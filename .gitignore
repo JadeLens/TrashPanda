@@ -1,2 +1,5 @@
 Library/
 *.sln
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp.csproj
+ProjectSettings/ProjectVersion.txt
