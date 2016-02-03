@@ -1,0 +1,143 @@
+fileFormatVersion: 2
+guid: b7df3d79f68cd1a4d9757e1001e4c0e0
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: CROCODILE
+    100004: CROCODILE_
+    100006: CROCODILE_ Head
+    100008: CROCODILE_ L Calf
+    100010: CROCODILE_ L Clavicle
+    100012: CROCODILE_ L Finger0
+    100014: CROCODILE_ L Foot
+    100016: CROCODILE_ L Forearm
+    100018: CROCODILE_ L Hand
+    100020: CROCODILE_ L Thigh
+    100022: CROCODILE_ L Toe0
+    100024: CROCODILE_ L UpperArm
+    100026: CROCODILE_ Neck
+    100028: CROCODILE_ Neck1
+    100030: CROCODILE_ Pelvis
+    100032: CROCODILE_ Queue de cheval 1
+    100034: CROCODILE_ R Calf
+    100036: CROCODILE_ R Clavicle
+    100038: CROCODILE_ R Finger0
+    100040: CROCODILE_ R Foot
+    100042: CROCODILE_ R Forearm
+    100044: CROCODILE_ R Hand
+    100046: CROCODILE_ R Thigh
+    100048: CROCODILE_ R Toe0
+    100050: CROCODILE_ R UpperArm
+    100052: CROCODILE_ Spine
+    100054: CROCODILE_ Spine1
+    100056: CROCODILE_ Tail
+    100058: CROCODILE_ Tail1
+    100060: CROCODILE_ Tail2
+    100062: CROCODILE_ Tail3
+    100064: CROCODILE_ Tail4
+    100066: CROCODILE_ Tail5
+    100068: CROCODILE_ Tail6
+    400000: //RootNode
+    400002: CROCODILE
+    400004: CROCODILE_
+    400006: CROCODILE_ Head
+    400008: CROCODILE_ L Calf
+    400010: CROCODILE_ L Clavicle
+    400012: CROCODILE_ L Finger0
+    400014: CROCODILE_ L Foot
+    400016: CROCODILE_ L Forearm
+    400018: CROCODILE_ L Hand
+    400020: CROCODILE_ L Thigh
+    400022: CROCODILE_ L Toe0
+    400024: CROCODILE_ L UpperArm
+    400026: CROCODILE_ Neck
+    400028: CROCODILE_ Neck1
+    400030: CROCODILE_ Pelvis
+    400032: CROCODILE_ Queue de cheval 1
+    400034: CROCODILE_ R Calf
+    400036: CROCODILE_ R Clavicle
+    400038: CROCODILE_ R Finger0
+    400040: CROCODILE_ R Foot
+    400042: CROCODILE_ R Forearm
+    400044: CROCODILE_ R Hand
+    400046: CROCODILE_ R Thigh
+    400048: CROCODILE_ R Toe0
+    400050: CROCODILE_ R UpperArm
+    400052: CROCODILE_ Spine
+    400054: CROCODILE_ Spine1
+    400056: CROCODILE_ Tail
+    400058: CROCODILE_ Tail1
+    400060: CROCODILE_ Tail2
+    400062: CROCODILE_ Tail3
+    400064: CROCODILE_ Tail4
+    400066: CROCODILE_ Tail5
+    400068: CROCODILE_ Tail6
+    4300000: CROCODILE
+    7400000: Take 001
+    11100000: //RootNode
+    13700000: CROCODILE
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: 8a01b5794e01c8a49b155bce49d5dfbb
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: ZEBRA_
+    100004: ZEBRA_ Head
+    100006: ZEBRA_ L Calf
+    100008: ZEBRA_ L Clavicle
+    100010: ZEBRA_ L Finger0
+    100012: ZEBRA_ L Foot
+    100014: ZEBRA_ L Forearm
+    100016: ZEBRA_ L Hand
+    100018: ZEBRA_ L HorseLink
+    100020: ZEBRA_ L Thigh
+    100022: ZEBRA_ L UpperArm
+    100024: ZEBRA_ Neck
+    100026: ZEBRA_ Neck1
+    100028: ZEBRA_ Neck2
+    100030: ZEBRA_ Neck3
+    100032: ZEBRA_ Pelvis
+    100034: ZEBRA_ Queue de cheval 1
+    100036: ZEBRA_ R Calf
+    100038: ZEBRA_ R Clavicle
+    100040: ZEBRA_ R Finger0
+    100042: ZEBRA_ R Foot
+    100044: ZEBRA_ R Forearm
+    100046: ZEBRA_ R Hand
+    100048: ZEBRA_ R HorseLink
+    100050: ZEBRA_ R Thigh
+    100052: ZEBRA_ R UpperArm
+    100054: ZEBRA_ Spine
+    100056: ZEBRA_ Spine1
+    100058: ZEBRA_ Tail
+    100060: ZEBRA_ Tail1
+    100062: ZEBRA_ Tail2
+    100064: ZEBRA_ Tail3
+    100066: ZEBRA_ Tail4
+    400000: //RootNode
+    400002: ZEBRA_
+    400004: ZEBRA_ Head
+    400006: ZEBRA_ L Calf
+    400008: ZEBRA_ L Clavicle
+    400010: ZEBRA_ L Finger0
+    400012: ZEBRA_ L Foot
+    400014: ZEBRA_ L Forearm
+    400016: ZEBRA_ L Hand
+    400018: ZEBRA_ L HorseLink
+    400020: ZEBRA_ L Thigh
+    400022: ZEBRA_ L UpperArm
+    400024: ZEBRA_ Neck
+    400026: ZEBRA_ Neck1
+    400028: ZEBRA_ Neck2
+    400030: ZEBRA_ Neck3
+    400032: ZEBRA_ Pelvis
+    400034: ZEBRA_ Queue de cheval 1
+    400036: ZEBRA_ R Calf
+    400038: ZEBRA_ R Clavicle
+    400040: ZEBRA_ R Finger0
+    400042: ZEBRA_ R Foot
+    400044: ZEBRA_ R Forearm
+    400046: ZEBRA_ R Hand
+    400048: ZEBRA_ R HorseLink
+    400050: ZEBRA_ R Thigh
+    400052: ZEBRA_ R UpperArm
+    400054: ZEBRA_ Spine
+    400056: ZEBRA_ Spine1
+    400058: ZEBRA_ Tail
+    400060: ZEBRA_ Tail1
+    400062: ZEBRA_ Tail2
+    400064: ZEBRA_ Tail3
+    400066: ZEBRA_ Tail4
+    7400000: Take 001
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
