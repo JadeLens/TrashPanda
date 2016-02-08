@@ -397,7 +397,7 @@ public class Node_Flee : aiBehaviorNode
                 m_child2.Reset();
                 break;
         }
-        // }
+        
         switch (m_child1.GetState())
         {
             case NodeState.Running:
@@ -444,7 +444,8 @@ public class Node_FollowOrders : aiBehaviorNode
     {
         if (unit.Orders.Count > 0)
         {
-            currentOrder = unit.Orders.Dequeue();
+           // currentOrder = unit.Orders.Dequeue();
+            currentOrder = unit.Orders.Peek();
         }
         else
         {

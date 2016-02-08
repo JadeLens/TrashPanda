@@ -50,9 +50,10 @@ public class Pier_Unit : MonoBehaviour {
 
     public void OnPathComplete(Path p)
     {
-        Debug.Log("pathComplete " + p.error);
+  //      Debug.Log("pathComplete ... " + p.error);
         if (!p.error)
         {
+    //        Debug.Log("path set ");
             path = p;
             stationary = true;
             currentWaypoint = 0;
@@ -101,7 +102,7 @@ public class Pier_Unit : MonoBehaviour {
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.deltaTime;
         controller.SimpleMove(dir);
-        tP = new Vector3(0.0f, path.vectorPath[currentWaypoint].y, path.vectorPath[currentWaypoint].z);
+      //  tP = new Vector3(0.0f, path.vectorPath[currentWaypoint].y, path.vectorPath[currentWaypoint].z);
 
         Vector3 targetDir = path.vectorPath[currentWaypoint] - transform.position;
         float step = speed * Time.deltaTime;
@@ -109,13 +110,20 @@ public class Pier_Unit : MonoBehaviour {
 
         if (lookat)
         {
-            transform.LookAt(path.vectorPath[currentWaypoint]);
+          //  transform.LookAt(path.vectorPath[currentWaypoint]);
+
+            Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
+            transform.rotation = rotation;
             StartCoroutine(lookTowards(0.1f));
 
         }
         if (stationary)
         {
-            transform.LookAt(path.vectorPath[currentWaypoint]);
+
+            Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
+            transform.rotation = rotation;
             lookat = true;
             stationary = false;
         }
