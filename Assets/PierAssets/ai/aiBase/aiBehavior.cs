@@ -31,7 +31,7 @@ public class aiBehavior : MonoBehaviour {
     /// <summary>
     /// how close does it stop to a target
     /// </summary>
-    public float SeekarriveRadius = 5f;
+    public float SeekarriveRadius = 2.5f;
     public NavMeshAgent agent;
 
     public Queue<aiBehaviorNode> Orders;
