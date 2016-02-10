@@ -47,7 +47,7 @@ public class BaseResouceCollection : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!bInBase)
+        if (!bInBase && !bControlled)
         {
             enterTime = Time.time;
         }
