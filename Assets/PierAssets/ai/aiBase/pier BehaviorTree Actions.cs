@@ -450,6 +450,7 @@ public class Node_FollowOrders : aiBehaviorNode
         else
         {
             Debug.Log("no orders");
+            Debug.Log(unit.Orders.Count);
             Fail();
         }
     }
