@@ -442,16 +442,15 @@ public class Node_FollowOrders : aiBehaviorNode
     }
     private void getOrder()
     {
-        if (unit.Orders.Count > 0)
-        {
+       
            // currentOrder = unit.Orders.Dequeue();
+        if (unit.Orders.Count != 0)
+        {
             currentOrder = unit.Orders.Peek();
         }
         else
         {
-            Debug.Log("no orders");
-            Debug.Log(unit.Orders.Count);
-            Fail();
+            Fail();//fail if no new orders
         }
     }
     public override void Reset()
@@ -462,27 +461,32 @@ public class Node_FollowOrders : aiBehaviorNode
 
     public override void Act(GameObject ob)
     {
-        switch (currentOrder.GetState())
+        getOrder();//get the latest oder
+        if (currentOrder != null)
         {
-            case NodeState.Ready:
-                currentOrder.Run();
-                break;
-            case NodeState.Running:
-                currentOrder.Act(ob);
-                break;
+            switch (currentOrder.GetState())
+            {
+                case NodeState.Ready:
+                    currentOrder.Run();
+                    break;
+                case NodeState.Running:
+                    currentOrder.Act(ob);
+                    break;
 
-            case NodeState.Failure:
-            // Debug.Log("fail");
-            //Fail();
+                case NodeState.Failure:
+                    Debug.Log("order failed");
+                    //Fail();
+                    break;
+                case NodeState.Success:
+                    //Debug.Log("sucess");
+                    //Succeed();
+                    currentOrder = null;
+                    unit.Orders.Dequeue();//remove completed order
+                    break;
 
-            case NodeState.Success:
-                //Debug.Log("sucess");
-                //Succeed();
-                getOrder();
-                break;
-
+            }
         }
-
+       
     }
 
 }
