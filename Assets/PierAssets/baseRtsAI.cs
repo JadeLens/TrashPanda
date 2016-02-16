@@ -47,22 +47,28 @@ public class baseRtsAI : aiBehavior
         return new Node_Repeat
         (
             new Node_PrioritySelector(
+
                 new aiBehaviorNode[] 
                 { 
-                    new Node_FollowOrders(this),
-                    new Node_Delay(0.5f),
+                    //new Node_FollowOrders(this),
+                  
                     new Node_Sequence
                     (
                         new  aiBehaviorNode[] 
                         {
                            
-                            new Node_Seek(agent,detectionRange,SeekarriveRadius,AItype.player),
+                            new Node_Seek_Modular
+                            (
+                                (IMoveToNode)(new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit)),
+                                 detectionRange,SeekarriveRadius,AItype.player
+                            ),
                             //new Node_Align(agent),
-                            new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.player),
+                           // new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.player),
                             new Node_Attack_Activate_Weapon(MainWeapon,stats),
                             new Node_Delay(1f)
                         }
-                    )
+                    ),
+                      new Node_Delay(0.1f)
 
                 }
             )
@@ -73,17 +79,22 @@ public class baseRtsAI : aiBehavior
     void Start()
     {
 
-        Init();
+      //  Init();
 
         Orders = new Queue<aiBehaviorNode>();
         switch (type)
         {
             case AItype.lamb:
-                routine = CreateRabbit();
+             //   routine = CreateRabbit();
                 break;
-        
+            case AItype.wolf:
+                routine = CreateAttackDrone();
+                Debug.Log("attack Drone");
+
+                break;
             default:
                 routine = CreateDrone();
+                Debug.Log(" Drone");
                 break;
 
         }

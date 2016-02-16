@@ -80,7 +80,97 @@ public class Node_Wander_Modular : aiBehaviorNode
     }
 }
 
+/// <summary>
+/// finds a target of specific type 
+/// then it moves toward it until it is close enought
+/// fails if no units in detection range
+/// </summary>
+public class Node_Seek_Modular : aiBehaviorNode
+{
+    private IMoveToNode m_child1;
+    private Node_FindClosestTarget m_child2;
+    private float m_range;
 
+    /// <summary>
+    /// finds a target of specific type 
+    /// then it moves toward it until it is close enought
+    /// fails if no units in detection range
+    /// </summary>
+    /// <param name="agent"></param>
+    /// <param name="_range"></param>
+    /// <param name="ArriveRadius"></param>
+    /// <param name="_type"></param>
+    public Node_Seek_Modular(IMoveToNode MoveNode, float _range, float ArriveRadius, AItype _type = AItype.none)
+    {
+        m_range = _range;
+        m_child1 = MoveNode;
+        m_child2 = new Node_FindClosestTarget(m_range, _type);
+        m_child1.SetArriveRadius(ArriveRadius);
+    }
+    public override void Reset()
+    {
+        m_child1.Reset();
+        m_child2.Reset();
+        MakeReady();
+    }
+    public override void Run()
+    {
+        base.Run();
+        m_child2.Run();
+    }
+    public override void Act(GameObject ob)
+    {
+        // Debug.Log("seek node act");
+        //we set a new destination every frame
+        // if (m_child1.isReady())//means we havent started to move
+        // {
+        // add some code to lose the target
+        switch (m_child2.GetState())
+        {
+            case NodeState.Running:
+                //Debug.Log("searching");
+                m_child2.Act(ob);
+                break;
+            case NodeState.Failure:
+                Fail();
+                //  Debug.Log(m_child1.GetDestination());
+                return;
+            //break;
+            case NodeState.Success:
+                if (m_child2.GetTarget() != null)
+                {
+                    Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
+                    //add a check to see if we are close enought for detection
+                    m_child1.SetDestination(m_child2.GetTarget().transform.position);
+                    //   Debug.Log("dest set");
+                    // m_child1.Run();
+                }
+                else
+                {
+                    Fail();
+                }
+                break;
+        }
+        switch (m_child1.GetState())
+        {
+            case NodeState.Ready:
+                m_child1.Run();
+                break;
+            case NodeState.Running:
+                m_child1.Act(ob);
+                break;
+            case NodeState.Failure:
+                Fail();
+                break;
+            case NodeState.Success:
+                // Debug.Log("seek worked");
+                Succeed();
+                break;
+
+        }
+
+    }
+}
 public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
 {
     private Vector3 m_target;

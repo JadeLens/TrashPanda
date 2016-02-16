@@ -681,18 +681,21 @@ public class Node_FindClosestTarget : aiBehaviorNode
         
         return m_target;
     }
+
     public override void Act(GameObject ob)
     {
         float closestDist = Mathf.Infinity;
         Collider[] hitColliders = Physics.OverlapSphere(ob.transform.position, m_radius);
         int i = 0;
         aiBehavior temp;
-
+      
         while (i < hitColliders.Length)
         {
+           
             temp = hitColliders[i].gameObject.GetComponent<aiBehavior>();
             if (temp != null && (temp.type == m_typeToLookFor || m_typeToLookFor == AItype.none))
             {
+                
                 float curDist = Vector3.Distance(temp.gameObject.transform.position, ob.transform.position);
                 if (curDist < closestDist)
                 {

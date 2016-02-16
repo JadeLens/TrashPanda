@@ -38,15 +38,38 @@ public class controlAI : MonoBehaviour {
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                // Debug.Log(hit.point);
-                foreach (baseRtsAI rabit in Selection)
+                foreach (baseRtsAI rabbit in Selection)
                 {
-                    IMoveToNode commande = new Node_MoveTo_With_Astar(rabit.gameObject, rabit.m_seeker, ref rabit.m_unit.del, rabit.m_unit);
+                    IMoveToNode commande = moveComand(rabbit);
                     commande.SetDestination(hit.point);
                     commande.SetArriveRadius(2.5f);
-                    rabit.Orders.Clear();
-                    rabit.Orders.Enqueue((aiBehaviorNode)commande);
+                    rabbit.Orders.Clear();
+                    rabbit.Orders.Enqueue((aiBehaviorNode)commande);
                 }
             }
         }
     }
+
+    IMoveToNode moveComand(baseRtsAI rabbit)
+    {
+        IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit);
+
+        return commande;
+    }
+    /*
+    aiBehaviorNode attackMove(baseRtsAI rabbit)
+    {
+        return new Node_Sequence
+        (
+            new aiBehaviorNode[] 
+            {
+                           
+                new Node_Seek_Modular(moveComand(rabbit),10,2.5f,AItype.lamb),
+                //new Node_Align(agent),
+                //new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.lamb),
+                new Node_Attack_Activate_Weapon(MainWeapon,stats),
+                new Node_Delay(1f)
+            }
+        );
+    }*/
 }
