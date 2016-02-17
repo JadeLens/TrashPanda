@@ -8,9 +8,11 @@ public class baseRtsAI : aiBehavior
     public Pier_Unit m_unit;
     public unitStats_ForAiTest stats;
     public command MainWeapon;
+	public AItype typeToChase;
+	public AItype typeToAvoid;
     private aiBehaviorNode CreateRabbit()
     {
-
+        
 
       //  movementNode.SetArriveRadius(SeekarriveRadius);
         return new Node_Repeat
@@ -19,7 +21,7 @@ public class baseRtsAI : aiBehavior
             (
                 new aiBehaviorNode[] 
                 { 
-                    new Node_Flee(agent,detectionRange,SeekarriveRadius,AItype.wolf),
+			//	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
                     new Node_Wander_Modular( 
                         new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit), anchorRange),
                  
@@ -50,7 +52,7 @@ public class baseRtsAI : aiBehavior
 
                 new aiBehaviorNode[] 
                 { 
-                    //new Node_FollowOrders(this),
+                    new Node_FollowOrders(this),
                   
                     new Node_Sequence
                     (
@@ -60,7 +62,7 @@ public class baseRtsAI : aiBehavior
                             new Node_Seek_Modular
                             (
                                 (IMoveToNode)(new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit)),
-                                 detectionRange,SeekarriveRadius,AItype.player
+								detectionRange,SeekarriveRadius,typeToChase
                             ),
                             //new Node_Align(agent),
                            // new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.player),
@@ -85,7 +87,7 @@ public class baseRtsAI : aiBehavior
         switch (type)
         {
             case AItype.lamb:
-             //   routine = CreateRabbit();
+                routine = CreateRabbit();
                 break;
             case AItype.wolf:
                 routine = CreateAttackDrone();

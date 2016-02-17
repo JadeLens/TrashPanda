@@ -130,7 +130,7 @@ public class Node_Seek_Modular : aiBehaviorNode
             case NodeState.Running:
                 //Debug.Log("searching");
                 m_child2.Act(ob);
-                break;
+                return;
             case NodeState.Failure:
                 Fail();
                 //  Debug.Log(m_child1.GetDestination());
@@ -142,7 +142,8 @@ public class Node_Seek_Modular : aiBehaviorNode
                     Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
                     //add a check to see if we are close enought for detection
                     m_child1.SetDestination(m_child2.GetTarget().transform.position);
-                    //   Debug.Log("dest set");
+//                       Debug.Log("dest set");
+//				Debug.Log(m_child2.GetTarget().transform.position);
                     // m_child1.Run();
                 }
                 else
@@ -179,27 +180,20 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
     private Seeker m_seeker;
     private OnPathDelegate m_onPathMade;
     Pier_Unit m_unit;
-    public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, ref OnPathDelegate onPath, Pier_Unit unit)
+	public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, ref OnPathDelegate onPath, Pier_Unit unit,Vector3 loc = default(Vector3))
     {
         m_owner = owner;
         m_seeker = seeker;
         m_onPathMade = onPath;
         m_unit = unit;
+		SetDestination(loc);
         ///Debug.Log("created move Node" + onPath);
     }
-    //temp-----------------------------
-    public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, Vector3 loc)
-    {
-        m_owner = owner;
-        m_seeker = seeker;
-        SetDestination(loc);
-    }
-    //temp------------------------------
-
+   
     public override void Run()
     {
         base.Run();
-            // Debug.Log("started seeker " +m_target);
+//             Debug.Log("started seeker " +m_target);
              Path p =  m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
              m_unit.path = p;
     }

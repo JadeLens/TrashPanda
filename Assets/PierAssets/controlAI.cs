@@ -11,25 +11,23 @@ public class controlAI : MonoBehaviour {
     void Update()
     {
         Vector3 pos = transform.position;
-        /*
-        if (Input.GetButtonDown("Fire2"))
-        {
-            RaycastHit hit;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f))
-            {
-                //Debug.Log(hit.point);
-
-                IMoveToNode commande = new Node_MoveTo_With_Astar(leader.gameObject, leader.m_seeker,leader.m_unit.OnPathComplete);
-                commande.SetDestination(hit.point);
-                commande.SetArriveRadius(0.5f * Selection.Length * 2);
-                leader.Orders.Enqueue((aiBehaviorNode)commande);
-        
-
-            }
-
-        }*/
+		if (Input.GetButton("Fire2"))
+		{
+			RaycastHit hit;
+			
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(ray, out hit, 100.0f))
+			{
+				// Debug.Log(hit.point);
+				foreach (baseRtsAI rabbit in Selection)
+				{
+					aiBehaviorNode commande = attackMove(rabbit,hit.point);
+					
+					rabbit.Orders.Clear();
+					rabbit.Orders.Enqueue(commande);
+				}
+			}
+		}
         if (Input.GetButton("Fire1"))
         {
             RaycastHit hit;
@@ -40,36 +38,47 @@ public class controlAI : MonoBehaviour {
                // Debug.Log(hit.point);
                 foreach (baseRtsAI rabbit in Selection)
                 {
-                    IMoveToNode commande = moveComand(rabbit);
-                    commande.SetDestination(hit.point);
-                    commande.SetArriveRadius(2.5f);
+					aiBehaviorNode commande = moveComand(rabbit,hit.point);
+				
                     rabbit.Orders.Clear();
-                    rabbit.Orders.Enqueue((aiBehaviorNode)commande);
+                    rabbit.Orders.Enqueue(commande);
                 }
             }
         }
     }
 
-    IMoveToNode moveComand(baseRtsAI rabbit)
+	aiBehaviorNode moveComand(baseRtsAI rabbit,Vector3 loc)
     {
-        IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit);
-
-        return commande;
+		IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,loc);
+	
+		commande.SetArriveRadius(2.5f);
+		return (aiBehaviorNode)commande;
     }
-    /*
-    aiBehaviorNode attackMove(baseRtsAI rabbit)
-    {
-        return new Node_Sequence
-        (
-            new aiBehaviorNode[] 
-            {
-                           
-                new Node_Seek_Modular(moveComand(rabbit),10,2.5f,AItype.lamb),
-                //new Node_Align(agent),
-                //new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.lamb),
-                new Node_Attack_Activate_Weapon(MainWeapon,stats),
-                new Node_Delay(1f)
-            }
-        );
-    }*/
+    
+	aiBehaviorNode attackMove(baseRtsAI rabbit,Vector3 loc)
+	{	
+		return new Node_Selector
+		(
+			new  aiBehaviorNode[] 
+			{
+     			new Node_Sequence
+                (
+                    new  aiBehaviorNode[] 
+                    {
+                       
+                        new Node_Seek_Modular
+                        (
+							(IMoveToNode)(new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del,rabbit.m_unit)),
+							rabbit.detectionRange,rabbit.SeekarriveRadius,rabbit.typeToChase
+                        ),
+						new Node_Attack_Activate_Weapon(rabbit.MainWeapon,rabbit.stats),
+                        new Node_Delay(1f)
+                    }
+				),
+				new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,loc)
+
+			}
+
+		);
+	}
 }
