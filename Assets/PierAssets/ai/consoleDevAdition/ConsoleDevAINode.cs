@@ -3,6 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Pathfinding;
+
+public class Node_Call_Delegate:aiBehaviorNode{
+	public delegate void NodeFunction();
+	NodeFunction m_function;
+	public Node_Call_Delegate(NodeFunction func){
+
+		m_function = func;
+	}
+	public override void Run()
+	{
+
+		base.Run ();
+		m_function();
+	}
+	public override void Reset()
+	{
+
+		MakeReady();
+	}
+	public override void Act(GameObject ob)
+	{
+		Succeed();
+
+	}
+
+}
 /// <summary>
 /// wander in range around a point
 /// </summary>
