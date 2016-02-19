@@ -6,7 +6,7 @@ public class PointOfInterest : MonoBehaviour {
 	public faction owningFaction;
 	public Material mat1;
 	public Material mat2;
-	int curentmat = 1;
+	public int curentmat = 1;
 	Renderer render;
 	public void ChangeFaction(faction newFaction){
 		owningFaction  = newFaction;

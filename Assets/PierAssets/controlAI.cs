@@ -45,7 +45,7 @@ public class controlAI : MonoBehaviour
 				if(poi)
 				{
 
-					aiBehaviorNode commande = new Node_Call_Delegate(poi.toggleMat);
+					aiBehaviorNode commande = UnitOrders.CapturePoint((baseRtsAI)Selection[0],poi);//new Node_Call_Delegate(poi.toggleMat);
 					Selection[0].Orders.Clear();
 					Selection[0].Orders.Enqueue(commande);
 					//UnitOrders.giveOrders(Selection,UnitOrders.OrderType.capture,hit.point);

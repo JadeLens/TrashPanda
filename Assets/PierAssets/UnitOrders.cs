@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 public class UnitOrders : MonoBehaviour {
+	delegate void OrderDoneCallBack();
 	public enum OrderType  {move,attackMove,capture};
 	public static void giveOrders(aiBehavior[] Selection,OrderType type,Vector3 location){
 
@@ -14,10 +15,10 @@ public class UnitOrders : MonoBehaviour {
 
 				 commande = UnitOrders.moveComand(rabbit,location);
 				break;
-			case OrderType.capture:
+			/*case OrderType.capture:
 
 				commande = UnitOrders.CapturePoint(rabbit);
-				break;
+				break;*/
 			case OrderType.attackMove:
 
 				 commande = UnitOrders.attackMove(rabbit,location);
@@ -33,9 +34,16 @@ public class UnitOrders : MonoBehaviour {
 		}
 	}
 
-	public static aiBehaviorNode CapturePoint(baseRtsAI rabbit)
+	public static aiBehaviorNode CapturePoint(baseRtsAI rabbit,PointOfInterest poi)
 	{
-		aiBehaviorNode commande = new Node_Call_Delegate(printDebug);
+		aiBehaviorNode commande = new Node_Sequence
+			(
+				new  aiBehaviorNode[] 
+				{
+					moveComand(rabbit,poi.gameObject.transform.position),
+					new Node_Call_Delegate(poi.toggleMat)
+				}
+			);
 		return commande;
 	}
 	 static void printDebug(){

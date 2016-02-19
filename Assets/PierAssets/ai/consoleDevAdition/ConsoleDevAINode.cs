@@ -6,14 +6,14 @@ using Pathfinding;
 
 public class Node_Call_Delegate:aiBehaviorNode{
 	public delegate void NodeFunction();
-	NodeFunction m_function;
+	protected NodeFunction m_function;
 	public Node_Call_Delegate(NodeFunction func){
 
 		m_function = func;
 	}
 	public override void Run()
 	{
-
+		
 		base.Run ();
 		m_function();
 	}
@@ -29,6 +29,7 @@ public class Node_Call_Delegate:aiBehaviorNode{
 	}
 
 }
+
 /// <summary>
 /// wander in range around a point
 /// </summary>
