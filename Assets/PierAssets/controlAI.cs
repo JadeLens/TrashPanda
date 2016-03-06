@@ -1,40 +1,65 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class controlAI : MonoBehaviour 
 {
+
     public aiBehavior[] Selection;
+    public List<baseRtsAI> mySelection;
+    public bool attackModifier = false;
 	// Use this for initialization
 	void Start () {
-	
-	}
+        FirstHit = Input.mousePosition;
+        mySelection = new List<baseRtsAI>();
+    }
+    Vector3 FirstHit;
+    static void drawBox(Vector3 topLeft, Vector3 botomRight,Vector3 topRight, Vector3 bottomLeft)
+    {
+        Debug.DrawLine(topLeft, topRight, Color.magenta);
+        Debug.DrawLine(topLeft,bottomLeft, Color.magenta);
+        Debug.DrawLine(botomRight, topRight, Color.magenta);
+        Debug.DrawLine(botomRight, bottomLeft, Color.magenta);
 
+   
+        Debug.DrawLine(topLeft,botomRight, Color.red);
+    }
     void Update()
     {
-        Vector3 pos = transform.position;
-		if (Input.GetButton("Fire2"))
-		{
-			RaycastHit hit;
-			
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, 100.0f))
-			{
-				// Debug.Log(hit.point);
-		
-				UnitOrders.giveOrders(Selection,UnitOrders.OrderType.attackMove,hit.point);
-			}
-		}
-        if (Input.GetButton("Fire1"))
+
+        if (Input.GetKeyUp(KeyCode.A))
         {
+            attackModifier = true;
+
+        }
+		if (Input.GetButtonUp("Fire2"))
+		{
             RaycastHit hit;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
-				UnitOrders.giveOrders(Selection,UnitOrders.OrderType.move,hit.point);
+                UnitOrders.OrderType type;
+                if (attackModifier)
+                {
+                    type = UnitOrders.OrderType.attackMove;
+                }
+                else
+                {
+                    type = UnitOrders.OrderType.move;
+                }
+                UnitOrders.giveOrders(mySelection, type, hit.point);
+                attackModifier = false;
             }
+          
+		}
+        if (Input.GetButtonUp("Fire1"))
+        {
+            attackModifier = false;
+
         }
-		if (Input.GetKeyDown(KeyCode.A))
+
+        if (Input.GetKeyDown(KeyCode.A))
 		{
 			RaycastHit hit;
 

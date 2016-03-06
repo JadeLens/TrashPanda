@@ -1,19 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class CameraSelection : MonoBehaviour {
 
-
+    /// <summary>
+    /// USE A BOUND TO CHECK UNIT POS IN VIEWPORT COORDINATES
+    /// </summary>
 	public Texture2D selectionBox = null;
 	public static Rect selection = new Rect(0,0,0,0);
 	private Vector3 startClick = -Vector3.one;
-	
+    controlAI ctrl;
+    public List<baseRtsAI> allUnits;
+    // Update is called once per frame
+    void Start()
+    {
 
-	// Update is called once per frame
-	void Update () {
+        ctrl = GameObject.FindObjectOfType<controlAI>();
+    }
+    void Update () {
+   
 		CheckCamera ();
-	}
+      
+       // allUnits = new List<baseRtsAI>();
+    }
+    public static Bounds getViewPortBounds(Camera cam,Vector3 pos1, Vector3 pos2)
+    {
+        Vector3 v1 = Camera.main.ScreenToViewportPoint(pos1);
 
+        Vector3 v2 = Camera.main.ScreenToViewportPoint(pos2);
+
+        Vector3 min = Vector3.Min(v1, v2);
+        Vector3 max = Vector3.Max(v1, v2);
+        Bounds bounds = new Bounds();
+
+        bounds.SetMinMax(min, max);
+        return bounds;
+    }
+    public bool IsWithingBounds(GameObject ob)
+    {
+
+     //   Bounds selectionBox = getViewPortBounds(Camera.main, startClick, Input.mousePosition);
+
+        Vector3 camPos = Camera.main.WorldToScreenPoint(ob.transform.position);
+        camPos.y = CameraSelection.invertMouseY(camPos.y);
+        return  CameraSelection.selection.Contains(camPos);
+
+       //  selectionBox.Contains(ob.transform.position);
+    }
 	private void CheckCamera()
 	{
 		if (Input.GetMouseButtonDown (0)) {
@@ -31,8 +64,24 @@ public class CameraSelection : MonoBehaviour {
 				selection.y += selection.height;
 				selection.height = -selection.height;
 			}
-
+            ctrl.mySelection.Clear();
+            foreach (baseRtsAI unit in allUnits)
+            {
+                
+               // Debug.Log("test");
+                if (IsWithingBounds(unit.gameObject))
+                {
+                 //   Debug.Log("test2");
+                    ctrl.mySelection.Add(unit);
+                }
+            }
 			startClick = -Vector3.one;
+
+
+			/*if(Physics.BoxCastAll()){
+				
+
+			}*/
 		}
 
 		if (Input.GetMouseButton (0))
@@ -40,7 +89,7 @@ public class CameraSelection : MonoBehaviour {
 
 			selection = new Rect(startClick.x,invertMouseY(startClick.y),Input.mousePosition.x - startClick.x,invertMouseY(Input.mousePosition.y) - invertMouseY(startClick.y));
 			                   
-			                               
+			 
 		}
 
 	}

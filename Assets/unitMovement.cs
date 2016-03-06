@@ -139,7 +139,7 @@ public class unitMovement : MonoBehaviour {
 	{
 
 
-		Debug.DrawRay (camRay.origin, camRay.direction * 50, Color.green);
+		//Debug.DrawRay (camRay.origin, camRay.direction * 50, Color.green);
 		
 	}
 } 

@@ -92,8 +92,12 @@ public class unitStats_ForAiTest : MonoBehaviour, IGameUnit
         if (Physics.Raycast(ray, out hit, range))
         {
             IGameUnit target = hit.collider.transform.gameObject.GetComponent(typeof(IGameUnit)) as IGameUnit;
+    //        Debug.Log("hit something");
+
+       //     Debug.Log(hit.collider.transform.gameObject.name);
             if (target != null && target != this)
             {
+               // Debug.Log("hit something");
                 float damage = GetDamage();
                 if (target.changeHealth(-damage)) //returns true if target died
                 {
@@ -119,6 +123,7 @@ public class unitStats_ForAiTest : MonoBehaviour, IGameUnit
                 IGameUnit target = col.transform.gameObject.GetComponent(typeof(IGameUnit)) as IGameUnit;
                 if (target != null && target != this)
                 {
+                    
                     float damage = GetDamage();
                     if (target.changeHealth(-damage)) //returns true if target died
                     {
