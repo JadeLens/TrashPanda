@@ -20,7 +20,7 @@ public class MenuButtonManager : MonoBehaviour {
 
     public void Play()
     {
-        //Application.LoadLevel("GameScene");
+        Application.LoadLevel(1);
     }
 
     public void Help()
