@@ -79,6 +79,7 @@ public class Node_Follow_Path :  aiBehaviorNode
         
     }
 }
+
 public class Node_CheckBool: aiBehaviorNode{
 	//put constructor
 	Dictionary<string, bool> m_dict;
@@ -169,6 +170,56 @@ public class Node_Invert : aiBehaviorNode
 }
 
 /// <summary>
+/// makes child node allways succeed
+/// </summary>
+public class Node_Succeeder : aiBehaviorNode
+{
+    private aiBehaviorNode m_child;
+
+    /// <summary>
+    /// makes child node allways succeed
+    /// </summary>
+    public Node_Succeeder(aiBehaviorNode Node)
+    {
+
+        m_child = Node;
+    }
+    public override void Run()
+    {
+        base.Run();
+        m_child.Run();
+    }
+
+    public override void Reset()
+    {
+
+        m_child.Reset();
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        switch (m_child.GetState())
+        {
+            case NodeState.Running:
+                m_child.Act(ob);
+                break;
+            case NodeState.Failure:
+                Debug.Log("child failed");
+                Succeed();
+                break;
+            case NodeState.Success:
+                Succeed();
+                break;
+            case NodeState.Ready:
+                m_child.Run();
+                break;
+        }
+
+    }
+}
+
+/// <summary>
+/// DEPRECIATED USE SEQUENCE
 /// runs child all child node each update tick until one fails
 /// </summary>
 public class Node_Concurent : aiBehaviorNode

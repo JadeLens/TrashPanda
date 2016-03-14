@@ -72,6 +72,7 @@ public abstract class aiBehaviorNode
 
     public NodeState GetState() { return m_state; }
 }
+
 /// <summary>
 /// runs children in a sequence until one fails or all have been run
 /// </summary>
@@ -79,10 +80,6 @@ public class Node_Sequence : aiBehaviorNode
 {
     public aiBehaviorNode[] m_children;
     private int m_currentChildIndex = 0;
-    /// <summary>
-    /// runs child in a sequence until one fails or all have been run
-    /// </summary>
-    public Node_Sequence() { }
     /// <summary>
     /// runs child in a sequence until one fails or all have been run
     /// </summary>
@@ -136,8 +133,11 @@ public class Node_Sequence : aiBehaviorNode
                 break;
             //if child succeeded increase the index to go to the next one
             case NodeState.Success:
-                m_currentChildIndex++;
-                break;
+                
+				m_currentChildIndex++;
+			// if we succeeded, don't wait for the next tick to process the next child
+				 Act(ob);
+			return;
             //if getState is null it means it hasent been started yet
             case NodeState.Ready:
                 m_children[m_currentChildIndex].Run();
@@ -145,6 +145,7 @@ public class Node_Sequence : aiBehaviorNode
         }
     }
 }
+
 /// <summary>
 /// repeats a child node n number of times or infinitively
 /// fails if child fails once  
@@ -224,62 +225,7 @@ public class Node_Repeat : aiBehaviorNode
         }
     }
 }
-/////////////////////////////////////////
-public class Node_Timer : aiBehaviorNode
-{
-    private aiBehaviorNode m_child;
 
-    private float m_timeToWait;
-    private float m_timer;
-
-
-    public Node_Timer(aiBehaviorNode Node, int timeToWait)
-    {
-        m_timeToWait = timeToWait;
-        m_child = Node;
-    }
-    public override void Run()
-    {
-        base.Run();
-        m_child.Run();
-    }
-
-    public override void Reset()
-    {
-        m_timer = 0;
-        m_child.Reset();
-        MakeReady();
-    }
-    public override void Act(GameObject ob)
-    {
-        m_timer += Time.deltaTime;
-
-        
-        switch (m_child.GetState())
-        {
-            case NodeState.Running:
-                m_child.Act(ob);
-                break;
-            case NodeState.Failure:
-                Fail();
-                break;
-            case NodeState.Success:
-                Succeed();
-                break;
-            case NodeState.Ready:
-                m_child.Run(); 
-                break;
-        }
-        if (m_timer >= m_timeToWait)
-        {
-            Fail();
-        }
-    }
-}
-
-
-
-/////////////////////////////////////////
 
 /// <summary>
 /// runs child all child node in sequence until one succeeds
@@ -341,7 +287,10 @@ public class Node_PrioritySelector : aiBehaviorNode
             //if one child fails go to the next one
             case NodeState.Failure:
                 m_currentChildIndex++;
-                break;
+			// if we succeeded, don't wait for the next tick to process the next child
+                
+				Act( ob);
+			return;
             //if one child succeeded the rest are skiped
             case NodeState.Success:
                 Succeed();
@@ -354,98 +303,11 @@ public class Node_PrioritySelector : aiBehaviorNode
     }
 
 }
-/// <summary>
-/// waits for time in secs then succeeds
-/// works best when use in a sequence node 
-/// could be used at the end of a sequence to delay a repeat
-/// </summary>
-public class Node_Delay : aiBehaviorNode
-{
-    private float m_delay;
-    private float m_timer;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="timeToWait"></param>
-    public Node_Delay(float timeToWait)
-    {
-        m_delay = timeToWait;
-    }
-    public override void Reset()
-    {
-        m_timer = 0;
-        MakeReady();
-    }
-    public override void Run()
-    {
-        base.Run();
-    }
-    public override void Act(GameObject ob)
-    {
-        m_timer += Time.deltaTime;
 
-        if (m_timer >= m_delay)
-        {
-            Succeed();
-        }
-    }
-}
+
 
 /// <summary>
-/// makes returns true if a certain amout of time has passed
-/// else fails
-/// </summary>
-public class Node_CoolDownTimer : aiBehaviorNode
-{
-    private bool firstTime = true;
-      private float m_delay;
-    /// <summary>
-    /// last time it succeded
-    /// </summary>
-    private float m_LastTime;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="timeToWait"></param>
-    public Node_CoolDownTimer(float timeToWait)
-    {
-        m_delay = timeToWait;
-    }
-    public override void Reset()
-    {
-       
-        MakeReady();
-    }
-    public override void Run()
-    {
-        base.Run();
-    }
-    public override void Act(GameObject ob)
-    {
-        if (firstTime)
-        {
-            firstTime = false;
-            Succeed();
-        }
-
-        else if (Time.time - m_LastTime > m_delay)
-        {
-            Succeed();
-        }
-        else
-        {
-            Fail();
-        }
-    }
-    protected override void Succeed()
-    {
-        base.Succeed();
-
-        m_LastTime = Time.time;
-    }
-}
-
-/// <summary>
+/// DEPRECIATED
 /// runs child all child node each update tick until one succeeds
 /// </summary>
 public class Node_Selector : aiBehaviorNode

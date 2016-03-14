@@ -6,7 +6,7 @@ public class baseRtsAI : aiBehavior
 {
     public Seeker m_seeker;
     public Pier_Unit m_unit;
-    public unitStats_ForAiTest stats;
+  //  public unitStats_ForAiTest stats;
     public command MainWeapon;
 	public AItype typeToChase;
 	public AItype typeToAvoid;
@@ -17,13 +17,14 @@ public class baseRtsAI : aiBehavior
       //  movementNode.SetArriveRadius(SeekarriveRadius);
         return new Node_Repeat
         (
-            new Node_Selector
+            new Node_PrioritySelector
             (
                 new aiBehaviorNode[] 
                 { 
 			//	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
                     new Node_Wander_Modular( 
-                        new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit), anchorRange),
+                        new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit,SeekarriveRadius),
+                        anchorRange),
                  
                 }
             )
@@ -46,7 +47,7 @@ public class baseRtsAI : aiBehavior
     }
       private aiBehaviorNode CreateAttackDrone()
     {
-        return new Node_Repeat
+        return new Node_Repeat//main repeat node
         (
             new Node_PrioritySelector(
 
@@ -54,23 +55,8 @@ public class baseRtsAI : aiBehavior
                 { 
                     new Node_FollowOrders(this),
                   
-                    new Node_Sequence
-                    (
-                        new  aiBehaviorNode[] 
-                        {
-                           
-                            new Node_Seek_Modular
-                            (
-                                (IMoveToNode)(new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit)),
-								detectionRange,SeekarriveRadius,typeToChase
-                            ),
-                            //new Node_Align(agent),
-                           // new Node_AlignToTarget(agent,detectionRange,SeekarriveRadius,AItype.player),
-                            new Node_Attack_Activate_Weapon(MainWeapon,stats),
-                            new Node_Delay(1f)
-                        }
-                    ),
-                      new Node_Delay(0.1f)
+                      pierBehaviorsubTrees.attackSequence(this,0.5f)//this gets reapeated by main repeat node if we have no orders
+                   
 
                 }
             )
@@ -81,7 +67,7 @@ public class baseRtsAI : aiBehavior
     void Start()
     {
 
-      //  Init();
+        Init();
 
         Orders = new Queue<aiBehaviorNode>();
         switch (type)
@@ -91,12 +77,12 @@ public class baseRtsAI : aiBehavior
                 break;
             case AItype.wolf:
                 routine = CreateAttackDrone();
-                Debug.Log("attack Drone");
+            //    Debug.Log("attack Drone");
 
                 break;
             default:
                 routine = CreateDrone();
-                Debug.Log(" Drone");
+          //      Debug.Log(" Drone");
                 break;
 
         }

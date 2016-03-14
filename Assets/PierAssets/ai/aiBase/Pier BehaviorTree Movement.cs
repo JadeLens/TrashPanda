@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathfinding;
 using extensions;
 
 public interface IMoveToNode
@@ -16,150 +17,222 @@ public interface IMoveToNode
 }
 
 /// <summary>
-/// base movement for all steering behaviours Node
+/// uses the a* pathfinding project to move 
 /// </summary>
-public class Node_SteerTo : aiBehaviorNode
+public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
 {
-    /// <summary>
-    /// how close do we have to get to it
-    /// </summary>
-
     private Vector3 m_target;
-    private float m_moveSpeed = 5f;
-    private float m_rotationSpeed = 3f;
+    private float m_radius;
+    private GameObject m_owner;
+    private Seeker m_seeker;
+    private OnPathDelegate m_onPathMade;
+    Pier_Unit m_unit;
+    Path m_path;
+    public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, ref OnPathDelegate onPath, Pier_Unit unit, float ArriveRadius, Vector3 loc = default(Vector3))
+    {
+        m_owner = owner;
+        m_seeker = seeker;
+        m_onPathMade = onPath;
+        m_unit = unit;
+        SetDestination(loc);
+        SetArriveRadius(ArriveRadius);
+        ///Debug.Log("created move Node" + onPath);
+    }
 
-    public Node_SteerTo() { }
-    public Node_SteerTo(float x, float z)
-    {
-        SetDirection(x, z);
-    }
-    public Node_SteerTo(float x, float y, float z)
-    {
-        SetDirection(x, y, z);
-    }
     public override void Run()
     {
         base.Run();
+        //             Debug.Log("started seeker " +m_target);
+        m_path = m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
+        m_unit.path = m_path;
+    }
+    public Vector3 GetDestination()
+    {
+        return m_target;
+    }
+    public void SetDestination(float x, float z)
+    {
+        m_target = (new Vector3(x, 0, z));
     }
 
-    public void SetDirection(float x, float z)
+    public void SetDestination(float x, float y, float z)
     {
-        m_target = new Vector3(x, 0, z);
+        m_target = (new Vector3(x, y, z));
     }
-    public void SetDirection(float x, float y, float z)
+
+    public void SetDestination(Vector3 v)
     {
-        m_target = new Vector3(x, y, z);
+        m_target = (v);
     }
-    public void SetDirection(Vector3 to)
+
+    public void SetArriveRadius(float r)
     {
-        m_target = to;
+        m_radius = r;
 
     }
-    /* 
-      public void SetStartPosition(Vector3 from)
-     {
-         m_startPos = from;
-     }*/
+
     public override void Reset()
     {
+        //m_steering.Reset();
+
         MakeReady();
     }
+
     public override void Act(GameObject ob)
     {
-        // Vector3 direction = m_target - ob.transform.position ;
-        ob.transform.rotation = Quaternion.Slerp(ob.transform.rotation, Quaternion.LookRotation(m_target), m_rotationSpeed * Time.deltaTime);
-
-        //Debug.Log(  direction.magnitude + " >" + m_arriveRadius);
-        // Vector3 moveVector = m_target.normalized * m_moveSpeed * Time.deltaTime;
-        Vector3 moveVector = ob.transform.forward.normalized * m_moveSpeed * Time.deltaTime;
-        ob.transform.position += moveVector;
 
 
-
-    }
-}
-
-public class Node_Align : aiBehaviorNode
-{
-    private Vector3 m_target;
-    private NavMeshAgent m_agent;
-    private float m_rotationSpeed = 3f;
-    public Node_Align(float rSpeed=3f)
-    {
-        m_rotationSpeed = rSpeed;
-    }
-    public Node_Align(NavMeshAgent agent)
-    {
-        m_agent = agent;
-        SetDirection(m_agent.destination);
-    }
-    public Node_Align(Vector3 v)
-    {
-        SetDirection(v);
-    }
-    public Node_Align(float x, float z)
-    {
-        SetDirection(x, z);
-    }
-    public Node_Align(float x, float y, float z)
-    {
-        SetDirection(x, y, z);
-    }
-   
-    public override void Run()
-    {
-        base.Run();
-    }
-
-    public void SetDirection(float x, float z)
-    {
-        m_target = new Vector3(x, 0, z);
-    }
-    public void SetDirection(float x, float y, float z)
-    {
-        m_target = new Vector3(x, y, z);
-    }
-    public void SetDirection(Vector3 to)
-    {
-        m_target = to;
-
-    }
-    
-    public override void Reset()
-    {
-        MakeReady();
-    }
-    public override void Act(GameObject ob)
-    {
-        // Vector3 direction = m_target - ob.transform.position ;
-        if (m_target == Vector3.zero)
+        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.blue, 0.10f);
+        if(m_unit.path != m_path)//if path changed recalculate path
         {
-            Debug.Break();
+            m_path = m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
+            m_unit.path = m_path;
+        }
+
+        if (isAtDestination(ob))
+        {
+            Succeed();
+            // Debug.Log("at destination");
+            // m_agent.SetDestination(ob.transform.position);
+
+        }
+
+    }
+
+    private bool isAtDestination(GameObject ob)
+    {
+        //  Debug.Log(Vector3.Distance(m_target, ob.transform.position));
+        if (Vector3.Distance(ob.transform.position, new Vector3(m_target.x, ob.transform.position.y, m_target.z)) <= m_radius)
+        {
+            return true;
         }
         else
         {
-           
-            ob.transform.rotation = Quaternion.Slerp(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation, m_rotationSpeed * Time.fixedDeltaTime);
-           // if (Vector3.Angle(ob.transform.forward, (m_target - ob.transform.position).normalized) < 2)
-            if (Quaternion.Angle(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation)<2)
-            {
-            
-                Succeed();
-                //  Debug.Log("finished Turning");
-            }
-            else
-            {
-              //  Debug.Log(Quaternion.Angle(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation));
-            
-                // Debug.Log(Vector3.Angle(ob.transform.rotation.eulerAngles, Quaternion.LookRotation(m_target).eulerAngles));
-            }
+            //  Debug.Log("moveTo distance is " + Vector3.Distance(ob.transform.position, m_target));
+            //  Debug.Log("arrive radius is " + m_radius);
+            return false;
         }
+        //if (m_target - m_startPos.sqrMagnitude <= 0.01) { return true; } else { return false; }
+    }
+}
+/// <summary>
+/// uses base unity navMesh to move
+/// </summary>
+public class Node_MoveTo_With_Avoid : aiBehaviorNode, IMoveToNode
+{
+    private Vector3 m_target;
+    private float m_radius;
+    private NavMeshAgent m_agent;
+
+    public Node_MoveTo_With_Avoid(NavMeshAgent agent)
+    {
+        m_agent = agent;
+    }
+    //temp-----------------------------
+    public Node_MoveTo_With_Avoid(NavMeshAgent agent, Vector3 loc)
+    {
+        m_agent = agent;
+        SetDestination(loc);
+    }
+    //temp------------------------------
+
+    public override void Run()
+    {
+        base.Run();
+        //     Debug.Log(m_target);
+
+    }
+    public Vector3 GetDestination()
+    {
+        return m_target;
+    }
+    public void SetDestination(float x, float z)
+    {
+        m_target = (new Vector3(x, 0, z));
+    }
+
+    public void SetDestination(float x, float y, float z)
+    {
+        m_target = (new Vector3(x, y, z));
+    }
+
+    public void SetDestination(Vector3 v)
+    {
+        m_target = (v);
+    }
+
+    public void SetArriveRadius(float r)
+    {
+        m_radius = r;
+
+    }
+
+    private Vector3 getNavCoordinate(Vector3 c)
+    {
+        Vector3 result;
+        if (m_agent.RandomPoint(m_target, 0.2f, out result) == false)
+        {
+            //Fail();
+        }
+
+        return result;
+    }
+
+    public override void Reset()
+    {
+        //m_steering.Reset();
+
+        MakeReady();
+    }
+
+    public override void Act(GameObject ob)
+    {
+        m_agent.SetDestination(m_target);
+
+        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.blue, 0.10f);
+
+        switch (m_agent.pathStatus)
+        {
+            case NavMeshPathStatus.PathComplete:
+
+                //  Succeed();
+                break;
+
+            case NavMeshPathStatus.PathInvalid:
+            case NavMeshPathStatus.PathPartial:
+                Fail();
+                break;
+
+        }
+        if (isAtDestination(ob))
+        {
+            Succeed();
+            m_agent.SetDestination(ob.transform.position);
+
+        }
+
+    }
+
+    private bool isAtDestination(GameObject ob)
+    {
+        //  Debug.Log(Vector3.Distance(m_target, ob.transform.position));
+        if (Vector3.Distance(ob.transform.position, new Vector3(m_target.x, ob.transform.position.y, m_target.z)) <= m_radius)
+        {
+            return true;
+        }
+        else
+        {
+            //  Debug.Log("moveTo distance is " + Vector3.Distance(ob.transform.position, m_target));
+            //  Debug.Log("arrive radius is " + m_radius);
+            return false;
+        }
+        //if (m_target - m_startPos.sqrMagnitude <= 0.01) { return true; } else { return false; }
     }
 }
 
-//temporary will use the command patern 
-//so this node would determine wich direction to send to  the move command
-//and also determine if we have reached the target pos
+/// <summary>
+/// uses steering to move around no nawMesh required
+/// </summary>
 public class Node_MoveTo : aiBehaviorNode, IMoveToNode
 {
     private bool isStartLocationStored = false;
@@ -247,121 +320,153 @@ public class Node_MoveTo : aiBehaviorNode, IMoveToNode
 }
 
 
-public class Node_MoveTo_With_Avoid : aiBehaviorNode, IMoveToNode
+/// <summary>
+/// base movement for all steering behaviours Node
+/// </summary>
+public class Node_SteerTo : aiBehaviorNode
 {
+    /// <summary>
+    /// how close do we have to get to it
+    /// </summary>
+
     private Vector3 m_target;
-    private float m_radius;
-    private NavMeshAgent m_agent;
+    private float m_moveSpeed = 5f;
+    private float m_rotationSpeed = 3f;
 
-    public Node_MoveTo_With_Avoid(NavMeshAgent agent)
+    public Node_SteerTo() { }
+    public Node_SteerTo(float x, float z)
     {
-        m_agent = agent;
+        SetDirection(x, z);
     }
-	//temp-----------------------------
-	public Node_MoveTo_With_Avoid(NavMeshAgent agent,Vector3 loc)
-	{
-		m_agent = agent;
-		SetDestination (loc);
-	}
-	//temp------------------------------
-
+    public Node_SteerTo(float x, float y, float z)
+    {
+        SetDirection(x, y, z);
+    }
     public override void Run()
     {
         base.Run();
-   //     Debug.Log(m_target);
-       
-    }
-    public Vector3 GetDestination()
-    {
-        return m_target;
-    }
-    public void SetDestination(float x, float z)
-    {
-        m_target = (new Vector3(x, 0, z));
     }
 
-    public void SetDestination(float x, float y, float z)
+    public void SetDirection(float x, float z)
     {
-        m_target = (new Vector3(x, y, z));
+        m_target = new Vector3(x, 0, z);
     }
-
-    public void SetDestination(Vector3 v)
+    public void SetDirection(float x, float y, float z)
     {
-        m_target = (v);
+        m_target = new Vector3(x, y, z);
     }
-
-    public void SetArriveRadius(float r)
+    public void SetDirection(Vector3 to)
     {
-        m_radius = r;
-       
+        m_target = to;
+
     }
-
-    private Vector3 getNavCoordinate(Vector3 c)
-    {
-        Vector3 result;
-        if (m_agent.RandomPoint(m_target, 0.2f, out result) == false)
-        {
-            //Fail();
-        }
-
-        return result;
-    }
-
+    /* 
+      public void SetStartPosition(Vector3 from)
+     {
+         m_startPos = from;
+     }*/
     public override void Reset()
     {
-        //m_steering.Reset();
-
         MakeReady();
     }
-
     public override void Act(GameObject ob)
     {
-        m_agent.SetDestination(m_target);
-        
-        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.blue, 0.10f);
-        
-        switch (m_agent.pathStatus)
-        {
-            case NavMeshPathStatus.PathComplete:
+        // Vector3 direction = m_target - ob.transform.position ;
+        ob.transform.rotation = Quaternion.Slerp(ob.transform.rotation, Quaternion.LookRotation(m_target), m_rotationSpeed * Time.deltaTime);
 
-              //  Succeed();
-                break;
+        //Debug.Log(  direction.magnitude + " >" + m_arriveRadius);
+        // Vector3 moveVector = m_target.normalized * m_moveSpeed * Time.deltaTime;
+        Vector3 moveVector = ob.transform.forward.normalized * m_moveSpeed * Time.deltaTime;
+        ob.transform.position += moveVector;
 
-            case NavMeshPathStatus.PathInvalid:
-            case NavMeshPathStatus.PathPartial:
-                Fail();
-                break;
 
-        }
-        if (isAtDestination(ob))
-        {
-            Succeed();
-            m_agent.SetDestination(ob.transform.position);
 
-        }
-      
-    }
-
-    private bool isAtDestination(GameObject ob)
-    {
-        //  Debug.Log(Vector3.Distance(m_target, ob.transform.position));
-        if (Vector3.Distance(ob.transform.position, new Vector3 (m_target.x,ob.transform.position.y,m_target.z)) <= m_radius) 
-        { 
-            return true; 
-        } 
-        else 
-        {
-          //  Debug.Log("moveTo distance is " + Vector3.Distance(ob.transform.position, m_target));
-          //  Debug.Log("arrive radius is " + m_radius);
-            return false; 
-        }
-        //if (m_target - m_startPos.sqrMagnitude <= 0.01) { return true; } else { return false; }
     }
 }
 
 
-///now obsolete because of navMesh
+public class Node_Align : aiBehaviorNode
+{
+    private Vector3 m_target;
+    private NavMeshAgent m_agent;
+    private float m_rotationSpeed = 3f;
+    public Node_Align(float rSpeed=3f)
+    {
+        m_rotationSpeed = rSpeed;
+    }
+    public Node_Align(NavMeshAgent agent)
+    {
+        m_agent = agent;
+        SetDirection(m_agent.destination);
+    }
+    public Node_Align(Vector3 v)
+    {
+        SetDirection(v);
+    }
+    public Node_Align(float x, float z)
+    {
+        SetDirection(x, z);
+    }
+    public Node_Align(float x, float y, float z)
+    {
+        SetDirection(x, y, z);
+    }
+   
+    public override void Run()
+    {
+        base.Run();
+    }
+
+    public void SetDirection(float x, float z)
+    {
+        m_target = new Vector3(x, 0, z);
+    }
+    public void SetDirection(float x, float y, float z)
+    {
+        m_target = new Vector3(x, y, z);
+    }
+    public void SetDirection(Vector3 to)
+    {
+        m_target = to;
+
+    }
+    
+    public override void Reset()
+    {
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        // Vector3 direction = m_target - ob.transform.position ;
+        if (m_target == Vector3.zero)
+        {
+            Debug.Break();
+        }
+        else
+        {
+           
+            ob.transform.rotation = Quaternion.Slerp(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation, m_rotationSpeed * Time.fixedDeltaTime);
+           // if (Vector3.Angle(ob.transform.forward, (m_target - ob.transform.position).normalized) < 2)
+            if (Quaternion.Angle(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation)<2)
+            {
+            
+                Succeed();
+                //  Debug.Log("finished Turning");
+            }
+            else
+            {
+              //  Debug.Log(Quaternion.Angle(Quaternion.LookRotation((m_target - ob.transform.position).normalized), ob.transform.rotation));
+            
+                // Debug.Log(Vector3.Angle(ob.transform.rotation.eulerAngles, Quaternion.LookRotation(m_target).eulerAngles));
+            }
+        }
+    }
+}
+
+
+
 /// <summary>
+/// DEPRECIATED
 /// used to avoid obstacle
 /// has a function to get an avoid vector
 /// uses raycasting to find obstacles  

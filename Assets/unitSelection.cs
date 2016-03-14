@@ -33,7 +33,7 @@ public class unitSelection : MonoBehaviour {
 			{
 
 				rend.material.shader = shader2;
-				Debug.Log("selected");
+			//	Debug.Log("selected");
 			}
 			else 
 			{
