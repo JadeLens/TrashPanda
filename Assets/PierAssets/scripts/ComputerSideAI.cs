@@ -34,29 +34,35 @@ public class ComputerSideAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 			selected = new List<aiBehavior>();
-		
+	
 		Vector3 temp  = Vector3.zero;
 		foreach(aiBehavior u in Selection){
-			temp += u.gameObject.transform.position;
+            if(u!=null)
+			    temp += u.gameObject.transform.position;
 
 		}
 		temp /= Selection.Length;
 		float averageDist =0;
 		foreach(aiBehavior u in Selection){
-			averageDist += Vector3.Distance( u.gameObject.transform.position,temp);
+            if (u != null)
+            {
+                averageDist += Vector3.Distance(u.gameObject.transform.position, temp); 
+            }
 
 		}
 		averageDist /= Selection.Length;
 
-		foreach(aiBehavior u in Selection){
-			if(Vector3.Distance( u.gameObject.transform.position,temp) < averageDist +2){
-				selected.Add(u);
-			}
-
+        foreach (aiBehavior u in Selection) {
+            if (u != null) { 
+                if (Vector3.Distance(u.gameObject.transform.position, temp) < averageDist + 2)
+                {
+                    selected.Add(u);
+                }
+            }
 		}
-		if(centroid)
+	/*	if(centroid)
 			centroid.position = temp;
-		
+		*/
         if (sendOrder)
         {
 			//UnitOrders.giveOrders(Selection,UnitOrders.OrderType.move,Location.position);

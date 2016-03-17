@@ -1,31 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+public enum faction { neutral, faction1, faction2 }
 public class baseRtsAI : aiBehavior
 {
+    public faction UnitFaction;
     public Seeker m_seeker;
     public Pier_Unit m_unit;
-  //  public unitStats_ForAiTest stats;
+    //  public unitStats_ForAiTest stats;
     public command MainWeapon;
-	public AItype typeToChase;
-	public AItype typeToAvoid;
+    public AItype typeToChase;
+    public AItype typeToAvoid;
     private aiBehaviorNode CreateRabbit()
     {
-        
 
-      //  movementNode.SetArriveRadius(SeekarriveRadius);
+
+        //  movementNode.SetArriveRadius(SeekarriveRadius);
         return new Node_Repeat
         (
             new Node_PrioritySelector
             (
-                new aiBehaviorNode[] 
+                new aiBehaviorNode[]
                 { 
 			//	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
-                    new Node_Wander_Modular( 
+                    new Node_Wander_Modular(
                         new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit,SeekarriveRadius),
                         anchorRange),
-                 
+
                 }
             )
         );
@@ -35,8 +36,8 @@ public class baseRtsAI : aiBehavior
         return new Node_Repeat
         (
             new Node_PrioritySelector(
-                new aiBehaviorNode[] 
-                { 
+                new aiBehaviorNode[]
+                {
                     new Node_FollowOrders(this),
                     new Node_Delay(0.5f)
 
@@ -45,16 +46,16 @@ public class baseRtsAI : aiBehavior
         );
 
     }
-      private aiBehaviorNode CreateAttackDrone()
+    private aiBehaviorNode CreateAttackDrone()
     {
         return new Node_Repeat//main repeat node
         (
             new Node_PrioritySelector(
 
-                new aiBehaviorNode[] 
-                { 
+                new aiBehaviorNode[]
+                {
                     new Node_FollowOrders(this),
-                  
+
                       pierBehaviorsubTrees.attackSequence(this,0.5f)//this gets reapeated by main repeat node if we have no orders
                    
 
@@ -63,7 +64,7 @@ public class baseRtsAI : aiBehavior
         );
 
     }
- 
+
     void Start()
     {
 
@@ -77,12 +78,12 @@ public class baseRtsAI : aiBehavior
                 break;
             case AItype.wolf:
                 routine = CreateAttackDrone();
-            //    Debug.Log("attack Drone");
+                //    Debug.Log("attack Drone");
 
                 break;
             default:
                 routine = CreateDrone();
-          //      Debug.Log(" Drone");
+                //      Debug.Log(" Drone");
                 break;
 
         }
@@ -91,7 +92,18 @@ public class baseRtsAI : aiBehavior
             routine.Run();
         }
     }
+
+
+    void OnEnable()
+    {
+        RTSUnitManager.Register(this);
+    }
+
+    void OnDisable()
+    {
+        RTSUnitManager.Unregister(this);
+
+    }
+
 }
-
-
 

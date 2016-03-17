@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class controlAI : MonoBehaviour 
 {
-
+    public faction UnitFaction;
     public aiBehavior[] Selection;
     public List<baseRtsAI> mySelection;
     public bool attackModifier = false;
@@ -14,6 +14,26 @@ public class controlAI : MonoBehaviour
         mySelection = new List<baseRtsAI>();
     }
     Vector3 FirstHit;
+
+    public void addUnit(baseRtsAI unit)
+    {
+        unit.gameObject.GetComponentInChildren<Projector>().enabled = true;
+        mySelection.Add(unit);
+    }
+    public void removeUnit(baseRtsAI unit)
+    {
+
+        unit.gameObject.GetComponentInChildren<Projector>().enabled = false;
+       // mySelection.Remove(unit);
+    }
+    public void ClearSelection()
+    {
+        foreach (baseRtsAI unit in mySelection)
+        {
+            removeUnit(unit);
+        }
+        mySelection.Clear();
+    }
     static void drawBox(Vector3 topLeft, Vector3 botomRight,Vector3 topRight, Vector3 bottomLeft)
     {
         Debug.DrawLine(topLeft, topRight, Color.magenta);

@@ -16,7 +16,8 @@ public class pierBehaviorsubTrees : MonoBehaviour {
         return new Node_Sequence(
             new aiBehaviorNode[]
                 {
-                new Node_Find_Closest_Target_BB(unit.blackBoard, "Target", unit.detectionRange,unit.typeToChase),
+               // new Node_Find_Closest_Target_BB(unit.blackBoard, "Target", unit.detectionRange,unit.typeToChase),
+                new Node_Get_Closest_Enemy(unit.blackBoard, "Target", unit.detectionRange,unit.UnitFaction),
                 new Node_Invert(new Node_IsNull(unit.blackBoard, "Target")),
                 new Node_Seek_Modular_BB(unit.blackBoard, "Target",
                     (IMoveToNode)(new Node_MoveTo_With_Astar(unit.gameObject, unit.m_seeker, ref unit.m_unit.del,unit.m_unit,unit.SeekarriveRadius))),

@@ -81,7 +81,8 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
         yield return new WaitForSeconds(delay);
         
         GameObject ob = Node_IsNull.GetBBVar(ai.blackBoard, targetKey) as GameObject;
-        target = ob.GetComponent<IGameUnit>();
+        if(ob!= null)
+            target = ob.GetComponent<IGameUnit>();
         if (target != null)
         {
             target.changeHealth(GetDamage());

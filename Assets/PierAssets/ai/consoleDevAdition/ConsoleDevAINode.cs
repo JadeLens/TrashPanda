@@ -4,29 +4,31 @@ using System.Collections.Generic;
 
 using Pathfinding;
 
-public class Node_Call_Delegate:aiBehaviorNode{
-	public delegate void NodeFunction();
-	protected NodeFunction m_function;
-	public Node_Call_Delegate(NodeFunction func){
+public class Node_Call_Delegate : aiBehaviorNode
+{
+    public delegate void NodeFunction();
+    protected NodeFunction m_function;
+    public Node_Call_Delegate(NodeFunction func)
+    {
 
-		m_function = func;
-	}
-	public override void Run()
-	{
-		
-		base.Run ();
-		m_function();
-	}
-	public override void Reset()
-	{
+        m_function = func;
+    }
+    public override void Run()
+    {
 
-		MakeReady();
-	}
-	public override void Act(GameObject ob)
-	{
-		Succeed();
+        base.Run();
+        m_function();
+    }
+    public override void Reset()
+    {
 
-	}
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        Succeed();
+
+    }
 
 }
 
@@ -43,7 +45,7 @@ public class Node_Wander_Modular : aiBehaviorNode
     /// <summary>
     /// wander in range around a point
     /// </summary>
-    public Node_Wander_Modular(IMoveToNode MoveNode, float range )
+    public Node_Wander_Modular(IMoveToNode MoveNode, float range)
     {
         m_range = range;
 
@@ -117,7 +119,7 @@ public class Node_SetVariable : aiBehaviorNode
     string m_keyToSet;
     Object m_value;
     //put constructor here
-    public Node_SetVariable(Dictionary<string, Object> dict, string key,Object value)
+    public Node_SetVariable(Dictionary<string, Object> dict, string key, Object value)
     {
         m_dict = dict;
         m_keyToSet = key;
@@ -129,7 +131,7 @@ public class Node_SetVariable : aiBehaviorNode
     {
 
         base.Run();
-        if(m_dict == null)
+        if (m_dict == null)
         {
             Debug.Log("npc ai blackBoard not initialized ");
             Debug.Break();
@@ -143,10 +145,10 @@ public class Node_SetVariable : aiBehaviorNode
     }
     public override void Act(GameObject ob)
     {
-          SetBBVar(m_dict, m_keyToSet, m_value);
-          Succeed();
+        SetBBVar(m_dict, m_keyToSet, m_value);
+        Succeed();
     }
-    static public void SetBBVar(Dictionary<string, Object> dict,string key,Object value)
+    static public void SetBBVar(Dictionary<string, Object> dict, string key, Object value)
     {
         if (dict.ContainsKey(key) == false)
         {
@@ -169,7 +171,7 @@ public class Node_IsNull : aiBehaviorNode
 {
     Dictionary<string, Object> m_dict;
     string m_keyToCheck;
-    
+
     /// <summary>
     /// checks if a blackBoard Variable is Null
     /// </summary>
@@ -286,8 +288,8 @@ public class Node_Seek_Modular : aiBehaviorNode
                     Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
                     //add a check to see if we are close enought for detection
                     m_child1.SetDestination(m_child2.GetTarget().transform.position);
-//                       Debug.Log("dest set");
-//				Debug.Log(m_child2.GetTarget().transform.position);
+                    //                       Debug.Log("dest set");
+                    //				Debug.Log(m_child2.GetTarget().transform.position);
                     // m_child1.Run();
                 }
                 else
@@ -325,15 +327,15 @@ public class Node_Seek_Modular : aiBehaviorNode
 public class Node_Seek_Modular_BB : aiBehaviorNode
 {
     private IMoveToNode m_child1;
- 
+
     private string m_key;
     private Dictionary<string, Object> m_dict;
-    public Node_Seek_Modular_BB(Dictionary<string, Object> blackBoard, string bb_key,IMoveToNode MoveNode)
+    public Node_Seek_Modular_BB(Dictionary<string, Object> blackBoard, string bb_key, IMoveToNode MoveNode)
     {
         m_dict = blackBoard;
         m_key = bb_key;
         m_child1 = MoveNode;
-      //  m_child2 = new Node_FindClosestTarget(m_range, _type);
+        //  m_child2 = new Node_FindClosestTarget(m_range, _type);
     }
     public override void Reset()
     {
@@ -343,14 +345,14 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
     public override void Run()
     {
         base.Run();
-  
+
     }
     public override void Act(GameObject ob)
     {
         // Debug.Log("seek node act");
         //we set a new destination every frame
         GameObject target = Node_IsNull.GetBBVar(m_dict, m_key) as GameObject;
-        if (target  != null)
+        if (target != null)
         {
             Vector3 Direction = target.transform.position - ob.transform.position;
             //add a check to see if we are close enought for detection
@@ -364,8 +366,8 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
             Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
             Fail();
         }
-                
-        
+
+
         switch (m_child1.GetState())
         {
             case NodeState.Ready:
@@ -387,6 +389,67 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
     }
 }
 
+public class Node_Get_Closest_Enemy : aiBehaviorNode
+{
+    private float m_radius;
+
+    private GameObject m_target;
+
+    private string m_key;
+    private Dictionary<string, Object> m_dict;
+    private faction m_faction;
+    public Node_Get_Closest_Enemy(Dictionary<string, Object> blackBoard, string bb_key, float radius, faction myFaction)
+    {
+        m_radius = radius;
+        m_faction = myFaction;
+        m_dict = blackBoard;
+        m_key = bb_key;
+
+    }
+    public override void Act(GameObject ob)
+    {
+        foreach (baseRtsAI  u in RTSUnitManager.GetUnitList())
+        {
+
+            if (u.UnitFaction!= m_faction)
+            {
+                float dist = Vector3.Distance(ob.transform.position, u.gameObject.transform.position);
+                if (dist < m_radius)
+                {
+                    if (m_target == null)
+                    {
+                        m_target = u.gameObject;
+
+                    }
+                    else if (dist < Vector3.Distance(ob.transform.position, m_target.transform.position))
+                    {
+
+                        m_target = u.gameObject;
+                    }
+
+                } 
+            }
+
+        }
+
+        if (m_target == null)
+        {
+
+            Fail();
+        }
+        else
+        {
+            Succeed();
+        }
+        Node_SetVariable.SetBBVar(m_dict, m_key, m_target);
+    }
+
+    public override void Reset()
+    {
+        m_target = null;
+        MakeReady();
+    }
+};
 /// <summary>
 /// does a circle cast to find targets
 /// uses a the blackBoard
@@ -399,7 +462,7 @@ public class Node_Find_Closest_Target_BB : aiBehaviorNode
     private AItype m_typeToLookFor;
     private string m_key;
     private Dictionary<string, Object> m_dict;
-    public Node_Find_Closest_Target_BB(Dictionary<string, Object> blackBoard,string bb_key,float radius, AItype type = AItype.none)
+    public Node_Find_Closest_Target_BB(Dictionary<string, Object> blackBoard, string bb_key, float radius, AItype type = AItype.none)
     {
         m_radius = radius;
         m_typeToLookFor = type;
@@ -447,7 +510,7 @@ public class Node_Find_Closest_Target_BB : aiBehaviorNode
         }
         if (m_target == null)
         {
-            
+
             Fail();
         }
         else
@@ -471,7 +534,7 @@ public class Node_Repeat_Until_Fail : aiBehaviorNode
     {
         m_child = Node;
     }
-    
+
     public override void Run()
     {
         base.Run();
@@ -493,12 +556,12 @@ public class Node_Repeat_Until_Fail : aiBehaviorNode
             case NodeState.Failure:
 
                 Succeed();
-               
+
                 break;
             case NodeState.Success:
                 m_child.Reset();
-             
-         
+
+
                 break;
             case NodeState.Ready:
                 m_child.Run();

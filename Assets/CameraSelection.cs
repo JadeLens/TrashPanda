@@ -11,7 +11,7 @@ public class CameraSelection : MonoBehaviour
     public static Rect selection = new Rect(0, 0, 0, 0);
     private Vector3 startClick = -Vector3.one;
     controlAI ctrl;
-    public List<baseRtsAI> allUnits;
+    
     // Update is called once per frame
     void Start()
     {
@@ -67,15 +67,17 @@ public class CameraSelection : MonoBehaviour
                 selection.y += selection.height;
                 selection.height = -selection.height;
             }
-            ctrl.mySelection.Clear();
-            foreach (baseRtsAI unit in allUnits)
+            ctrl.ClearSelection();
+            foreach (baseRtsAI unit in RTSUnitManager.GetUnitList())
             {
 
                 // Debug.Log("test");
                 if (IsWithingBounds(unit.gameObject))
                 {
-                    //   Debug.Log("test2");
-                    ctrl.mySelection.Add(unit);
+                    if (unit.UnitFaction == ctrl.UnitFaction)
+                    {
+                        ctrl.addUnit(unit);
+                    }
                 }
             }
             startClick = -Vector3.one;
