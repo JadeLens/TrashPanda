@@ -15,8 +15,7 @@ public interface IActivatableAbility
 public interface IGameUnit
 {
 
-    void AttackTrue();
-
+     void AttackTrue();
      void AttackFalse();
      bool GetIsAttacking();
      IEnumerator Attack(float range, float delay);
