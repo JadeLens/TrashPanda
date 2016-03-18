@@ -82,10 +82,14 @@ public class ComputerSideAI : MonoBehaviour {
 		if(gettingAPoint == false){
 			PointOfInterest poi = getPointToAttack();
 			if(poi != null){
-				aiBehaviorNode commande = UnitOrders.CapturePoint((baseRtsAI)Selection[0],poi);//new Node_Call_Delegate(poi.toggleMat);
-				Selection[0].Orders.Clear();
-				Selection[0].Orders.Enqueue(commande);
-				OutToCapturePt.Add(Selection[0]);
+
+                if ( Selection[0] != null)
+                {
+                    aiBehaviorNode commande = UnitOrders.CapturePoint((baseRtsAI)Selection[0], poi);//new Node_Call_Delegate(poi.toggleMat);
+                    Selection[0].Orders.Clear();
+                    Selection[0].Orders.Enqueue(commande);
+                    OutToCapturePt.Add(Selection[0]); 
+                }
 				gettingAPoint = true;
 			}
 

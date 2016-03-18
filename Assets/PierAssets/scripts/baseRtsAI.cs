@@ -11,6 +11,8 @@ public class baseRtsAI : aiBehavior
     public command MainWeapon;
     public AItype typeToChase;
     public AItype typeToAvoid;
+
+    public float attackDelay = 1;
     private aiBehaviorNode CreateRabbit()
     {
 
@@ -56,7 +58,7 @@ public class baseRtsAI : aiBehavior
                 {
                     new Node_FollowOrders(this),
 
-                      pierBehaviorsubTrees.attackSequence(this,0.5f)//this gets reapeated by main repeat node if we have no orders
+                      pierBehaviorsubTrees.attackSequence(this)//this gets reapeated by main repeat node if we have no orders
                    
 
                 }
@@ -70,7 +72,7 @@ public class baseRtsAI : aiBehavior
 
         Init();
 
-        Orders = new Queue<aiBehaviorNode>();
+     
         switch (type)
         {
             case AItype.lamb:

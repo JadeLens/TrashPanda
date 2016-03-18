@@ -50,12 +50,18 @@ public class aiBehavior : MonoBehaviour {
     }
 	// sets a routine based on ai type
     //these are mostly test routines
+    void Awake()
+    {
+
+        Orders = new Queue<aiBehaviorNode>();
+
+    }
 	void Start () 
     {
 
         Init();
         agent = this.gameObject.GetComponent<NavMeshAgent>();
-        Orders = new Queue<aiBehaviorNode>();
+      
         switch(type){
         case AItype.lamb:
             routine = CreateLamb();

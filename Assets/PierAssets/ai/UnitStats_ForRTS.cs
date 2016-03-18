@@ -73,7 +73,10 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
         IsDead = true;
 
         //this.gameObject.SetActive(false);
-        Destroy(this.gameObject);
+        if(this.gameObject != null)
+        { 
+            Destroy(this.gameObject);
+        }
     }
 
     public IEnumerator Attack(float range, float delay)

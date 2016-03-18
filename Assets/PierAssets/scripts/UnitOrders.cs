@@ -3,36 +3,62 @@ using System.Collections;
 using System.Collections.Generic;
 public class UnitOrders : MonoBehaviour {
 	delegate void OrderDoneCallBack();
-	public enum OrderType  {move,attackMove,capture};
+	public enum OrderType  {move,attackMove,attackTarget,capture};
+    public static void giveOrder(baseRtsAI unit, OrderType type, Vector3 location)
+    {
+        aiBehaviorNode commande;
+        switch (type)
+        {
+            case OrderType.attackMove:
+
+                commande = attackMove(unit, location);
+                break;
+            default:
+
+                commande = moveComand(unit, location);
+
+                break;
+        }
+        EnqueueComand(unit, commande);
+    }
+    public static void giveOrder(baseRtsAI unit, OrderType type, baseRtsAI target)
+    {
+
+        EnqueueComand(unit, attackTarget(unit, target));
+    }
+    public static void giveOrder(baseRtsAI unit, OrderType type, PointOfInterest poi)
+    {
+
+        EnqueueComand(unit, CapturePoint(unit, poi));
+    }
+
+    public static void EnqueueComand(baseRtsAI unit, aiBehaviorNode cmd)
+    {
+        if (unit != null)
+        {
+            unit.Orders.Clear();
+            unit.Orders.Enqueue(cmd);
+        }
+
+    }
     public static void giveOrders(List<baseRtsAI> Selection, OrderType type, Vector3 location)
     {
 
         foreach (baseRtsAI rabbit in Selection)
         {
             //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
-            aiBehaviorNode commande;
-            switch (type)
-            {
-                case OrderType.move:
+            if(rabbit != null)
+                giveOrder(rabbit, type, location);
+        }
+    }
+    public static void giveOrders(List<baseRtsAI> Selection, OrderType type, baseRtsAI target)
+    {
 
-                    commande = UnitOrders.moveComand(rabbit, location);
-                    break;
-                /*case OrderType.capture:
-
-                    commande = UnitOrders.CapturePoint(rabbit);
-                    break;*/
-                case OrderType.attackMove:
-
-                    commande = UnitOrders.attackMove(rabbit, location);
-                    break;
-                default:
-
-                    commande = UnitOrders.moveComand(rabbit, location);
-
-                    break;
-            }
-            rabbit.Orders.Clear();
-            rabbit.Orders.Enqueue(commande);
+        foreach (baseRtsAI rabbit in Selection)
+        {
+            //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
+            if (rabbit != null)
+                giveOrder(rabbit, type, target);
         }
     }
     public static aiBehaviorNode CapturePoint(baseRtsAI rabbit,PointOfInterest poi)
@@ -66,10 +92,28 @@ public class UnitOrders : MonoBehaviour {
                     new Node_Invert
                     (new Node_Repeat_Until_Fail
                         (
-                           pierBehaviorsubTrees.attackSequence(rabbit,1.0f)
+                           pierBehaviorsubTrees.attackSequence(rabbit)
                         )
                     ),
                     new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,loc)
+
+                }
+            );
+    }
+    public static aiBehaviorNode attackTarget(baseRtsAI rabbit, baseRtsAI target)
+    {
+        return new Node_Selector
+            (new aiBehaviorNode[]
+                {
+                    new Node_SetVariable(rabbit.blackBoard,"Target",target.gameObject),
+                    new Node_Invert
+                    (new Node_Repeat_Until_Fail
+                        (
+                        pierBehaviorsubTrees.killTarget(rabbit,"Target")
+                        
+                        )
+                    ),
+                    new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,target.gameObject.transform.position)
 
                 }
             );

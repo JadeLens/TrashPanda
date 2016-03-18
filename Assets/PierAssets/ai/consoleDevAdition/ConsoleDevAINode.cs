@@ -208,6 +208,7 @@ public class Node_IsNull : aiBehaviorNode
         else
         {
             Fail();
+
         }
     }
     static public Object GetBBVar(Dictionary<string, Object> dict, string key)
@@ -363,7 +364,7 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
         }
         else
         {
-            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
+//            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
             Fail();
         }
 

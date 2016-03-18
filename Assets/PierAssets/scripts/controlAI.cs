@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// script that allows player to give orders to his units
+/// </summary>
 public class controlAI : MonoBehaviour 
 {
     public faction UnitFaction;
-    public aiBehavior[] Selection;
     public List<baseRtsAI> mySelection;
     public bool attackModifier = false;
 	// Use this for initialization
@@ -22,8 +23,8 @@ public class controlAI : MonoBehaviour
     }
     public void removeUnit(baseRtsAI unit)
     {
-
-        unit.gameObject.GetComponentInChildren<Projector>().enabled = false;
+        if(unit != null)
+            unit.gameObject.GetComponentInChildren<Projector>().enabled = false;
        // mySelection.Remove(unit);
     }
     public void ClearSelection()
@@ -59,6 +60,20 @@ public class controlAI : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
+                PointOfInterest poi = hit.collider.gameObject.GetComponent<PointOfInterest>();
+                if (poi != null)
+                {
+                    mySelection[0].Orders.Clear();
+                    mySelection[0].Orders.Enqueue(UnitOrders.CapturePoint(mySelection[0], poi));
+
+                    return;
+                }
+                baseRtsAI target = hit.collider.gameObject.GetComponent<baseRtsAI>();
+                if(target != null)
+                {
+                    UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.attackTarget, target);
+                    return;
+                }
                 UnitOrders.OrderType type;
                 if (attackModifier)
                 {
@@ -78,27 +93,6 @@ public class controlAI : MonoBehaviour
             attackModifier = false;
 
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-		{
-			RaycastHit hit;
-
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, 100.0f))
-			{
-				PointOfInterest poi = hit.collider.gameObject.GetComponent<PointOfInterest>();
-				if(poi)
-				{
-
-					aiBehaviorNode commande = UnitOrders.CapturePoint((baseRtsAI)Selection[0],poi);//new Node_Call_Delegate(poi.toggleMat);
-					Selection[0].Orders.Clear();
-					Selection[0].Orders.Enqueue(commande);
-					//UnitOrders.giveOrders(Selection,UnitOrders.OrderType.capture,hit.point);
-				}
-				
-
-			}
-		}
 	}
 }
 

@@ -100,6 +100,10 @@ public class Pier_Unit : MonoBehaviour {
         }
 
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+
+
+
+
         dir *= speed * Time.deltaTime;
         controller.SimpleMove(dir);
       //  tP = new Vector3(0.0f, path.vectorPath[currentWaypoint].y, path.vectorPath[currentWaypoint].z);
