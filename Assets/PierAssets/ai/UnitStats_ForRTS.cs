@@ -89,7 +89,7 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
         if (target != null)
         {
             target.changeHealth(GetDamage());
-            Debug.Log("testing");
+        
         }
         
 

@@ -23,8 +23,10 @@ public class UnitOrders : MonoBehaviour {
     }
     public static void giveOrder(baseRtsAI unit, OrderType type, baseRtsAI target)
     {
-
-        EnqueueComand(unit, attackTarget(unit, target));
+        if (unit != target)
+        {
+            EnqueueComand(unit, attackTarget(unit, target));
+        }
     }
     public static void giveOrder(baseRtsAI unit, OrderType type, PointOfInterest poi)
     {
@@ -86,7 +88,7 @@ public class UnitOrders : MonoBehaviour {
 
     public static aiBehaviorNode attackMove(baseRtsAI rabbit, Vector3 loc)
     {
-        return new Node_Selector
+        return new Node_PrioritySelector
             (new aiBehaviorNode[]
                 {
                     new Node_Invert
@@ -102,12 +104,13 @@ public class UnitOrders : MonoBehaviour {
     }
     public static aiBehaviorNode attackTarget(baseRtsAI rabbit, baseRtsAI target)
     {
-        return new Node_Selector
+        return new Node_PrioritySelector
             (new aiBehaviorNode[]
-                {
-                    new Node_SetVariable(rabbit.blackBoard,"Target",target.gameObject),
+                {//change to seletor nested ina  sequence
+                    new Node_Invert(new Node_Succeeder(new Node_SetVariable(rabbit.blackBoard,"Target",target.gameObject))),
                     new Node_Invert
-                    (new Node_Repeat_Until_Fail
+                    (
+                        new Node_Repeat_Until_Fail
                         (
                         pierBehaviorsubTrees.killTarget(rabbit,"Target")
                         

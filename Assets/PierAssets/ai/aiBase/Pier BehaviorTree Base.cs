@@ -319,6 +319,7 @@ public class Node_Selector : aiBehaviorNode
     /// /// </summary>
     public Node_Selector() { }
     /// <summary>
+    /// /// DEPRECIATED
     /// runs child all child node in sequence until one succeeds
     /// acts wierdly if only 1 child
     /// </summary>

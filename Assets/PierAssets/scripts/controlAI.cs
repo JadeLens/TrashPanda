@@ -71,6 +71,8 @@ public class controlAI : MonoBehaviour
                 baseRtsAI target = hit.collider.gameObject.GetComponent<baseRtsAI>();
                 if(target != null)
                 {
+                    // Debug.Log("target test");
+
                     UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.attackTarget, target);
                     return;
                 }
