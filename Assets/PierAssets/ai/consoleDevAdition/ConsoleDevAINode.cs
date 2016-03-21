@@ -4,29 +4,31 @@ using System.Collections.Generic;
 
 using Pathfinding;
 
-public class Node_Call_Delegate:aiBehaviorNode{
-	public delegate void NodeFunction();
-	protected NodeFunction m_function;
-	public Node_Call_Delegate(NodeFunction func){
+public class Node_Call_Delegate : aiBehaviorNode
+{
+    public delegate void NodeFunction();
+    protected NodeFunction m_function;
+    public Node_Call_Delegate(NodeFunction func)
+    {
 
-		m_function = func;
-	}
-	public override void Run()
-	{
-		
-		base.Run ();
-		m_function();
-	}
-	public override void Reset()
-	{
+        m_function = func;
+    }
+    public override void Run()
+    {
 
-		MakeReady();
-	}
-	public override void Act(GameObject ob)
-	{
-		Succeed();
+        base.Run();
+        m_function();
+    }
+    public override void Reset()
+    {
 
-	}
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        Succeed();
+
+    }
 
 }
 
@@ -43,7 +45,7 @@ public class Node_Wander_Modular : aiBehaviorNode
     /// <summary>
     /// wander in range around a point
     /// </summary>
-    public Node_Wander_Modular(IMoveToNode MoveNode, float range )
+    public Node_Wander_Modular(IMoveToNode MoveNode, float range)
     {
         m_range = range;
 
@@ -107,6 +109,124 @@ public class Node_Wander_Modular : aiBehaviorNode
     }
 }
 
+
+/// <summary>
+/// set a variable in the black board
+/// </summary>
+public class Node_SetVariable : aiBehaviorNode
+{
+    Dictionary<string, Object> m_dict;
+    string m_keyToSet;
+    Object m_value;
+    //put constructor here
+    public Node_SetVariable(Dictionary<string, Object> dict, string key, Object value)
+    {
+        m_dict = dict;
+        m_keyToSet = key;
+        m_value = value;
+
+
+    }
+    public override void Run()
+    {
+
+        base.Run();
+        if (m_dict == null)
+        {
+            Debug.Log("npc ai blackBoard not initialized ");
+            Debug.Break();
+
+        }
+    }
+    public override void Reset()
+    {
+
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        SetBBVar(m_dict, m_keyToSet, m_value);
+        Succeed();
+    }
+    static public void SetBBVar(Dictionary<string, Object> dict, string key, Object value)
+    {
+        if (dict.ContainsKey(key) == false)
+        {
+
+            dict.Add(key, value);
+        }
+        else
+        {
+            dict[key] = value;
+        }
+
+    }
+
+}
+
+/// <summary>
+/// checks if a blackBoard Variable is Null
+/// </summary>
+public class Node_IsNull : aiBehaviorNode
+{
+    Dictionary<string, Object> m_dict;
+    string m_keyToCheck;
+
+    /// <summary>
+    /// checks if a blackBoard Variable is Null
+    /// </summary>
+    public Node_IsNull(Dictionary<string, Object> dict, string key)
+    {
+        m_dict = dict;
+        m_keyToCheck = key;
+
+    }
+    public override void Run()
+    {
+
+        base.Run();
+        if (m_dict == null)
+        {
+            Debug.Log("npc ai blackBoard not initialized ");
+            Debug.Break();
+
+        }
+    }
+    public override void Reset()
+    {
+
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        Object value = GetBBVar(m_dict, m_keyToCheck);
+
+        if (value == null)
+        {
+            Succeed();
+        }
+        else
+        {
+            Fail();
+
+        }
+    }
+    static public Object GetBBVar(Dictionary<string, Object> dict, string key)
+    {
+        if (dict.ContainsKey(key))
+        {
+            return dict[key];
+
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+}
+
+
 /// <summary>
 /// finds a target of specific type 
 /// then it moves toward it until it is close enought
@@ -169,8 +289,8 @@ public class Node_Seek_Modular : aiBehaviorNode
                     Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
                     //add a check to see if we are close enought for detection
                     m_child1.SetDestination(m_child2.GetTarget().transform.position);
-//                       Debug.Log("dest set");
-//				Debug.Log(m_child2.GetTarget().transform.position);
+                    //                       Debug.Log("dest set");
+                    //				Debug.Log(m_child2.GetTarget().transform.position);
                     // m_child1.Run();
                 }
                 else
@@ -199,93 +319,255 @@ public class Node_Seek_Modular : aiBehaviorNode
 
     }
 }
-public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
+
+
+/// <summary>
+/// finds a target of specific type 
+/// then it moves toward it until it is close enought
+/// </summary>
+public class Node_Seek_Modular_BB : aiBehaviorNode
 {
-    private Vector3 m_target;
-    private float m_radius;
-    private GameObject m_owner;
-    private Seeker m_seeker;
-    private OnPathDelegate m_onPathMade;
-    Pier_Unit m_unit;
-	public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, ref OnPathDelegate onPath, Pier_Unit unit,Vector3 loc = default(Vector3))
+    private IMoveToNode m_child1;
+
+    private string m_key;
+    private Dictionary<string, Object> m_dict;
+    public Node_Seek_Modular_BB(Dictionary<string, Object> blackBoard, string bb_key, IMoveToNode MoveNode)
     {
-        m_owner = owner;
-        m_seeker = seeker;
-        m_onPathMade = onPath;
-        m_unit = unit;
-		SetDestination(loc);
-        ///Debug.Log("created move Node" + onPath);
+        m_dict = blackBoard;
+        m_key = bb_key;
+        m_child1 = MoveNode;
+        //  m_child2 = new Node_FindClosestTarget(m_range, _type);
     }
-   
+    public override void Reset()
+    {
+        m_child1.Reset();
+        MakeReady();
+    }
     public override void Run()
     {
         base.Run();
-//             Debug.Log("started seeker " +m_target);
-             Path p =  m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
-             m_unit.path = p;
-    }
-    public Vector3 GetDestination()
-    {
-        return m_target;
-    }
-    public void SetDestination(float x, float z)
-    {
-        m_target = (new Vector3(x, 0, z));
-    }
 
-    public void SetDestination(float x, float y, float z)
-    {
-        m_target = (new Vector3(x, y, z));
     }
-
-    public void SetDestination(Vector3 v)
+    public override void Act(GameObject ob)
     {
-        m_target = (v);
+        // Debug.Log("seek node act");
+        //we set a new destination every frame
+        GameObject target = Node_IsNull.GetBBVar(m_dict, m_key) as GameObject;
+        if (target != null)
+        {
+            Vector3 Direction = target.transform.position - ob.transform.position;
+            //add a check to see if we are close enought for detection
+            m_child1.SetDestination(target.transform.position);
+            //                       Debug.Log("dest set");
+            //				Debug.Log(m_child2.GetTarget().transform.position);
+            // m_child1.Run();
+        }
+        else
+        {
+//            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
+            Fail();
+        }
+
+
+        switch (m_child1.GetState())
+        {
+            case NodeState.Ready:
+                m_child1.Run();
+                break;
+            case NodeState.Running:
+                m_child1.Act(ob);
+                break;
+            case NodeState.Failure:
+                Fail();
+                break;
+            case NodeState.Success:
+                // Debug.Log("seek worked");
+                Succeed();
+                break;
+
+        }
+
     }
+}
 
-    public void SetArriveRadius(float r)
+public class Node_Get_Closest_Enemy : aiBehaviorNode
+{
+    private float m_radius;
+
+    private GameObject m_target;
+
+    private string m_key;
+    private Dictionary<string, Object> m_dict;
+    private faction m_faction;
+    public Node_Get_Closest_Enemy(Dictionary<string, Object> blackBoard, string bb_key, float radius, faction myFaction)
     {
-        m_radius = r;
+        m_radius = radius;
+        m_faction = myFaction;
+        m_dict = blackBoard;
+        m_key = bb_key;
 
+    }
+    public override void Act(GameObject ob)
+    {
+        foreach (baseRtsAI  u in RTSUnitManager.GetUnitList())
+        {
+
+            if (u.UnitFaction!= m_faction)
+            {
+                float dist = Vector3.Distance(ob.transform.position, u.gameObject.transform.position);
+                if (dist < m_radius)
+                {
+                    if (m_target == null)
+                    {
+                        m_target = u.gameObject;
+
+                    }
+                    else if (dist < Vector3.Distance(ob.transform.position, m_target.transform.position))
+                    {
+
+                        m_target = u.gameObject;
+                    }
+
+                } 
+            }
+
+        }
+
+        if (m_target == null)
+        {
+
+            Fail();
+        }
+        else
+        {
+            Succeed();
+        }
+        Node_SetVariable.SetBBVar(m_dict, m_key, m_target);
     }
 
     public override void Reset()
     {
-        //m_steering.Reset();
-
+        m_target = null;
         MakeReady();
+    }
+};
+/// <summary>
+/// does a circle cast to find targets
+/// uses a the blackBoard
+/// </summary>
+public class Node_Find_Closest_Target_BB : aiBehaviorNode
+{
+    private float m_radius;
+
+    private GameObject m_target;
+    private AItype m_typeToLookFor;
+    private string m_key;
+    private Dictionary<string, Object> m_dict;
+    public Node_Find_Closest_Target_BB(Dictionary<string, Object> blackBoard, string bb_key, float radius, AItype type = AItype.none)
+    {
+        m_radius = radius;
+        m_typeToLookFor = type;
+        m_dict = blackBoard;
+        m_key = bb_key;
+    }
+    public override void Reset()
+    {
+        m_target = null;
+        MakeReady();
+    }
+    public GameObject GetTarget()
+    {
+        if (m_target == null)
+        {
+            Fail();
+        }
+
+        return m_target;
     }
 
     public override void Act(GameObject ob)
     {
-        
+        float closestDist = Mathf.Infinity;
+        Collider[] hitColliders = Physics.OverlapSphere(ob.transform.position, m_radius);
+        int i = 0;
+        aiBehavior temp;
 
-        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.blue, 0.10f);
-
-      
-        if (isAtDestination(ob))
+        while (i < hitColliders.Length)
         {
-            Succeed();
-           // Debug.Log("at destination");
-           // m_agent.SetDestination(ob.transform.position);
 
+            temp = hitColliders[i].gameObject.GetComponent<aiBehavior>();
+            if (temp != null && (temp.type == m_typeToLookFor || m_typeToLookFor == AItype.none))
+            {
+
+                float curDist = Vector3.Distance(temp.gameObject.transform.position, ob.transform.position);
+                if (curDist < closestDist)
+                {
+                    closestDist = curDist;
+                    m_target = temp.gameObject;
+                }
+            }
+
+            i++;
         }
-
-    }
-
-    private bool isAtDestination(GameObject ob)
-    {
-        //  Debug.Log(Vector3.Distance(m_target, ob.transform.position));
-        if (Vector3.Distance(ob.transform.position, new Vector3(m_target.x, ob.transform.position.y, m_target.z)) <= m_radius)
+        if (m_target == null)
         {
-            return true;
+
+            Fail();
         }
         else
         {
-            //  Debug.Log("moveTo distance is " + Vector3.Distance(ob.transform.position, m_target));
-            //  Debug.Log("arrive radius is " + m_radius);
-            return false;
+            Succeed();
         }
-        //if (m_target - m_startPos.sqrMagnitude <= 0.01) { return true; } else { return false; }
+        Node_SetVariable.SetBBVar(m_dict, m_key, m_target);
     }
 }
+
+/// <summary>
+/// repeats a child node until it fails
+/// </summary>
+public class Node_Repeat_Until_Fail : aiBehaviorNode
+{
+    private aiBehaviorNode m_child;
+    /// <summary>
+    /// repeats a child node until it fails
+    /// </summary>
+    public Node_Repeat_Until_Fail(aiBehaviorNode Node)
+    {
+        m_child = Node;
+    }
+
+    public override void Run()
+    {
+        base.Run();
+        m_child.Run();
+    }
+
+    public override void Reset()
+    {
+        m_child.Reset();
+        MakeReady();
+    }
+    public override void Act(GameObject ob)
+    {
+        switch (m_child.GetState())
+        {
+            case NodeState.Running:
+                m_child.Act(ob);
+                break;
+            case NodeState.Failure:
+
+                Succeed();
+
+                break;
+            case NodeState.Success:
+                m_child.Reset();
+
+
+                break;
+            case NodeState.Ready:
+                m_child.Run();
+                break;
+        }
+    }
+}
+

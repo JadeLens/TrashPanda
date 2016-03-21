@@ -86,6 +86,7 @@ public class Node_PuffDown : aiBehaviorNode
 }
 
 /// <summary>
+/// DEPRECIATED use Modular Version
 /// wander in range around a point
 /// </summary>
 public class Node_Wander : aiBehaviorNode
@@ -163,6 +164,7 @@ public class Node_Wander : aiBehaviorNode
 }
 
 /// <summary>
+/// DEPRECIATED use Modular Version
 /// finds a target of specific type 
 /// then it moves toward it until it is close enought
 /// fails if no units in detection range
@@ -256,6 +258,7 @@ public class Node_Seek : aiBehaviorNode
 /// <summary>
 /// finds the closest target and turns toward it 
 /// fails if it cant find a target
+/// for Unity NAvMesh
 /// </summary>
 public class Node_AlignToTarget :aiBehaviorNode
 {
@@ -413,6 +416,7 @@ public class Node_Flee : aiBehaviorNode
         }
     }
 }
+
 /// <summary>
 /// used to make a basic rts like unit that will ]
 /// follow orders from its order qeue 
@@ -478,7 +482,7 @@ public class Node_FollowOrders : aiBehaviorNode
                     //Fail();
                     break;
                 case NodeState.Success:
-                    //Debug.Log("sucess");
+                  //  Debug.Log("sucess");
                     //Succeed();
                     currentOrder = null;
                     unit.Orders.Dequeue();//remove completed order

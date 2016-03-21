@@ -8,9 +8,12 @@ public enum AItype {none, lamb, wolf,drone ,warrior,player};
 //[RequireComponent(typeof(NavMeshAgent))]
 //[RequireComponent(typeof(IGameUnit))]
 public class aiBehavior : MonoBehaviour {
-   /// <summary>
-   /// type of ai  used for search seek and avoid 
-   /// </summary>
+
+   public Dictionary<string, Object> blackBoard;
+
+    /// <summary>
+    /// type of ai  used for search seek and avoid 
+    /// </summary>
     public AItype type;
 
     /// <summary>
@@ -40,18 +43,25 @@ public class aiBehavior : MonoBehaviour {
     public IGameUnit stats;
     protected void Init()
     {
-        agent = this.gameObject.GetComponent<NavMeshAgent>();
+      
         stats = this.gameObject.GetComponent<IGameUnit>();
+        blackBoard = new Dictionary<string, Object>();
         //stats = this.gameObject.get
     }
 	// sets a routine based on ai type
     //these are mostly test routines
+    void Awake()
+    {
+
+        Orders = new Queue<aiBehaviorNode>();
+
+    }
 	void Start () 
     {
 
         Init();
-
-        Orders = new Queue<aiBehaviorNode>();
+        agent = this.gameObject.GetComponent<NavMeshAgent>();
+      
         switch(type){
         case AItype.lamb:
             routine = CreateLamb();
