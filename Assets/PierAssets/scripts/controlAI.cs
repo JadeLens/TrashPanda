@@ -4,10 +4,9 @@ using System.Collections.Generic;
 /// <summary>
 /// script that allows player to give orders to his units
 /// </summary>
-public class controlAI : MonoBehaviour 
+public class controlAI : basePlayer
 {
-    public faction UnitFaction;
-    public List<baseRtsAI> mySelection;
+ 
     public bool attackModifier = false;
 	// Use this for initialization
 	void Start () {

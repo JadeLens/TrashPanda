@@ -7,17 +7,29 @@ using Pathfinding;
 public class Node_Call_Delegate : aiBehaviorNode
 {
     public delegate void NodeFunction();
+    public delegate void NodeFunction2(baseRtsAI unit);
     protected NodeFunction m_function;
+    protected NodeFunction2 m_function2;
+    protected baseRtsAI m_unit;
     public Node_Call_Delegate(NodeFunction func)
     {
 
         m_function = func;
     }
+    public Node_Call_Delegate(NodeFunction2 func,baseRtsAI unit)
+    {
+        m_unit = unit;
+        m_function2 = func;
+    }
     public override void Run()
     {
 
         base.Run();
-        m_function();
+        if(m_function != null)
+            m_function();
+        if (m_function2 != null)
+            m_function2(m_unit);
+
     }
     public override void Reset()
     {

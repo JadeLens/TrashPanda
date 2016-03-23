@@ -1,65 +1,96 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class ComputerSideAI : MonoBehaviour {
-    public aiBehavior[] Selection;
-	public List<aiBehavior> selected;
-	public faction myFaction;
-	public List<PointOfInterest> points;
+public class ComputerSideAI : basePlayer
+{
+    // public aiBehavior[] Selection;
+    //public List<aiBehavior> selected;
+
+
+    Dictionary<CtrlGroupsName, List<baseRtsAI>> controlGroups;
+    //public faction UnitFaction;
+    public List<PointOfInterest> points;
 	public bool gettingAPoint = false;
     public bool sendOrder = false;
 	public Transform Location;
 	public Transform centroid;
 	public 	List<aiBehavior> OutToCapturePt;
+    public enum CtrlGroupsName {all,capture,offence, defence };
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 		OutToCapturePt = new List<aiBehavior>();
-	}
+        controlGroups = new Dictionary<CtrlGroupsName, List<baseRtsAI>>();
 
-	PointOfInterest getPointToAttack(){
-		foreach(PointOfInterest poi in points){
-			/*if(poi.owningFaction != myFaction){
+        controlGroups[CtrlGroupsName.all] = new List<baseRtsAI>();
+        controlGroups[CtrlGroupsName.capture] = new List<baseRtsAI>();
+        controlGroups[CtrlGroupsName.offence] = new List<baseRtsAI>();
+        foreach (baseRtsAI unit in RTSUnitManager.GetUnitList())
+        {
+                if (unit.UnitFaction == UnitFaction)
+                {
+                    controlGroups[CtrlGroupsName.all].Add(unit);
+                }  
+        }
+        //decide ratio of capturer to offence 
+        //add defender later
+        int total = controlGroups[CtrlGroupsName.all].Count;
+        int numCapturer  = Mathf.CeilToInt( total / 6);
+        int numOffence = total  - numCapturer;
+        for(int i = 0; i < total; i++)
+        {
+            if (i <= numCapturer)
+            {
+                controlGroups[CtrlGroupsName.capture].Add(controlGroups[CtrlGroupsName.all][i]);
+            }
+            else
+            {
+                controlGroups[CtrlGroupsName.offence].Add(controlGroups[CtrlGroupsName.all][i]);
+            }
+        }
+    }
 
-
-				return poi;
-			}*/
-			if(poi.curentmat != 2){
-
-
+	PointOfInterest getPointToAttack()
+    {
+		foreach(PointOfInterest poi in points)
+        {
+			if(poi.owningFaction != UnitFaction)
+            {
 				return poi;
 			}
 		}
 		return null;
 	}
 	// Update is called once per frame
-	void Update () {
-			selected = new List<aiBehavior>();
+	void Update ()
+    {
+		//	selected = new List<aiBehavior>();
 	
-		Vector3 temp  = Vector3.zero;
-		foreach(aiBehavior u in Selection){
-            if(u!=null)
-			    temp += u.gameObject.transform.position;
+		//Vector3 temp  = Vector3.zero;
+		//foreach(aiBehavior u in Selection){
+  //          if(u!=null)
+		//	    temp += u.gameObject.transform.position;
 
-		}
-		temp /= Selection.Length;
-		float averageDist =0;
-		foreach(aiBehavior u in Selection){
-            if (u != null)
-            {
-                averageDist += Vector3.Distance(u.gameObject.transform.position, temp); 
-            }
+		//}
+		//temp /= Selection.Length;
+		//float averageDist =0;
+		//foreach(aiBehavior u in Selection){
+  //          if (u != null)
+  //          {
+  //              averageDist += Vector3.Distance(u.gameObject.transform.position, temp); 
+  //          }
 
-		}
-		averageDist /= Selection.Length;
+		//}
+		//averageDist /= Selection.Length;
 
-        foreach (aiBehavior u in Selection) {
-            if (u != null) { 
-                if (Vector3.Distance(u.gameObject.transform.position, temp) < averageDist + 2)
-                {
-                    selected.Add(u);
-                }
-            }
-		}
+  //      foreach (aiBehavior u in Selection) {
+  //          if (u != null) { 
+  //              if (Vector3.Distance(u.gameObject.transform.position, temp) < averageDist + 2)
+  //              {
+  //                  selected.Add(u);
+  //              }
+  //          }
+		//}
 	/*	if(centroid)
 			centroid.position = temp;
 		*/
@@ -67,7 +98,7 @@ public class ComputerSideAI : MonoBehaviour {
         {
 			//UnitOrders.giveOrders(Selection,UnitOrders.OrderType.move,Location.position);
 
-			foreach (baseRtsAI rabbit in selected)
+			foreach (baseRtsAI rabbit in controlGroups[CtrlGroupsName.offence])
 			{				
 
 				aiBehaviorNode commande = UnitOrders.moveComand(rabbit,Location.position);
@@ -82,13 +113,13 @@ public class ComputerSideAI : MonoBehaviour {
 		if(gettingAPoint == false){
 			PointOfInterest poi = getPointToAttack();
 			if(poi != null){
-
-                if ( Selection[0] != null)
+                int index = getAvailableUnit(controlGroups[CtrlGroupsName.capture]);
+                if (controlGroups[CtrlGroupsName.capture][index] != null)
                 {
-                    aiBehaviorNode commande = UnitOrders.CapturePoint((baseRtsAI)Selection[0], poi);//new Node_Call_Delegate(poi.toggleMat);
-                    Selection[0].Orders.Clear();
-                    Selection[0].Orders.Enqueue(commande);
-                    OutToCapturePt.Add(Selection[0]); 
+                    aiBehaviorNode commande = UnitOrders.CapturePoint(controlGroups[CtrlGroupsName.capture][index], poi);//new Node_Call_Delegate(poi.toggleMat);
+                    controlGroups[CtrlGroupsName.capture][index].Orders.Clear();
+                    controlGroups[CtrlGroupsName.capture][index].Orders.Enqueue(commande);
+                    OutToCapturePt.Add(controlGroups[CtrlGroupsName.capture][index]); 
                 }
 				gettingAPoint = true;
 			}
@@ -105,4 +136,17 @@ public class ComputerSideAI : MonoBehaviour {
 			}
 		}
 	}
+    int getAvailableUnit(List<baseRtsAI> listOfUnits)
+    {
+        for(int i = 0; i < listOfUnits.Count; i++)
+        {
+            if (listOfUnits[i].Orders.Count == 0)
+            {
+
+                return i;
+            }
+
+        }
+        return -1;
+    }
 }

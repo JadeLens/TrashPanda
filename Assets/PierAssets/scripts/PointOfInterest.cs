@@ -11,26 +11,48 @@ public class PointOfInterest : MonoBehaviour {
 	public void ChangeFaction(faction newFaction){
 		owningFaction  = newFaction;
 	}
+    public void CapturePT(baseRtsAI unit)
+    {
+        ChangeFaction(unit.UnitFaction);
+        toggleMat();
 
-public	void toggleMat(){
-		Debug.Log(this.gameObject.name);
-		if(curentmat ==1){
+    }
+
+    public	void toggleMat()
+    {
+	//	Debug.Log(this.gameObject.name);
+		if(owningFaction == faction.faction1)
+        {
 			curentmat =2;
 			render.material = mat2;
 		}
-		else{
+		else
+        {
 			curentmat =1;
 			render.material = mat1;
-
 		}
 	}
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		render  = this.GetComponent<Renderer>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+
 	}
+
+
+    void OnEnable()
+    {
+        HouseManager.Register(this);
+    }
+
+    void OnDisable()
+    {
+        HouseManager.Unregister(this);
+
+    }
 }
