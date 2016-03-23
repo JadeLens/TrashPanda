@@ -1,0 +1,185 @@
+fileFormatVersion: 2
+guid: 6d1fe34cfe5019645b613d92761a4897
+timeCreated: 1458745027
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: balcony_balcony_plaster_light_brown
+    100002: barrels_barrels_metal_grey
+    100004: barrels_barrels_wood_brown
+    100006: boards_boards_wood_brown
+    100008: boards_support_boards_support_wood_brown
+    100010: chimneys_chimneys_metal_dark_brown
+    100012: chimneys_chimneys_plaster_light_brown
+    100014: cover_window_cover_window_plaster_sand
+    100016: //RootNode
+    100018: doors_doors_wood_brown
+    100020: foundation_foundation_foundation_brown_brick
+    100022: gutters_gutters_metal_grey
+    100024: parapets_parapets_foundation_brown_brick
+    100026: roof_roof_metal_dark_brown
+    100028: roof_roof_metal_dark_brown_MeshPart0
+    100030: roof_roof_metal_dark_brown_MeshPart1
+    100032: roof_roof_metal_dark_brown_MeshPart2
+    100034: roof_support_roof_support_wood_balls_brown
+    100036: terrace_terrace_plate_grey
+    100038: walls_walls_plaster_light_brown
+    100040: window_roof_window_roof_glass_window
+    100042: window_roof_window_roof_metal_dark_brown
+    100044: windows_windows_glass_window
+    100046: windows_windows_wood_brown
+    400000: balcony_balcony_plaster_light_brown
+    400002: barrels_barrels_metal_grey
+    400004: barrels_barrels_wood_brown
+    400006: boards_boards_wood_brown
+    400008: boards_support_boards_support_wood_brown
+    400010: chimneys_chimneys_metal_dark_brown
+    400012: chimneys_chimneys_plaster_light_brown
+    400014: cover_window_cover_window_plaster_sand
+    400016: //RootNode
+    400018: doors_doors_wood_brown
+    400020: foundation_foundation_foundation_brown_brick
+    400022: gutters_gutters_metal_grey
+    400024: parapets_parapets_foundation_brown_brick
+    400026: roof_roof_metal_dark_brown
+    400028: roof_roof_metal_dark_brown_MeshPart0
+    400030: roof_roof_metal_dark_brown_MeshPart1
+    400032: roof_roof_metal_dark_brown_MeshPart2
+    400034: roof_support_roof_support_wood_balls_brown
+    400036: terrace_terrace_plate_grey
+    400038: walls_walls_plaster_light_brown
+    400040: window_roof_window_roof_glass_window
+    400042: window_roof_window_roof_metal_dark_brown
+    400044: windows_windows_glass_window
+    400046: windows_windows_wood_brown
+    2300000: balcony_balcony_plaster_light_brown
+    2300002: barrels_barrels_metal_grey
+    2300004: barrels_barrels_wood_brown
+    2300006: boards_boards_wood_brown
+    2300008: boards_support_boards_support_wood_brown
+    2300010: chimneys_chimneys_metal_dark_brown
+    2300012: chimneys_chimneys_plaster_light_brown
+    2300014: cover_window_cover_window_plaster_sand
+    2300016: doors_doors_wood_brown
+    2300018: foundation_foundation_foundation_brown_brick
+    2300020: gutters_gutters_metal_grey
+    2300022: parapets_parapets_foundation_brown_brick
+    2300024: roof_roof_metal_dark_brown_MeshPart0
+    2300026: roof_roof_metal_dark_brown_MeshPart1
+    2300028: roof_roof_metal_dark_brown_MeshPart2
+    2300030: roof_support_roof_support_wood_balls_brown
+    2300032: terrace_terrace_plate_grey
+    2300034: walls_walls_plaster_light_brown
+    2300036: window_roof_window_roof_glass_window
+    2300038: window_roof_window_roof_metal_dark_brown
+    2300040: windows_windows_glass_window
+    2300042: windows_windows_wood_brown
+    3300000: balcony_balcony_plaster_light_brown
+    3300002: barrels_barrels_metal_grey
+    3300004: barrels_barrels_wood_brown
+    3300006: boards_boards_wood_brown
+    3300008: boards_support_boards_support_wood_brown
+    3300010: chimneys_chimneys_metal_dark_brown
+    3300012: chimneys_chimneys_plaster_light_brown
+    3300014: cover_window_cover_window_plaster_sand
+    3300016: doors_doors_wood_brown
+    3300018: foundation_foundation_foundation_brown_brick
+    3300020: gutters_gutters_metal_grey
+    3300022: parapets_parapets_foundation_brown_brick
+    3300024: roof_roof_metal_dark_brown_MeshPart0
+    3300026: roof_roof_metal_dark_brown_MeshPart1
+    3300028: roof_roof_metal_dark_brown_MeshPart2
+    3300030: roof_support_roof_support_wood_balls_brown
+    3300032: terrace_terrace_plate_grey
+    3300034: walls_walls_plaster_light_brown
+    3300036: window_roof_window_roof_glass_window
+    3300038: window_roof_window_roof_metal_dark_brown
+    3300040: windows_windows_glass_window
+    3300042: windows_windows_wood_brown
+    4300000: balcony_balcony_plaster_light_brown
+    4300002: barrels_barrels_metal_grey
+    4300004: barrels_barrels_wood_brown
+    4300006: boards_boards_wood_brown
+    4300008: boards_support_boards_support_wood_brown
+    4300010: chimneys_chimneys_metal_dark_brown
+    4300012: chimneys_chimneys_plaster_light_brown
+    4300014: cover_window_cover_window_plaster_sand
+    4300016: doors_doors_wood_brown
+    4300018: foundation_foundation_foundation_brown_brick
+    4300020: gutters_gutters_metal_grey
+    4300022: parapets_parapets_foundation_brown_brick
+    4300024: roof_roof_metal_dark_brown_MeshPart0
+    4300026: roof_roof_metal_dark_brown_MeshPart1
+    4300028: roof_roof_metal_dark_brown_MeshPart2
+    4300030: roof_support_roof_support_wood_balls_brown
+    4300032: terrace_terrace_plate_grey
+    4300034: walls_walls_plaster_light_brown
+    4300036: window_roof_window_roof_glass_window
+    4300038: window_roof_window_roof_metal_dark_brown
+    4300040: windows_windows_glass_window
+    4300042: windows_windows_wood_brown
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
