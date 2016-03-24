@@ -18,7 +18,7 @@ public class FogOfWarSight : MonoBehaviour
     {
 	    foreach(Collider col in Physics.OverlapSphere(transform.position, radius, layerMask))
         {  
-            if (col.gameObject.GetComponent<Renderer>() != null)
+            if (col.gameObject.GetComponentInChildren<Renderer>() != null)
             {
                 col.SendMessage("Observed", SendMessageOptions.DontRequireReceiver);
                 //col.gameObject.GetComponent<Renderer>().enabled = true;

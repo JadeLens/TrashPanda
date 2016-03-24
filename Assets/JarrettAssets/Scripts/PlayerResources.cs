@@ -4,7 +4,9 @@ using System.Collections;
 //use this script on an empty object to hold the players resources
 public class PlayerResources : MonoBehaviour
 {
+    [SerializeField]
     private int Water = 0;
+    [SerializeField]
     private int Trash = 0;
 
     public int getTrash()

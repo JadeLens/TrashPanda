@@ -5,12 +5,14 @@ using System.Collections;
 public class FogOfWarVisibility : MonoBehaviour
 {
     private bool observed = false;
-
-	// Use this for initialization
-	void Start ()
+    private SkinnedMeshRenderer myRenderer;
+    private Canvas myCanvas;
+    // Use this for initialization
+    void Start ()
     {
-	
-	}
+        myRenderer = this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+        myCanvas = this.gameObject.GetComponentInChildren<Canvas>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -18,14 +20,14 @@ public class FogOfWarVisibility : MonoBehaviour
 	    if (observed)
         {
             //this.gameObject.GetComponent<Renderer>().enabled = true;
-            this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-            this.gameObject.GetComponentInChildren<Canvas>().enabled = true;
+            myRenderer.enabled = true;
+            myCanvas.enabled = true;
         }
         else
         {
             //this.gameObject.GetComponent<Renderer>().enabled = false;
-            this.gameObject.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-            this.gameObject.GetComponentInChildren<Canvas>().enabled = false;
+            myRenderer.enabled = false;
+            myCanvas.enabled = false;
         }
 
         observed = false;
@@ -34,5 +36,6 @@ public class FogOfWarVisibility : MonoBehaviour
     void Observed()
     {
         observed = true;
+   //    Debug.Log("yo");
     }
 }

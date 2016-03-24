@@ -97,13 +97,10 @@ public class ComputerSideAI : basePlayer
         if (sendOrder)
         {
 			//UnitOrders.giveOrders(Selection,UnitOrders.OrderType.move,Location.position);
-
 			foreach (baseRtsAI rabbit in controlGroups[CtrlGroupsName.offence])
 			{				
 
 				aiBehaviorNode commande = UnitOrders.moveComand(rabbit,Location.position);
-					
-
 				rabbit.Orders.Clear();
 				rabbit.Orders.Enqueue(commande);
 			}
