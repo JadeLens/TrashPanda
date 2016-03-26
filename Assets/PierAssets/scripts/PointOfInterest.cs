@@ -46,20 +46,21 @@ public class PointOfInterest : MonoBehaviour
 		owningFaction  = newFaction;
 
         CapturedTime = Time.time;
-        for (int i = 0; i < players.Length; i++)
-        {
 
-           if(players[i].UnitFaction == owningFaction)
-            {
-                currentPlayerIndex = i;
-                break;
-            }
-        }
     }
     public void CapturePT(baseRtsAI unit)
     {
         ChangeFaction(unit.UnitFaction);
         toggleMat();
+        for (int i = 0; i < players.Length; i++)
+        {
+
+            if (players[i].UnitFaction == owningFaction)
+            {
+                currentPlayerIndex = i;
+                break;
+            }
+        }
 
     }
 
@@ -84,6 +85,7 @@ public class PointOfInterest : MonoBehaviour
     {
         if (currentPlayerIndex != -1)
         {
+
             TimeOwned = Time.time - CapturedTime;
             if (TimeOwned >= IncRate + LastInc)
             {
