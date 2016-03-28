@@ -18,7 +18,7 @@ public class UnitBuilder : MonoBehaviour {
     public void SpawnRabbit()
     {
 
-        if (owner.myResources.getTrash()> rabbitTrashCost && owner.myResources.getWater() > rabbitWaterCost) {
+        if (owner.myResources.getTrash()>= rabbitTrashCost && owner.myResources.getWater() >= rabbitWaterCost) {
             if(!Mute)
                 AudioManager.PlaySoundClip(spawnSound);
             owner.myResources.IncrementTrash(-rabbitTrashCost);

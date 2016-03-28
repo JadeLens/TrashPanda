@@ -10,10 +10,7 @@ public class LoadScene : MonoBehaviour {
     public void Exit()
     {
         Application.Quit();
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
+       
     }
 	
 }

@@ -9,7 +9,7 @@ public class ComputerSideAI : basePlayer
 
     Dictionary<CtrlGroupsName, List<baseRtsAI>> controlGroups;
     //public faction UnitFaction;
-    public List<PointOfInterest> points;
+   // public List<PointOfInterest> points;
 	public bool gettingAPoint = false;
     public bool sendOrder = false;
 	public Transform Location;
@@ -52,7 +52,7 @@ public class ComputerSideAI : basePlayer
 
 	PointOfInterest getPointToAttack()
     {
-		foreach(PointOfInterest poi in points)
+		foreach(PointOfInterest poi in HouseManager.GetUnitList())
         {
 			if(poi.owningFaction != UnitFaction)
             {
