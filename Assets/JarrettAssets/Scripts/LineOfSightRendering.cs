@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Currently Unused. Use Fog Of War Scripts instead.
 public class LineOfSightRendering : MonoBehaviour
 {
     public string viewerTag = "Player";
