@@ -32,6 +32,7 @@ public class PointOfInterest : MonoBehaviour
     public int incWater = 1; //decrementation rate
 
     ///////////////////////////////////////////////
+    public AudioClip playerCapture;
 
     // Use this for initialization
     void Start()
@@ -46,7 +47,7 @@ public class PointOfInterest : MonoBehaviour
 		owningFaction  = newFaction;
 
         CapturedTime = Time.time;
-
+        LastInc = Time.time ;
     }
     public void CapturePT(baseRtsAI unit)
     {
@@ -71,7 +72,9 @@ public class PointOfInterest : MonoBehaviour
         {
 			curentmat =2;
 			render.material = mat2;
-		}
+            if(playerCapture)
+                AudioManager.PlaySoundClip(playerCapture);
+        }
 		else
         {
 			curentmat =1;

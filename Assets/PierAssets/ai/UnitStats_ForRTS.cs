@@ -19,6 +19,7 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
     private bool isAttacking = false;
     // Use this for initialization
 
+    public AudioClip hurtSound;
     public GameObject GetGameObject()
     {
         return this.gameObject;
@@ -59,6 +60,8 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
     public bool changeHealth(float damage)
     {
         currentHealth += damage;
+        if(hurtSound)
+            AudioManager.PlaySoundClip(hurtSound);
         //Debug.Log(unitname + " current health remaining : " + currentHealth);
         if (currentHealth <= 0)
         {
