@@ -176,9 +176,11 @@
     <Compile Include="Assets\PierAssets\scripts\PointOfInterest.cs" />
     <Compile Include="Assets\PierAssets\scripts\UnitBuilder.cs" />
     <Compile Include="Assets\PierAssets\scripts\UnitOrders.cs" />
+    <Compile Include="Assets\PierAssets\scripts\basePlayer.cs" />
     <Compile Include="Assets\PierAssets\scripts\baseRtsAI.cs" />
     <Compile Include="Assets\PierAssets\scripts\controlAI.cs" />
     <Compile Include="Assets\PierAssets\scripts\path.cs" />
+    <Compile Include="Assets\PierAssets\scripts\static\HouseManager.cs" />
     <Compile Include="Assets\PierAssets\scripts\static\RTSUnitManager.cs" />
     <Compile Include="Assets\ResidentialLite\Scripts\Houses.cs" />
     <Compile Include="Assets\ResidentialLite\Scripts\Informer.cs" />
@@ -225,6 +227,10 @@
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
+    <Compile Include="Assets\SoundsSteve\AudioManager.cs" />
+    <Compile Include="Assets\SoundsSteve\LoadScene.cs" />
+    <Compile Include="Assets\SoundsSteve\resourceUI.cs" />
+    <Compile Include="Assets\UpdateHealth.cs" />
     <Compile Include="Assets\myScripts\node\Grid.cs" />
     <Compile Include="Assets\myScripts\node\Heap.cs" />
     <Compile Include="Assets\myScripts\node\Node.cs" />
