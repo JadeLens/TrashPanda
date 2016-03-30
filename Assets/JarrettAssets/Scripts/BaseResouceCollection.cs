@@ -26,6 +26,8 @@ public class BaseResouceCollection : MonoBehaviour
     public int incTrash = 0; //decrementation rate
     public int incWater = 0; //decrementation rate
 
+    private MeshRenderer myRenderer;
+
     void OnTriggerEnter(Collider other)
     {
         // CollectResource Resource = (CollectResource)other.gameObject.GetComponent(typeof(CollectResource));
@@ -41,12 +43,17 @@ public class BaseResouceCollection : MonoBehaviour
 
     void Start ()
     {
+        myRenderer = this.gameObject.GetComponentInChildren<MeshRenderer>();
         //InvokeRepeating("getIncWater", 0, 1.0);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if( Owner.tag == "Player")
+        {
+            Debug.Log("PlayerOwned");
+        }
         if (!bInBase && !bControlled)
         {
             enterTime = Time.time;
@@ -70,6 +77,7 @@ public class BaseResouceCollection : MonoBehaviour
                 Owner.IncrementTrash(getIncTrash());
                 Owner.IncrementWater(getIncWater());
             }
+            this.gameObject.GetComponentInChildren<Renderer>().enabled = true;
         }
     }
 

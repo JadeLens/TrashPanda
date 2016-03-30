@@ -31,6 +31,11 @@ public class PointOfInterest : MonoBehaviour
     public int incTrash = 2; //decrementation rate
     public int incWater = 1; //decrementation rate
 
+    //Fog Of War
+    public MeshRenderer LightRenderer;
+    public float sightRadius = 4.0f;
+    public LayerMask layerMask = -1;
+
     ///////////////////////////////////////////////
     public AudioClip playerCapture;
 
@@ -38,8 +43,8 @@ public class PointOfInterest : MonoBehaviour
     void Start()
     {
         players = GameObject.FindObjectsOfType<basePlayer>();
+        //LightRenderer = this.gameObject.GetComponentInChildren<MeshRenderer>();
 
-     
         render = this.GetComponent<Renderer>();
     }
     public void ChangeFaction(faction newFaction){
@@ -96,6 +101,24 @@ public class PointOfInterest : MonoBehaviour
                 players[currentPlayerIndex].myResources.IncrementTrash(incTrash);
                 players[currentPlayerIndex].myResources.IncrementWater(incWater);
             }
+            if (currentPlayerIndex == 1 && LightRenderer != null) //real player owns the object
+            {
+                LightRenderer.enabled = true;
+
+                foreach (Collider col in Physics.OverlapSphere(transform.position, sightRadius, layerMask))
+                {
+                    if (col.gameObject.GetComponentInChildren<Renderer>() != null)
+                    {
+                        col.SendMessage("Observed", SendMessageOptions.DontRequireReceiver);
+                        //col.gameObject.GetComponent<Renderer>().enabled = true;
+                    }
+                }
+            }
+            else if(LightRenderer != null)
+            {
+                LightRenderer.enabled = false;
+            }
+            
         }
     }
 
