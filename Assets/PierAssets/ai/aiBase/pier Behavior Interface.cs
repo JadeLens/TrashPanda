@@ -22,8 +22,9 @@ public interface IGameUnit
      IEnumerator AttackSphere(float range, float delay);
      float getCurrentHealth();
      bool changeHealth(float damage);
-    
+ 
      bool CheckIfAlive();
      float GetDamage();
-     GameObject GetGameObject();
+    GameObject GetGameObject();
+
 }

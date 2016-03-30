@@ -25,11 +25,11 @@ public class ComputerSideAI : basePlayer
         controlGroups[CtrlGroupsName.all] = new List<baseRtsAI>();
         controlGroups[CtrlGroupsName.capture] = new List<baseRtsAI>();
         controlGroups[CtrlGroupsName.offence] = new List<baseRtsAI>();
-        foreach (baseRtsAI unit in RTSUnitManager.GetUnitList())
+        foreach (IRtsUnit unit in RTSUnitManager.GetUnitList())
         {
-                if (unit.UnitFaction == UnitFaction)
+                if (unit.getFaction() == UnitFaction && unit.getAIcomponent()!= null)
                 {
-                    controlGroups[CtrlGroupsName.all].Add(unit);
+                    controlGroups[CtrlGroupsName.all].Add(unit.getAIcomponent());
                 }  
         }
         //decide ratio of capturer to offence 

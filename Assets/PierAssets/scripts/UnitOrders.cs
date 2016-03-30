@@ -29,9 +29,9 @@ public class UnitOrders : MonoBehaviour
         EnqueueComand(unit, commande);
     }
 
-    public static void giveOrder(baseRtsAI unit, OrderType type, baseRtsAI target)
+    public static void giveOrder(baseRtsAI unit, OrderType type, IRtsUnit target)
     {
-        if (unit != target)
+        if (unit.stats != target)
         {
             EnqueueComand(unit, attackTarget(unit, target));
         }
@@ -63,7 +63,7 @@ public class UnitOrders : MonoBehaviour
         }
     }
 
-    public static void giveOrders(List<baseRtsAI> Selection, OrderType type, baseRtsAI target)
+    public static void giveOrders(List<baseRtsAI> Selection, OrderType type, IRtsUnit target)
     {
         foreach (baseRtsAI rabbit in Selection)
         {
@@ -112,12 +112,12 @@ public class UnitOrders : MonoBehaviour
         );
     }
 
-    public static aiBehaviorNode attackTarget(baseRtsAI rabbit, baseRtsAI target)
+    public static aiBehaviorNode attackTarget(baseRtsAI rabbit, IRtsUnit target)
     {
         return new Node_PrioritySelector
             (new aiBehaviorNode[]
             {//change to seletor nested ina  sequence
-                new Node_Invert(new Node_Succeeder(new Node_SetVariable(rabbit.blackBoard,"Target",target.gameObject))),
+                new Node_Invert(new Node_Succeeder(new Node_SetVariable(rabbit.blackBoard,"Target",target.GetGameObject()))),
                 new Node_Invert
                 (
                     new Node_Repeat_Until_Fail
@@ -126,7 +126,7 @@ public class UnitOrders : MonoBehaviour
                         
                     )
                 ),
-                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,target.gameObject.transform.position)
+                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,target.GetGameObject().transform.position)
 
             }
         );

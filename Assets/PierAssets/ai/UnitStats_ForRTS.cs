@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
+public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
 {
     baseRtsAI ai;
     IGameUnit target;
@@ -18,7 +18,19 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
     protected float maxHealth = 100;
     private bool isAttacking = false;
     // Use this for initialization
+    public faction myFaction;
 
+    public faction getFaction()
+    {
+      
+      
+            return myFaction;
+    }
+    public baseRtsAI getAIcomponent()
+    {
+
+        return ai;
+    }
     public AudioClip hurtSound;
     public GameObject GetGameObject()
     {
@@ -109,6 +121,8 @@ public class UnitStats_ForRTS : MonoBehaviour,IGameUnit
     {
         ai = gameObject.GetComponent<baseRtsAI>();
         currentHealth = maxHealth;
+        if (ai != null)
+            myFaction =  ai.UnitFaction;
     }
 	
 	// Update is called once per frame

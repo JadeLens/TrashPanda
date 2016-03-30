@@ -67,10 +67,11 @@ public class controlAI : basePlayer
 
                     return;
                 }
-                baseRtsAI target = hit.collider.gameObject.GetComponent<baseRtsAI>();
+                IRtsUnit target = hit.collider.gameObject.GetComponent<IRtsUnit>();
+                Debug.Log(hit.collider.gameObject.name);
                 if(target != null)
                 {
-                    // Debug.Log("target test");
+                     Debug.Log("target test");
 
                     UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.attackTarget, target);
                     return;

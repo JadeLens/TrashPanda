@@ -68,15 +68,14 @@ public class CameraSelection : MonoBehaviour
                 selection.height = -selection.height;
             }
             ctrl.ClearSelection();
-            foreach (baseRtsAI unit in RTSUnitManager.GetUnitList())
+            foreach (IRtsUnit unit in RTSUnitManager.GetUnitList())
             {
-
                 // Debug.Log("test");
-                if (IsWithingBounds(unit.gameObject))
+                if (IsWithingBounds(unit.GetGameObject()))
                 {
-                    if (unit.UnitFaction == ctrl.UnitFaction)
+                    if (unit.getFaction() == ctrl.UnitFaction)
                     {
-                        ctrl.addUnit(unit);
+                        ctrl.addUnit(unit.getAIcomponent());
                     }
                 }
             }

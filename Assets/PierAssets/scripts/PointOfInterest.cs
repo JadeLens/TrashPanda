@@ -94,12 +94,13 @@ public class PointOfInterest : MonoBehaviour
         if (currentPlayerIndex != -1)
         {
 
-            TimeOwned = Time.time - CapturedTime;
-            if (TimeOwned >= IncRate + LastInc)
+            TimeOwned += Time.deltaTime;
+            if (TimeOwned >= IncRate )
             {
-                LastInc = Time.time - CapturedTime;
+                TimeOwned = 0;
                 players[currentPlayerIndex].myResources.IncrementTrash(incTrash);
                 players[currentPlayerIndex].myResources.IncrementWater(incWater);
+
             }
             if (currentPlayerIndex == 1 && LightRenderer != null) //real player owns the object
             {
