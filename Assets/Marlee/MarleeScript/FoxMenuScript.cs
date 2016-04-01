@@ -32,8 +32,9 @@ public class FoxMenuScript : MonoBehaviour {
             spawn();
             if (spawner != 3)
             {
-                AudioSource audio = GetComponent<AudioSource>(); GetComponent<AudioSource>();
-                audio.Play();
+                AudioSource audio = GetComponent<AudioSource>(); 
+                if(audio != null)
+                    audio.Play();
             }
 
            // Debug.Log("bye2");
