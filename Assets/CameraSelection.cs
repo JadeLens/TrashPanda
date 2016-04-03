@@ -75,7 +75,8 @@ public class CameraSelection : MonoBehaviour
                 {
                     if (unit.getFaction() == ctrl.UnitFaction)
                     {
-                        ctrl.addUnit(unit.getAIcomponent());
+                        if(unit.getAIcomponent() != null)
+                            ctrl.addUnit(unit.getAIcomponent());
                     }
                 }
             }
