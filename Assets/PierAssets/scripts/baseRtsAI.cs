@@ -13,6 +13,7 @@ public class baseRtsAI : aiBehavior
     public AItype typeToAvoid;
 
     public float attackDelay = 1;
+    public new IRtsUnit stats;
     private aiBehaviorNode CreateRabbit()
     {
 
@@ -71,8 +72,8 @@ public class baseRtsAI : aiBehavior
     {
 
         Init();
+       
 
-     
         switch (type)
         {
             case AItype.lamb:
@@ -98,6 +99,7 @@ public class baseRtsAI : aiBehavior
 
     void OnEnable()
     {
+        stats = this.gameObject.GetComponent<IRtsUnit>();
         RTSUnitManager.Register(this);
     }
 

@@ -106,9 +106,9 @@ public class Pier_Unit : MonoBehaviour {
         foreach (var agent in neighbours)
         {
             // checking for field of vision boids
-            if (Vector3.Distance(agent.transform.position, this.transform.position) < separationRadius)
+            if (Vector3.Distance(agent.GetGameObject().transform.position, this.transform.position) < separationRadius)
             {
-                Vector3 towardsMe = this.transform.position - agent.transform.position;
+                Vector3 towardsMe = this.transform.position - agent.GetGameObject().transform.position;
 
                 if (towardsMe.magnitude > 0)
                 {

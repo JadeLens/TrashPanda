@@ -15,13 +15,16 @@ public class unitStats_ForAiTest : MonoBehaviour, IGameUnit
     protected float maxHealth = 100;
     private bool isAttacking = false;
 
+
     public GameObject GetGameObject()
     {
         return this.gameObject;
     }
+   
 	// Use this for initialization
 	void Start () {
         currentHealth = maxHealth;
+     
 	}
 
     public bool GetIsAttacking(){return isAttacking;}

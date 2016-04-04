@@ -43,12 +43,12 @@ public class aiBehavior : MonoBehaviour {
     public IGameUnit stats;
     protected void Init()
     {
-      
+
         stats = this.gameObject.GetComponent<IGameUnit>();
         blackBoard = new Dictionary<string, Object>();
         //stats = this.gameObject.get
     }
-	// sets a routine based on ai type
+    // sets a routine based on ai type
     //these are mostly test routines
     void Awake()
     {
@@ -100,7 +100,7 @@ public class aiBehavior : MonoBehaviour {
     {
         return new Node_Repeat
         (
-            new Node_Selector
+            new Node_PrioritySelector
             (
                 new aiBehaviorNode[] 
                 { 
@@ -138,12 +138,14 @@ public class aiBehavior : MonoBehaviour {
     //used for debug only
 //also starts its if not yet started
     public void OnMouseDown()
-    {if(routine.isReady()){
-        routine.Run();}
-    else{
-        routine.Reset();
-        routine.Run();
-    }
+    {
+        if (routine.isReady()){
+            //   routine.Run();
+        }
+        else{
+            //routine.Reset();
+           // routine.Run();
+        }
     }
 	// Update is called once per frame
     public void FixedUpdate()

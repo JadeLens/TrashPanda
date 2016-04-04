@@ -421,23 +421,23 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
     }
     public override void Act(GameObject ob)
     {
-        foreach (baseRtsAI  u in RTSUnitManager.GetUnitList())
+        foreach (IRtsUnit  u in RTSUnitManager.GetUnitList())
         {
-
-            if (u.UnitFaction!= m_faction)
+   
+            if (u.getFaction() != m_faction)
             {
-                float dist = Vector3.Distance(ob.transform.position, u.gameObject.transform.position);
+                float dist = Vector3.Distance(ob.transform.position, u.GetGameObject().transform.position);
                 if (dist < m_radius)
                 {
                     if (m_target == null)
                     {
-                        m_target = u.gameObject;
+                        m_target = u.GetGameObject();
 
                     }
                     else if (dist < Vector3.Distance(ob.transform.position, m_target.transform.position))
                     {
 
-                        m_target = u.gameObject;
+                        m_target = u.GetGameObject();
                     }
 
                 } 

@@ -62,15 +62,17 @@ public class controlAI : basePlayer
                 PointOfInterest poi = hit.collider.gameObject.GetComponent<PointOfInterest>();
                 if (poi != null)
                 {
+                    UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.move, hit.point);
                     mySelection[0].Orders.Clear();
                     mySelection[0].Orders.Enqueue(UnitOrders.CapturePoint(mySelection[0], poi));
 
                     return;
                 }
-                baseRtsAI target = hit.collider.gameObject.GetComponent<baseRtsAI>();
+                IRtsUnit target = hit.collider.gameObject.GetComponent<IRtsUnit>();
+           //     Debug.Log(hit.collider.gameObject.name);
                 if(target != null)
                 {
-                    // Debug.Log("target test");
+                  ///   Debug.Log("target test");
 
                     UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.attackTarget, target);
                     return;
