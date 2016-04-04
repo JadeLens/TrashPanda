@@ -20,8 +20,10 @@ public class MainBuilding : MonoBehaviour {
 
     void OnDisable()
     {
-        Debug.Log("game over");
-        Debug.Break();
+        //        Debug.Log("game over");
+        //      Debug.Break();
+
+        Application.LoadLevel("GAMEOVER");
         RTSUnitManager.Unregister(stats);
 
     }
