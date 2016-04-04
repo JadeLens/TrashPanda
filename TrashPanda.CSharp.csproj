@@ -146,6 +146,7 @@
     <Compile Include="Assets\AstarPathfindingProject\changelog.cs" />
     <Compile Include="Assets\CameraSelection.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\BaseResouceCollection.cs" />
+    <Compile Include="Assets\JarrettAssets\Scripts\CameraLookAt.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\CollectResource.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\FogOfWarSight.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\FogOfWarVisibility.cs" />
@@ -170,15 +171,18 @@
     <Compile Include="Assets\PierAssets\ai\extension\navMeshExtension.cs" />
     <Compile Include="Assets\PierAssets\ai\gameJamAditions\GameJamAiNodes.cs" />
     <Compile Include="Assets\PierAssets\ai\unitStats_ForAiTest.cs" />
-    <Compile Include="Assets\PierAssets\scripts\BaseAI.cs" />
     <Compile Include="Assets\PierAssets\scripts\ComputerSideAI.cs" />
+    <Compile Include="Assets\PierAssets\scripts\MainBuilding.cs" />
     <Compile Include="Assets\PierAssets\scripts\Pier_Unit.cs" />
     <Compile Include="Assets\PierAssets\scripts\PointOfInterest.cs" />
     <Compile Include="Assets\PierAssets\scripts\UnitBuilder.cs" />
     <Compile Include="Assets\PierAssets\scripts\UnitOrders.cs" />
+    <Compile Include="Assets\PierAssets\scripts\basePlayer.cs" />
     <Compile Include="Assets\PierAssets\scripts\baseRtsAI.cs" />
     <Compile Include="Assets\PierAssets\scripts\controlAI.cs" />
-    <Compile Include="Assets\PierAssets\scripts\path.cs" />
+    <Compile Include="Assets\PierAssets\scripts\notInUse\BaseAI.cs" />
+    <Compile Include="Assets\PierAssets\scripts\notInUse\path.cs" />
+    <Compile Include="Assets\PierAssets\scripts\static\HouseManager.cs" />
     <Compile Include="Assets\PierAssets\scripts\static\RTSUnitManager.cs" />
     <Compile Include="Assets\ResidentialLite\Scripts\Houses.cs" />
     <Compile Include="Assets\ResidentialLite\Scripts\Informer.cs" />
@@ -225,6 +229,10 @@
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\ResidentialLite\Standard Assets\Effects\ImageEffects\Scripts\Vortex.cs" />
+    <Compile Include="Assets\SoundsSteve\AudioManager.cs" />
+    <Compile Include="Assets\SoundsSteve\LoadScene.cs" />
+    <Compile Include="Assets\SoundsSteve\resourceUI.cs" />
+    <Compile Include="Assets\UpdateHealth.cs" />
     <Compile Include="Assets\myScripts\node\Grid.cs" />
     <Compile Include="Assets\myScripts\node\Heap.cs" />
     <Compile Include="Assets\myScripts\node\Node.cs" />
@@ -236,6 +244,10 @@
     <Compile Include="Assets\unitMovement.cs" />
     <Compile Include="Assets\unitPath.cs" />
     <Compile Include="Assets\unitSelection.cs" />
+    <Compile Include="Assets\woodlandAnimalPack\demoButton.cs" />
+    <Compile Include="Assets\woodlandAnimalPack\demoGUI.cs" />
+    <Compile Include="Assets\woodlandAnimalPack\rabbitDemoFunctions.cs" />
+    <Compile Include="Assets\woodlandAnimalPack\universalDemoGUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh.shader" />
