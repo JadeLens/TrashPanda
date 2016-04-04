@@ -60,11 +60,11 @@ public class ComputerSideAI : basePlayer
             (
                 new aiBehaviorNode[]
                 {
-                 new Node_Call_Delegate(countUnits)///also sorts them into groups
-                ,new Node_Call_Delegate(sendToCapPoint)
-                ,new Node_Call_Delegate(isCapingDone),
+                 new Node_Call_Delegate(countUnits),///also sorts them into groups
+                 new Node_Call_Delegate(sendToCapPoint),
+                 new Node_Call_Delegate(isCapingDone),
                  new Node_Call_Delegate(sendOrder),
-                new Node_Delay(actionDelay)
+                 new Node_Delay(actionDelay)
 
                 }
 
