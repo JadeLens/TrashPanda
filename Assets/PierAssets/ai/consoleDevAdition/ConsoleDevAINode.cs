@@ -127,11 +127,11 @@ public class Node_Wander_Modular : aiBehaviorNode
 /// </summary>
 public class Node_SetVariable : aiBehaviorNode
 {
-    Dictionary<string, Object> m_dict;
+    Dictionary<string, System.Object> m_dict;
     string m_keyToSet;
     Object m_value;
     //put constructor here
-    public Node_SetVariable(Dictionary<string, Object> dict, string key, Object value)
+    public Node_SetVariable(Dictionary<string, System.Object> dict, string key, Object value)
     {
         m_dict = dict;
         m_keyToSet = key;
@@ -160,8 +160,9 @@ public class Node_SetVariable : aiBehaviorNode
         SetBBVar(m_dict, m_keyToSet, m_value);
         Succeed();
     }
-    static public void SetBBVar(Dictionary<string, Object> dict, string key, Object value)
-    {
+ 
+        static public void SetBBVar(Dictionary<string, System.Object> dict, string key, System.Object value)
+        {
         if (dict.ContainsKey(key) == false)
         {
 
@@ -173,6 +174,7 @@ public class Node_SetVariable : aiBehaviorNode
         }
 
     }
+  
 
 }
 
@@ -181,13 +183,13 @@ public class Node_SetVariable : aiBehaviorNode
 /// </summary>
 public class Node_IsNull : aiBehaviorNode
 {
-    Dictionary<string, Object> m_dict;
+    Dictionary<string, System.Object> m_dict;
     string m_keyToCheck;
 
     /// <summary>
     /// checks if a blackBoard Variable is Null
     /// </summary>
-    public Node_IsNull(Dictionary<string, Object> dict, string key)
+    public Node_IsNull(Dictionary<string, System.Object> dict, string key)
     {
         m_dict = dict;
         m_keyToCheck = key;
@@ -211,7 +213,7 @@ public class Node_IsNull : aiBehaviorNode
     }
     public override void Act(GameObject ob)
     {
-        Object value = GetBBVar(m_dict, m_keyToCheck);
+        System.Object value = GetBBVar(m_dict, m_keyToCheck);
 
         if (value == null)
         {
@@ -223,7 +225,7 @@ public class Node_IsNull : aiBehaviorNode
 
         }
     }
-    static public Object GetBBVar(Dictionary<string, Object> dict, string key)
+    static public System.Object GetBBVar(Dictionary<string, System.Object> dict, string key)
     {
         if (dict.ContainsKey(key))
         {
@@ -342,8 +344,8 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
     private IMoveToNode m_child1;
 
     private string m_key;
-    private Dictionary<string, Object> m_dict;
-    public Node_Seek_Modular_BB(Dictionary<string, Object> blackBoard, string bb_key, IMoveToNode MoveNode)
+    private Dictionary<string, System.Object> m_dict;
+    public Node_Seek_Modular_BB(Dictionary<string, System.Object> blackBoard, string bb_key, IMoveToNode MoveNode)
     {
         m_dict = blackBoard;
         m_key = bb_key;
@@ -409,9 +411,9 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
     private GameObject m_target;
 
     private string m_key;
-    private Dictionary<string, Object> m_dict;
+    private Dictionary<string, System.Object> m_dict;
     private faction m_faction;
-    public Node_Get_Closest_Enemy(Dictionary<string, Object> blackBoard, string bb_key, float radius, faction myFaction)
+    public Node_Get_Closest_Enemy(Dictionary<string, System.Object> blackBoard, string bb_key, float radius, faction myFaction)
     {
         m_radius = radius;
         m_faction = myFaction;
@@ -474,8 +476,8 @@ public class Node_Find_Closest_Target_BB : aiBehaviorNode
     private GameObject m_target;
     private AItype m_typeToLookFor;
     private string m_key;
-    private Dictionary<string, Object> m_dict;
-    public Node_Find_Closest_Target_BB(Dictionary<string, Object> blackBoard, string bb_key, float radius, AItype type = AItype.none)
+    private Dictionary<string, System.Object> m_dict;
+    public Node_Find_Closest_Target_BB(Dictionary<string, System.Object> blackBoard, string bb_key, float radius, AItype type = AItype.none)
     {
         m_radius = radius;
         m_typeToLookFor = type;

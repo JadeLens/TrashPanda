@@ -148,7 +148,12 @@ public class AudioManager : MonoBehaviour
 
         return source;
     }
+    public static void OnChange()
+    {
+        sources.Clear();
 
+
+    }
 
     /// <summary>
     /// Looks for an available AudioSource. An available AudioSource is one that is not playing an AudioClip.
@@ -174,7 +179,13 @@ public class AudioManager : MonoBehaviour
         // If one is found, stop searching by simply returning it. 
         for (int i = 0; i <   sources.Count; i++)
         {
+           
             AudioSource source =   sources[i];
+            if(source== null)
+            {
+
+
+            }
             if (source.isPlaying == false)
             {
                 return source;

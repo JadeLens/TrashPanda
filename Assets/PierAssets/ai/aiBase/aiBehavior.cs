@@ -9,7 +9,7 @@ public enum AItype {none, lamb, wolf,drone ,warrior,player};
 //[RequireComponent(typeof(IGameUnit))]
 public class aiBehavior : MonoBehaviour {
 
-   public Dictionary<string, Object> blackBoard;
+   public Dictionary<string, System.Object> blackBoard;
 
     /// <summary>
     /// type of ai  used for search seek and avoid 
@@ -45,7 +45,7 @@ public class aiBehavior : MonoBehaviour {
     {
 
         stats = this.gameObject.GetComponent<IGameUnit>();
-        blackBoard = new Dictionary<string, Object>();
+        blackBoard = new Dictionary<string, System.Object>();
         //stats = this.gameObject.get
     }
     // sets a routine based on ai type

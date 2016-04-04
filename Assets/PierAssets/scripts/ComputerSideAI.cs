@@ -8,7 +8,7 @@ public class ComputerSideAI : basePlayer
 
     //behaviortree Related start
 
-    public Dictionary<string, Object> blackBoard;
+    public Dictionary<string, System.Object> blackBoard;
     public bool autoStart = false;
     public aiBehaviorNode routine;
 
@@ -24,12 +24,17 @@ public class ComputerSideAI : basePlayer
 	public 	List<aiBehavior> OutToCapturePt;
     public enum CtrlGroupsName {all,capture,offence, defence };
     public float actionDelay = 30;
+
+    int total;
+    int numCapturer;
+    int numOffence;
+
     // Use this for initialization
     void Start ()
     {
 		OutToCapturePt = new List<aiBehavior>();
         controlGroups = new Dictionary<CtrlGroupsName, List<baseRtsAI>>();
-        blackBoard = new Dictionary<string, Object>();
+        blackBoard = new Dictionary<string, System.Object>();
 
         controlGroups[CtrlGroupsName.all] = new List<baseRtsAI>();
         controlGroups[CtrlGroupsName.capture] = new List<baseRtsAI>();
@@ -72,12 +77,8 @@ public class ComputerSideAI : basePlayer
          );
 
     }
-    class UnitAmount : Object
-    {
-        public int total;
-        public int numCapturer;
-        public int numOffence;
-    }
+ 
+      
 
     public void countUnits()
     {
@@ -91,13 +92,13 @@ public class ComputerSideAI : basePlayer
                 controlGroups[CtrlGroupsName.all].Add(unit.getAIcomponent());
             }
         }
-        UnitAmount unitAmount = new UnitAmount();
-        unitAmount.total = controlGroups[CtrlGroupsName.all].Count;
-        unitAmount.numCapturer = Mathf.CeilToInt(unitAmount.total / 3);
-        unitAmount.numOffence = unitAmount.total - unitAmount.numCapturer *2;
-        for (int i = 0; i < unitAmount.total; i++)
+      
+        total = controlGroups[CtrlGroupsName.all].Count;
+        numCapturer = Mathf.CeilToInt(total / 3);
+        numOffence = total - numCapturer *2;
+        for (int i = 0; i < total; i++)
         {
-            if (i <= unitAmount.numCapturer)
+            if (i <= numCapturer)
             {
                 controlGroups[CtrlGroupsName.capture].Add(controlGroups[CtrlGroupsName.all][i]);
             }
@@ -106,7 +107,8 @@ public class ComputerSideAI : basePlayer
                 controlGroups[CtrlGroupsName.offence].Add(controlGroups[CtrlGroupsName.all][i]);
             }
         }
-        Node_SetVariable.SetBBVar(blackBoard, "unitCount",unitAmount);
+       // blackBoard.Add("unitCount", total);
+       Node_SetVariable.SetBBVar(blackBoard, "unitCount", total);
 
     }
 	PointOfInterest getPointToAttack()
@@ -143,9 +145,6 @@ public class ComputerSideAI : basePlayer
             }
 
         }
-         
-       
-
 
     }
 
@@ -170,6 +169,11 @@ public class ComputerSideAI : basePlayer
             //{
             //    gettingAPoint = false;
             //}
+        }
+        else
+        {
+
+         //   Node_SetVariable.SetBBVar(blackBoard, "isCapDone", true);
         }
 
     }

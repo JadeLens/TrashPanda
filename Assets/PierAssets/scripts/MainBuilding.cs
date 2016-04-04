@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class MainBuilding : MonoBehaviour {
     IRtsUnit stats;
     // Use this for initialization
@@ -22,9 +22,10 @@ public class MainBuilding : MonoBehaviour {
     {
         //        Debug.Log("game over");
         //      Debug.Break();
-
-        Application.LoadLevel("GAMEOVER");
         RTSUnitManager.Unregister(stats);
 
+        LoadScene.SafeLoad("GAMEOVER");
+
+        
     }
 }

@@ -4,8 +4,15 @@ using System.Collections;
 public class LoadScene : MonoBehaviour {
 
     public void Load(string Level)
+   {
+
+        SafeLoad(Level);
+    }
+    public static void SafeLoad(string level)
     {
-        Application.LoadLevel(Level);
+        AudioManager.OnChange();
+        Application.LoadLevel(level);
+
     }
     public void Exit()
     {
