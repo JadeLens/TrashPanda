@@ -153,6 +153,7 @@
     <Compile Include="Assets\JarrettAssets\Scripts\LineOfSightRendering.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\PlayerResources.cs" />
     <Compile Include="Assets\JarrettAssets\Scripts\ResourceCollisionHandling.cs" />
+    <Compile Include="Assets\JarrettAssets\Scripts\TestCameraMovement.cs" />
     <Compile Include="Assets\Marlee\MarleeScript\FoxMenuScript.cs" />
     <Compile Include="Assets\Marlee\MarleeScript\MenuButtonManager.cs" />
     <Compile Include="Assets\Marlee\MarleeScript\MenuScript.cs" />

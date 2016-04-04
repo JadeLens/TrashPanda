@@ -22,9 +22,7 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
 
     public faction getFaction()
     {
-      
-      
-            return myFaction;
+        return myFaction;
     }
     public baseRtsAI getAIcomponent()
     {
@@ -116,13 +114,12 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
 
     }
 
-
     void Start ()
     {
         ai = gameObject.GetComponent<baseRtsAI>();
         currentHealth = maxHealth;
         if (ai != null)
-            myFaction =  ai.UnitFaction;
+            myFaction = ai.UnitFaction;
     }
 	
 	// Update is called once per frame

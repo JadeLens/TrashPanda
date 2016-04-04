@@ -17,7 +17,7 @@ public class cameraMovement : MonoBehaviour
 
     void Start()
     {
-
+        
         cameraTar = GameObject.Find("cameraTarget").GetComponent<Transform>();
         cam = Camera.main;
         ogCamSize = 5.5f;
@@ -25,6 +25,7 @@ public class cameraMovement : MonoBehaviour
 
         left = Camera.main.WorldToViewportPoint(new Vector3(1.0f, 0.0f, 0.0f));
         down = Camera.main.WorldToViewportPoint(new Vector3(0.0f, 1.0f, 0.0f));
+        transform.eulerAngles = new Vector3(0, 45, 0);
 
     }
     void Update()
@@ -103,6 +104,7 @@ public class cameraMovement : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.W))
         {
+           // transform.forward
             cameraTar.position += transform.up / speed;
         }
         if (Input.GetKey(KeyCode.S))
