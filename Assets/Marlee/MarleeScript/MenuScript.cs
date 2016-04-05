@@ -37,7 +37,7 @@ public class MenuScript : MonoBehaviour {
                     audio.Play();
             }
 
-            Debug.Log("bye2");
+           
 
         }
 
