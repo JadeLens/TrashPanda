@@ -3,7 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Pathfinding;
+using System;
 
+public class Node_Check_Condition : aiBehaviorNode
+{
+
+    public delegate bool NodeFunction();
+    protected NodeFunction m_function;
+    bool result;
+    public Node_Check_Condition(NodeFunction func)
+    {
+
+        m_function = func;
+
+    }
+    public override void Run()
+    {
+
+        base.Run();
+        if (m_function != null)
+            result = m_function();
+ 
+    }
+    public override void Act(GameObject ob)
+    {
+        if (result == true)
+        {
+            Succeed();
+
+        }
+        else
+        {
+            Fail();
+        }
+    }
+
+    public override void Reset()
+    {
+        MakeReady();
+    }
+}
 public class Node_Call_Delegate : aiBehaviorNode
 {
     public delegate void NodeFunction();
@@ -16,7 +55,7 @@ public class Node_Call_Delegate : aiBehaviorNode
 
         m_function = func;
     }
-    public Node_Call_Delegate(NodeFunction2 func,baseRtsAI unit)
+    public Node_Call_Delegate(NodeFunction2 func, baseRtsAI unit)
     {
         m_unit = unit;
         m_function2 = func;
@@ -25,7 +64,7 @@ public class Node_Call_Delegate : aiBehaviorNode
     {
 
         base.Run();
-        if(m_function != null)
+        if (m_function != null)
             m_function();
         if (m_function2 != null)
             m_function2(m_unit);
@@ -79,7 +118,7 @@ public class Node_Wander_Modular : aiBehaviorNode
 
     private void InitializeChild(GameObject ob)
     {
-        Vector2 rDir = Random.insideUnitCircle;
+        Vector2 rDir = UnityEngine.Random.insideUnitCircle;
         rDir *= m_range;
         rDir += new Vector2(ob.transform.position.x, ob.transform.position.z);
         m_child.SetDestination(rDir.x, ob.transform.position.y, rDir.y);
@@ -129,9 +168,9 @@ public class Node_SetVariable : aiBehaviorNode
 {
     Dictionary<string, System.Object> m_dict;
     string m_keyToSet;
-    Object m_value;
+    System.Object m_value;
     //put constructor here
-    public Node_SetVariable(Dictionary<string, System.Object> dict, string key, Object value)
+    public Node_SetVariable(Dictionary<string, System.Object> dict, string key, UnityEngine.Object value)
     {
         m_dict = dict;
         m_keyToSet = key;
@@ -160,9 +199,9 @@ public class Node_SetVariable : aiBehaviorNode
         SetBBVar(m_dict, m_keyToSet, m_value);
         Succeed();
     }
- 
-        static public void SetBBVar(Dictionary<string, System.Object> dict, string key, System.Object value)
-        {
+
+    static public void SetBBVar(Dictionary<string, System.Object> dict, string key, System.Object value)
+    {
         if (dict.ContainsKey(key) == false)
         {
 
@@ -174,7 +213,7 @@ public class Node_SetVariable : aiBehaviorNode
         }
 
     }
-  
+
 
 }
 
@@ -378,7 +417,7 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
         }
         else
         {
-//            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
+            //            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
             Fail();
         }
 
@@ -423,9 +462,9 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
     }
     public override void Act(GameObject ob)
     {
-        foreach (IRtsUnit  u in RTSUnitManager.GetUnitList())
+        foreach (IRtsUnit u in RTSUnitManager.GetUnitList())
         {
-   
+
             if (u.getFaction() != m_faction)
             {
                 float dist = Vector3.Distance(ob.transform.position, u.GetGameObject().transform.position);
@@ -442,7 +481,7 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
                         m_target = u.GetGameObject();
                     }
 
-                } 
+                }
             }
 
         }
