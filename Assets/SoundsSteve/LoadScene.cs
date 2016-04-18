@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour {
 
     public void Load(string Level)
@@ -11,7 +11,8 @@ public class LoadScene : MonoBehaviour {
     public static void SafeLoad(string level)
     {
         AudioManager.OnChange();
-        Application.LoadLevel(level);
+        SceneManager.LoadScene(level);
+        
 
     }
     public void Exit()

@@ -8,7 +8,7 @@ public class cameraMovement : MonoBehaviour
     public Camera cam;
     public float camSize;
     public float ogCamSize = 5.5f;
-    public Vector3 ogCamRot = new Vector3(30.0f, 45, 0.0f);
+    public Quaternion ogCamRot;
     public int speed = 5;
 
 
@@ -21,11 +21,11 @@ public class cameraMovement : MonoBehaviour
         cameraTar = GameObject.Find("cameraTarget").GetComponent<Transform>();
         cam = Camera.main;
         ogCamSize = 5.5f;
-
+        ogCamRot = transform.rotation;
 
         left = Camera.main.WorldToViewportPoint(new Vector3(1.0f, 0.0f, 0.0f));
         down = Camera.main.WorldToViewportPoint(new Vector3(0.0f, 1.0f, 0.0f));
-        transform.eulerAngles = new Vector3(0, 45, 0);
+       // transform.eulerAngles = new Vector3(0, 45, 0);
 
     }
     void Update()
@@ -57,12 +57,12 @@ public class cameraMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             cam.orthographicSize = ogCamSize;
-            transform.rotation = Quaternion.Slerp(transform.rotation, cameraRot, 1.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
         }
         //Scroll Zoom
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            Debug.Log("WheelScroll");
+          //  Debug.Log("WheelScroll");
             cam.orthographicSize = Mathf.Max(cam.orthographicSize - 1, camSize);
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
@@ -75,12 +75,12 @@ public class cameraMovement : MonoBehaviour
             if (Input.GetAxis("Mouse X") < 0)
             {
                 transform.RotateAround(Vector3.zero, Vector3.up, 100 * Time.deltaTime);
-                Debug.Log("Move");
+              //  Debug.Log("Move");
             }
             if (Input.GetAxis("Mouse X") > 0)
             {
                 transform.RotateAround(Vector3.zero, -Vector3.up, 100 * Time.deltaTime);
-                Debug.Log("Move");
+            //    Debug.Log("Move");
             }
         }
         //Increase Camera Speed

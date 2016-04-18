@@ -14,13 +14,14 @@ public class ComputerSideAI : basePlayer
 
     //behaviortree Related end
 
+    public UnitBuilder myBuilding;
     Dictionary<CtrlGroupsName, List<baseRtsAI>> controlGroups;
     //public faction UnitFaction;
    // public List<PointOfInterest> points;
 	public bool gettingAPoint = false;
   
 	public Transform Location;
-	public Transform centroid;
+//	public Transform centroid;
 	public 	List<aiBehavior> OutToCapturePt;
     public enum CtrlGroupsName {all,capture,offence, defence };
     public float actionDelay = 30;
@@ -43,7 +44,7 @@ public class ComputerSideAI : basePlayer
         //decide ratio of capturer to offence 
         //add defender later
 
-        routine = createComputerAI();
+        routine = createAdvancedComputerAI();
         if (autoStart)
         {
             routine.Run();
@@ -58,7 +59,6 @@ public class ComputerSideAI : basePlayer
     }
     public aiBehaviorNode createComputerAI()
     {
-
         return new Node_Repeat
         (
             new Node_Sequence
@@ -67,8 +67,8 @@ public class ComputerSideAI : basePlayer
                 {
                  new Node_Call_Delegate(countUnits),///also sorts them into groups
                  new Node_Call_Delegate(sendToCapPoint),
-                 new Node_Call_Delegate(isCapingDone),
-                 new Node_Call_Delegate(sendOrder),
+                 new Node_Check_Condition(isCapingDone),
+                 new Node_Call_Delegate(sendAttackOrder),//attack order
                  new Node_Delay(actionDelay)
 
                 }
@@ -77,8 +77,65 @@ public class ComputerSideAI : basePlayer
          );
 
     }
- 
-      
+    public aiBehaviorNode createAdvancedComputerAI()
+    {
+        return new Node_Repeat
+        (
+            new Node_Sequence
+            (
+                new aiBehaviorNode[]
+                {
+                new Node_Call_Delegate(countUnits),///also sorts them into groups
+                new Node_PrioritySelector
+                (
+                    new aiBehaviorNode[]
+                    {
+                        new Node_Sequence //attack sequence
+                        (
+                            new aiBehaviorNode[]
+                            {
+                            new Node_Check_Condition(haveEnoughUnitsToAttack),
+                            new Node_Call_Delegate(sendAttackOrder)
+                            }
+                        ),
+                        new Node_Check_Condition(makeUnits), //returns false if not enought resources
+                        new Node_Sequence //capPoint sequence
+                        (
+                            new aiBehaviorNode[]
+                            {
+                                new Node_Check_Condition(isCapingDone),//add check to see if any unCaptured points
+                                new Node_Call_Delegate(sendToCapPoint)
+                                
+                            }
+                        )
+                    }
+                 ),
+               
+                 new Node_Delay(actionDelay)
+
+                }
+
+            )
+         );
+
+    }
+
+    bool makeUnits()
+    {
+
+
+        return myBuilding.SpawnRabbit();
+    }
+    bool haveEnoughUnitsToAttack()
+    {
+
+        return false;
+    }
+    bool haveEnoughUnits()
+    {
+
+        return false;
+    }
 
     public void countUnits()
     {
@@ -111,6 +168,7 @@ public class ComputerSideAI : basePlayer
        Node_SetVariable.SetBBVar(blackBoard, "unitCount", total);
 
     }
+    //to add prioritise closer cap pt and neutral ones
 	PointOfInterest getPointToAttack()
     {
 		foreach(PointOfInterest poi in HouseManager.GetUnitList())
@@ -148,7 +206,7 @@ public class ComputerSideAI : basePlayer
 
     }
 
-    void isCapingDone()
+    bool isCapingDone()
     {
         if (OutToCapturePt.Count > 0)
         {
@@ -172,12 +230,12 @@ public class ComputerSideAI : basePlayer
         }
         else
         {
-
+            return true;
          //   Node_SetVariable.SetBBVar(blackBoard, "isCapDone", true);
         }
-
+        return false;
     }
-    void sendOrder()
+    void sendAttackOrder()
     {
             //UnitOrders.giveOrders(Selection,UnitOrders.OrderType.move,Location.position);
             foreach (baseRtsAI rabbit in controlGroups[CtrlGroupsName.offence])

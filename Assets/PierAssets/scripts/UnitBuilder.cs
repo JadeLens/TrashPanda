@@ -15,7 +15,15 @@ public class UnitBuilder : MonoBehaviour {
     public AudioClip spawnSound = null;
     public AudioClip wrong;
     // Use this for initialization
-    public void SpawnRabbit()
+
+        /// <summary>
+        /// because Ui button cant use a return type of bool 
+        /// </summary>
+    public void spawnForUiButton()
+    {
+        SpawnRabbit();
+    }
+    public bool SpawnRabbit()
     {
 
         if (owner.myResources.getTrash()>= rabbitTrashCost && owner.myResources.getWater() >= rabbitWaterCost) {
@@ -28,11 +36,13 @@ public class UnitBuilder : MonoBehaviour {
 
             aiComponent.UnitFaction = owner.UnitFaction;
             UnitOrders.giveOrder(aiComponent, UnitOrders.OrderType.move, rallyPoint.position);
+            return true;
         }
         else
         {
             if (!Mute)
                 AudioManager.PlaySoundClip(wrong);
+            return false;
         }
     }
 }
