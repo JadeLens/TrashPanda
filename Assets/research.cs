@@ -31,7 +31,7 @@ public class research : MonoBehaviour {
 
         //GetComponentInChildren<Text>().text = "Raccoon";
         m_caller.GetComponent<Button>().onClick.RemoveAllListeners();
-        m_caller.GetComponent<Button>().onClick.AddListener(rabbitDen.GetComponent<UnitBuilder>().SpawnRabbit);
+        m_caller.GetComponent<Button>().onClick.AddListener(rabbitDen.GetComponent<UnitBuilder>().spawnForUiButton);
         //this.GetComponent<research>().enabled = false;
         //this.GetComponent<Button>()
 
