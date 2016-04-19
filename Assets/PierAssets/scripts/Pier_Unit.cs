@@ -9,8 +9,8 @@ public class Pier_Unit : MonoBehaviour {
     //public Vector3 castPosition;
     //public Vector3 tP;
 
-    public Seeker seeker;
-    public rabbitAnim rAnim;
+    private Seeker seeker;
+    public IUnitAnim unitAnim;
     public unitSelection unitS;
 
 
@@ -42,12 +42,13 @@ public class Pier_Unit : MonoBehaviour {
     public void Start()
     {
         seeker = GetComponent<Seeker>();
-    //    controller = GetComponent<CharacterController>();
+        unitAnim = GetComponent<IUnitAnim>();
+        //    controller = GetComponent<CharacterController>();
     //    rAnim = GameObject.Find("RABBIT").GetComponent<rabbitAnim>();
     //    unitS = GameObject.Find("RABBIT/RABBIT").GetComponent<unitSelection>();
 
         stationary = true;
-        rAnim.anim.Play("idle1");
+        unitAnim.playIdle();
 
         layerItem = LayerMask.NameToLayer("ground");
         del = new OnPathDelegate(OnPathComplete);
@@ -176,7 +177,7 @@ public class Pier_Unit : MonoBehaviour {
         if (currentWaypoint >= path.vectorPath.Count)
         {
             stationary = true;
-            rAnim.anim.CrossFade("idle1");
+            unitAnim.crossFadeIdle();
             // Debug.Log("End Of Path Reached");
             return;
         }
@@ -195,11 +196,11 @@ public class Pier_Unit : MonoBehaviour {
         }
         if (!stationary )
         {
-            rAnim.anim.Play("run");
+            unitAnim.playRun();
         }
         else
         {
-            rAnim.anim.Play("idle1");
+            unitAnim.playIdle();
         }
 
         if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
