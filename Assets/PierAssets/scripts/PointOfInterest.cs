@@ -45,7 +45,7 @@ public class PointOfInterest : MonoBehaviour
         players = GameObject.FindObjectsOfType<basePlayer>();
         //LightRenderer = this.gameObject.GetComponentInChildren<MeshRenderer>();
 
-        render = this.GetComponent<Renderer>();
+        render = this.GetComponentInChildren<Renderer>();
     }
     public void ChangeFaction(faction newFaction){
 

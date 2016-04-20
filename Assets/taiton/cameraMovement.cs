@@ -34,7 +34,7 @@ public class cameraMovement : MonoBehaviour
         Vector3 temp = new Vector3(30.0f, 45, 0.0f);
         cameraRot = Quaternion.Euler(temp);
         //Drag left
-        if (Input.mousePosition.x <= left.x)
+        if (Input.mousePosition.x <= 0)
         {
             cameraTar.position += -transform.right / speed;
         }
@@ -44,14 +44,14 @@ public class cameraMovement : MonoBehaviour
             cameraTar.position += transform.right / speed;
         }
         //Drag Down
-        if (Input.mousePosition.y <= down.y)
+        if (Input.mousePosition.y <= 0)
         {
-            cameraTar.position += -transform.up / speed;
+            cameraTar.position += -transform.forward / speed;
         }
         //Drag up
         if (Input.mousePosition.y >= Screen.height)
         {
-            cameraTar.position += transform.up / speed;
+            cameraTar.position += transform.forward / speed;
         }
         //Reset Camera
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -62,12 +62,16 @@ public class cameraMovement : MonoBehaviour
         //Scroll Zoom
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-          //  Debug.Log("WheelScroll");
-            cam.orthographicSize = Mathf.Max(cam.orthographicSize - 1, camSize);
+            cameraTar.position += transform.forward / speed;
+            cameraTar.position += -transform.up / speed;
+            //  Debug.Log("WheelScroll");
+            // cam.orthographicSize = Mathf.Max(cam.orthographicSize - 1, camSize);
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            cam.orthographicSize = Mathf.Max(cam.orthographicSize + 1, camSize);
+            cameraTar.position += -transform.forward / speed;
+            cameraTar.position += transform.up / speed;
+            //   cam.orthographicSize = Mathf.Max(cam.orthographicSize + 1, camSize);
         }
         //Middle Click Rotation
         if (Input.GetMouseButton(2))
