@@ -9,7 +9,7 @@ public class PauseMenuManager : MonoBehaviour
 {
 
     public bool pauseGame = false;
-    public GameObject player;
+   // public GameObject player;
     public GameObject pausemenuCanvas;
     public GameObject optionsCanvas;
 

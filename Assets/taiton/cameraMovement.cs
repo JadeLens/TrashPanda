@@ -78,12 +78,12 @@ public class cameraMovement : MonoBehaviour
         {
             if (Input.GetAxis("Mouse X") < 0)
             {
-                transform.RotateAround(Vector3.zero, Vector3.up, 100 * Time.deltaTime);
+                transform.RotateAround(cameraTar.transform.position, -Vector3.up, 100 * Time.deltaTime);
               //  Debug.Log("Move");
             }
             if (Input.GetAxis("Mouse X") > 0)
             {
-                transform.RotateAround(Vector3.zero, -Vector3.up, 100 * Time.deltaTime);
+                transform.RotateAround(cameraTar.transform.position, Vector3.up, 100 * Time.deltaTime);
             //    Debug.Log("Move");
             }
         }
@@ -109,20 +109,20 @@ public class cameraMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.W))
         {
            // transform.forward
-            cameraTar.position += transform.up / speed;
+            cameraTar.position += transform.forward / speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            cameraTar.position += -transform.up / speed;
+            cameraTar.position += -transform.forward / speed;
         }
         if (Input.GetKey(KeyCode.E))
         {
-            transform.RotateAround(Vector3.zero, -Vector3.up, 100 * Time.deltaTime);
+            transform.RotateAround(cameraTar.transform.position, -Vector3.up, 100 * Time.deltaTime);
          
         }
         if (Input.GetKey(KeyCode.Q))
         {
-            transform.RotateAround(Vector3.zero, Vector3.up, 100 * Time.deltaTime);
+            transform.RotateAround(cameraTar.transform.position, Vector3.up, 100 * Time.deltaTime);
         }
 
     }

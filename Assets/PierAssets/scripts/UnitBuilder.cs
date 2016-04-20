@@ -5,13 +5,16 @@ public class UnitBuilder : MonoBehaviour {
     public basePlayer owner;
     public bool Mute = false;
    public Transform rabbitPrefab;
-
+    public Transform RacoonPrefab;
     public Transform spawnLoc;
 
     public Transform rallyPoint;
 
     public int rabbitTrashCost = 50;
     public int rabbitWaterCost = 50;
+
+    public int racoonTrashCost = 50;
+    public int racoonWaterCost = 50;
     public AudioClip spawnSound = null;
     public AudioClip wrong;
     // Use this for initialization
@@ -32,6 +35,33 @@ public class UnitBuilder : MonoBehaviour {
             owner.myResources.IncrementTrash(-rabbitTrashCost);
             owner.myResources.IncrementWater(-rabbitWaterCost);
             Transform rabbit = Instantiate(rabbitPrefab, spawnLoc.position, spawnLoc.rotation) as Transform;
+            baseRtsAI aiComponent = rabbit.gameObject.GetComponent<baseRtsAI>();
+
+            aiComponent.UnitFaction = owner.UnitFaction;
+            UnitOrders.giveOrder(aiComponent, UnitOrders.OrderType.move, rallyPoint.position);
+            return true;
+        }
+        else
+        {
+            if (!Mute)
+                AudioManager.PlaySoundClip(wrong);
+            return false;
+        }
+    }
+    public void spawnRacoonForUiButton()
+    {
+        SpawnRacoon();
+    }
+    public bool SpawnRacoon()
+    {
+
+        if (owner.myResources.getTrash() >= racoonTrashCost && owner.myResources.getWater() >= racoonWaterCost)
+        {
+            if (!Mute)
+                AudioManager.PlaySoundClip(spawnSound);
+            owner.myResources.IncrementTrash(-racoonTrashCost);
+            owner.myResources.IncrementWater(-racoonWaterCost);
+            Transform rabbit = Instantiate(RacoonPrefab, spawnLoc.position, spawnLoc.rotation) as Transform;
             baseRtsAI aiComponent = rabbit.gameObject.GetComponent<baseRtsAI>();
 
             aiComponent.UnitFaction = owner.UnitFaction;

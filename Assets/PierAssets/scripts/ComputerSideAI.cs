@@ -7,6 +7,7 @@ public class ComputerSideAI : basePlayer
     //public List<aiBehavior> selected;
 
     //behaviortree Related start
+    public int SizeOfArmy = 5;
 
     public Dictionary<string, System.Object> blackBoard;
     public bool autoStart = false;
@@ -128,12 +129,19 @@ public class ComputerSideAI : basePlayer
     }
     bool haveEnoughUnitsToAttack()
     {
-
-        return false;
+        if (controlGroups[CtrlGroupsName.offence].Count >= SizeOfArmy)
+        {
+            SizeOfArmy += 3;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+  
     }
     bool haveEnoughUnits()
     {
-
         return false;
     }
 
