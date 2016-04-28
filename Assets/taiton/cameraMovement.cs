@@ -18,7 +18,7 @@ public class cameraMovement : MonoBehaviour
     void Start()
     {
         
-        cameraTar = GameObject.Find("cameraTarget").GetComponent<Transform>();
+        cameraTar = GameObject.Find("CameraTarget").GetComponent<Transform>();
         cam = Camera.main;
         ogCamSize = 5.5f;
         ogCamRot = transform.rotation;
