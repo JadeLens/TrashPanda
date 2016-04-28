@@ -8,8 +8,8 @@ public class resourceUI : MonoBehaviour {
     public basePlayer player;
     // Use this for initialization
     void Start () {
-	
-	}
+        player = GameObject.FindObjectOfType<controlAI>();
+    }
 	
 	// Update is called once per frame
 	void LateUpdate () {
