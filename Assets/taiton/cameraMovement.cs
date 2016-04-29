@@ -11,7 +11,16 @@ public class cameraMovement : MonoBehaviour
     public Quaternion ogCamRot;
     public int speed = 5;
 
+    public bool stopScroll = false;
+    public bool stopScroll2 = false;
+    public bool stopLeft = false;
+    public float inScrollClamp;
+    public float outScrollClamp;
 
+    public float leftWallClamp;
+    public float downWallClamp;
+    public float rightWallClamp;
+    public float upWallClamp;
     Vector3 left;
     Vector3 down;
 
@@ -21,21 +30,71 @@ public class cameraMovement : MonoBehaviour
         cameraTar = GameObject.Find("CameraTarget").GetComponent<Transform>();
         cam = Camera.main;
         ogCamSize = 5.5f;
-        ogCamRot = transform.rotation;
+        
 
         left = Camera.main.WorldToViewportPoint(new Vector3(1.0f, 0.0f, 0.0f));
         down = Camera.main.WorldToViewportPoint(new Vector3(0.0f, 1.0f, 0.0f));
-       // transform.eulerAngles = new Vector3(0, 45, 0);
+        // transform.eulerAngles = new Vector3(0, 45, 0);
 
+    
     }
     void Update()
     {
+        inScrollClamp = -5.0f;
+        outScrollClamp = 8.0f;
+        ogCamRot = Quaternion.Euler(0.0f, 60.0f, 0.0f);
+        leftWallClamp = 0.0f;
+        downWallClamp = 0.0f;
+        rightWallClamp = 50.0f;
+        upWallClamp = 50.0f;
+
+        if (cameraTar.position.y <= inScrollClamp)
+        {
+            cameraTar.position = new Vector3(cameraTar.position.x, inScrollClamp, cameraTar.position.z);
+            stopScroll = true;
+        }
+        else
+        {
+            stopScroll = false;
+        }
+        if (cameraTar.position.y >= outScrollClamp)
+        {
+            cameraTar.position = new Vector3(cameraTar.position.x, outScrollClamp, cameraTar.position.z);
+            stopScroll2 = true;
+        }
+        else
+        {
+            stopScroll2 = false;
+        }
+
+        if (cameraTar.position.x <= leftWallClamp)
+        {
+            cameraTar.position = new Vector3(leftWallClamp, cameraTar.position.y, cameraTar.position.z);
+            stopLeft = true;
+        }
+        else
+        {
+            stopLeft = false;
+        }
+        if (cameraTar.position.z <= downWallClamp)
+        {
+            cameraTar.position = new Vector3(cameraTar.position.x, cameraTar.position.y, downWallClamp);
+        }
+        if (cameraTar.position.x >= rightWallClamp)
+        {
+            cameraTar.position = new Vector3(rightWallClamp, cameraTar.position.y, cameraTar.position.z);
+        }
+        if (cameraTar.position.z >= upWallClamp)
+        {
+            cameraTar.position = new Vector3(cameraTar.position.x, cameraTar.position.y, upWallClamp);
+        }
 
         Vector3 temp = new Vector3(30.0f, 45, 0.0f);
         cameraRot = Quaternion.Euler(temp);
         //Drag left
         if (Input.mousePosition.x <= 0)
         {
+            if(!stopLeft)
             cameraTar.position += -transform.right / speed;
         }
         //Drag Right
@@ -56,21 +115,28 @@ public class cameraMovement : MonoBehaviour
         //Reset Camera
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            cam.orthographicSize = ogCamSize;
-            transform.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
+            cameraTar.position = new Vector3(cameraTar.position.x, 1.5f, cameraTar.position.z);
+            cameraTar.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
+           // transform.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
         }
         //Scroll Zoom
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            cameraTar.position += transform.forward / speed;
-            cameraTar.position += -transform.up / speed;
+            if (!stopScroll)
+            {
+                cameraTar.position += transform.forward / speed;
+                cameraTar.position += -transform.up / speed;
+            }
             //  Debug.Log("WheelScroll");
             // cam.orthographicSize = Mathf.Max(cam.orthographicSize - 1, camSize);
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            cameraTar.position += -transform.forward / speed;
-            cameraTar.position += transform.up / speed;
+            if (!stopScroll2)
+            {
+                cameraTar.position += -transform.forward / speed;
+                cameraTar.position += transform.up / speed;
+            }
             //   cam.orthographicSize = Mathf.Max(cam.orthographicSize + 1, camSize);
         }
         //Middle Click Rotation
