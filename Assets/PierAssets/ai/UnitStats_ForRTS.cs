@@ -57,6 +57,10 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
     {
         return currentHealth;
     }
+    public float getMaxHealth()
+    {
+        return maxHealth;
+    }
     public virtual float GetDamage()
     {
         isAttacking = false;

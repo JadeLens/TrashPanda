@@ -11,7 +11,7 @@ public class Pier_Unit : MonoBehaviour {
 
     private Seeker seeker;
     public IUnitAnim unitAnim;
-    public unitSelection unitS;
+   // public unitSelection unitS;
 
 
     public float separationCoeficient = 60;
@@ -165,35 +165,47 @@ public class Pier_Unit : MonoBehaviour {
     }
     public void FixedUpdate()
     {
-
-     //   part1();
-      
-
         if (path == null)
         {
             stationary = true;
-            return;
-        }
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            stationary = true;
-            unitAnim.crossFadeIdle();
-            // Debug.Log("End Of Path Reached");
-            return;
+            // return;
         }
         else
         {
-            part2Math();
-        }
-        if (stationary)
-        {
+            if (currentWaypoint >= path.vectorPath.Count)
+            {
+                stationary = true;
+                unitAnim.crossFadeIdle();
+                //   Debug.Log("End Of Path Reached");
+                //     return;
+            }
+            else
+            {
+                part2Math();
 
-            Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = rotation;
-            lookat = true;
-            stationary = false;
+                if (stationary)
+                {
+
+                    Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
+                    Quaternion rotation = Quaternion.LookRotation(relativePos);
+                    transform.rotation = rotation;
+                    lookat = true;
+                    stationary = false;
+                }
+
+                if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
+                {
+                    currentWaypoint++;
+                    //        Debug.Log("next Pt");
+                    lookat = true;
+                    //  return;
+
+                }
+            }
+          
         }
+
+
         if (!stationary )
         {
             unitAnim.playRun();
@@ -203,14 +215,7 @@ public class Pier_Unit : MonoBehaviour {
             unitAnim.playIdle();
         }
 
-        if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
-        {
-            currentWaypoint++;
-    //        Debug.Log("next Pt");
-            lookat = true;
-            return;
-
-        }
+      
 
     }
 

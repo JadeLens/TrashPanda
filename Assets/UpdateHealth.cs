@@ -13,6 +13,7 @@ public class UpdateHealth : MonoBehaviour
     {
         stats = GetComponent<UnitStats_ForRTS>();
         healthBar = GetComponentInChildren<Slider>();
+        healthBar.maxValue = stats.getMaxHealth();
     }
 
     // Update is called once per frame
