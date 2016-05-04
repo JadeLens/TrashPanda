@@ -417,7 +417,7 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
         }
         else
         {
-            //            Debug.LogError("typecast failed wrong data type in bb var  if var can be null use the Is_Null Node");
+            
             Fail();
         }
 
@@ -440,6 +440,12 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
 
         }
 
+    }
+
+    protected override void Fail()
+    {
+        base.Fail();
+        Debug.Log("seekFail");
     }
 }
 

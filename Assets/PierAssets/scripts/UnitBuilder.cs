@@ -37,7 +37,7 @@ public class UnitBuilder : MonoBehaviour {
             Transform rabbit = Instantiate(rabbitPrefab, spawnLoc.position, spawnLoc.rotation) as Transform;
             baseRtsAI aiComponent = rabbit.gameObject.GetComponent<baseRtsAI>();
 
-            aiComponent.UnitFaction = owner.UnitFaction;
+            aiComponent.stats.setFaction(owner.UnitFaction);
             UnitOrders.giveOrder(aiComponent, UnitOrders.OrderType.move, rallyPoint.position);
             return true;
         }
@@ -64,7 +64,7 @@ public class UnitBuilder : MonoBehaviour {
             Transform rabbit = Instantiate(RacoonPrefab, spawnLoc.position, spawnLoc.rotation) as Transform;
             baseRtsAI aiComponent = rabbit.gameObject.GetComponent<baseRtsAI>();
 
-            aiComponent.UnitFaction = owner.UnitFaction;
+            aiComponent.stats.setFaction(owner.UnitFaction);
             UnitOrders.giveOrder(aiComponent, UnitOrders.OrderType.move, rallyPoint.position);
             return true;
         }

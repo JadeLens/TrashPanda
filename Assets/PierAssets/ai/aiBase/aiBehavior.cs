@@ -14,7 +14,7 @@ public class aiBehavior : MonoBehaviour {
     /// <summary>
     /// type of ai  used for search seek and avoid 
     /// </summary>
-    public AItype type;
+    public AItype type; //to be remove or privatised
 
     /// <summary>
     /// root node of the tree
@@ -30,7 +30,7 @@ public class aiBehavior : MonoBehaviour {
     /// <summary>
     /// how far can it detect a target 
     /// </summary>
-    public float detectionRange = 10;
+    private float detectionRange = 10;
     /// <summary>
     /// how close does it stop to a target
     /// </summary>

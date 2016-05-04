@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Pathfinding;
 using extensions;
 
@@ -24,15 +25,12 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
     private Vector3 m_target;
     private float m_radius;
     private GameObject m_owner;
-    private Seeker m_seeker;
-    private OnPathDelegate m_onPathMade;
     Pier_Unit m_unit;
-    Path m_path;
-    public Node_MoveTo_With_Astar(GameObject owner, Seeker seeker, ref OnPathDelegate onPath, Pier_Unit unit, float ArriveRadius, Vector3 loc = default(Vector3))
+
+    public Node_MoveTo_With_Astar(GameObject owner, Pier_Unit unit, float ArriveRadius, Vector3 loc = default(Vector3))
     {
         m_owner = owner;
-        m_seeker = seeker;
-        m_onPathMade = onPath;
+       
         m_unit = unit;
         SetDestination(loc);
         SetArriveRadius(ArriveRadius);
@@ -42,9 +40,8 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
     public override void Run()
     {
         base.Run();
-        //             Debug.Log("started seeker " +m_target);
-        m_path = m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
-        m_unit.path = m_path;
+
+      
     }
     public Vector3 GetDestination()
     {
@@ -81,13 +78,9 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
     public override void Act(GameObject ob)
     {
 
-
-        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.blue, 0.10f);
-        if(m_unit.path != m_path)//if path changed recalculate path
-        {
-            m_path = m_seeker.StartPath(m_owner.transform.position, m_target, m_onPathMade);
-            m_unit.path = m_path;
-        }
+        m_unit.SetDestination(m_target);
+        Debug.DrawRay(ob.transform.position, m_target - ob.transform.position, Color.red);
+     
 
         if (isAtDestination(ob))
         {

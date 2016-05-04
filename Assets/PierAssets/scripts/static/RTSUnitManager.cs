@@ -4,7 +4,11 @@ using System.Collections.Generic;
 public interface IRtsUnit: IGameUnit
 {
     faction getFaction();
-  
+    void setFaction(faction newFaction);
+
+    float getSightRange();
+    float getAttackRange();
+    float getAttackSpeed();
     baseRtsAI getAIcomponent();
 }
 

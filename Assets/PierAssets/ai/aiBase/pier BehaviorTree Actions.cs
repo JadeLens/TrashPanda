@@ -479,6 +479,7 @@ public class Node_FollowOrders : aiBehaviorNode
 
                 case NodeState.Failure:
                     Debug.Log("order failed");
+                    unit.Orders.Dequeue();//remove completed order
                     //Fail();
                     break;
                 case NodeState.Success:

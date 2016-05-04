@@ -5,10 +5,10 @@ using Pathfinding;
 public class Pier_Unit : MonoBehaviour {
 
 
-   // public Vector3 targetPosition;
+    // public Vector3 targetPosition;
     //public Vector3 castPosition;
     //public Vector3 tP;
-
+     Vector3 DestinationGoal;
     private Seeker seeker;
     public IUnitAnim unitAnim;
    // public unitSelection unitS;
@@ -19,9 +19,7 @@ public class Pier_Unit : MonoBehaviour {
     public float destinationCoeficient = 25;
     //public CharacterController controller;
     public Path path;
-
-    Ray camRay;
-    RaycastHit camRayHit;
+    
 
     public float nextWaypointDistance = 1f;
 
@@ -33,6 +31,18 @@ public class Pier_Unit : MonoBehaviour {
     public bool stationary;
     public bool lookat;
    public OnPathDelegate del;
+
+    public void SetDestination(Vector3 dest)
+    {
+        if (DestinationGoal != dest)
+        {
+            DestinationGoal = dest;
+          
+            path = seeker.StartPath(transform.position, DestinationGoal, del);
+
+        }
+
+    }
     IEnumerator lookTowards(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -43,9 +53,6 @@ public class Pier_Unit : MonoBehaviour {
     {
         seeker = GetComponent<Seeker>();
         unitAnim = GetComponent<IUnitAnim>();
-        //    controller = GetComponent<CharacterController>();
-    //    rAnim = GameObject.Find("RABBIT").GetComponent<rabbitAnim>();
-    //    unitS = GameObject.Find("RABBIT/RABBIT").GetComponent<unitSelection>();
 
         stationary = true;
         unitAnim.playIdle();
@@ -73,25 +80,6 @@ public class Pier_Unit : MonoBehaviour {
             lookat = true;
         }
     }
-    //void part1()
-    //{
-
-    //    camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-    //    if (Physics.Raycast(camRay, out camRayHit))
-    //    {
-    //        if (Input.GetMouseButtonDown(1))
-    //        {
-    //            lookat = true;
-    //            if (camRayHit.transform.gameObject.layer == layerItem)
-    //            {
-    //                targetPosition = new Vector3(camRayHit.point.x, 0.0f, camRayHit.point.z);
-    //            }
-    //            //  seeker.StartPath(transform.position, targetPosition, OnPathComplete);
-    //        }
-    //    }
-    //}
-
     Vector3 Seperation()
     {
         // seperation behaviour steers boids into opposite directions of their neighbours
@@ -156,8 +144,11 @@ public class Pier_Unit : MonoBehaviour {
             //  transform.LookAt(path.vectorPath[currentWaypoint]);
 
             Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = rotation;
+            if (relativePos != Vector3.zero)
+            { 
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+                transform.rotation = rotation;
+            }
             //  StartCoroutine(lookTowards(0.1f));
             lookat = false;
         }
@@ -176,6 +167,7 @@ public class Pier_Unit : MonoBehaviour {
             {
                 stationary = true;
                 unitAnim.crossFadeIdle();
+
                 //   Debug.Log("End Of Path Reached");
                 //     return;
             }
@@ -187,8 +179,11 @@ public class Pier_Unit : MonoBehaviour {
                 {
 
                     Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
-                    Quaternion rotation = Quaternion.LookRotation(relativePos);
-                    transform.rotation = rotation;
+                    if (relativePos != Vector3.zero)
+                    {
+                        Quaternion rotation = Quaternion.LookRotation(relativePos);
+                        transform.rotation = rotation;
+                    }
                     lookat = true;
                     stationary = false;
                 }

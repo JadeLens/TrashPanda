@@ -3,6 +3,7 @@ using System.Collections;
 
 public class cameraMovement : MonoBehaviour
 {
+    Vector3 ogPosition;
     public Transform cameraTar;
     public Quaternion cameraRot;
     public Camera cam;
@@ -30,7 +31,7 @@ public class cameraMovement : MonoBehaviour
         cameraTar = GameObject.Find("CameraTarget").GetComponent<Transform>();
         cam = Camera.main;
         ogCamSize = 5.5f;
-        
+        ogPosition = transform.position;
 
         left = Camera.main.WorldToViewportPoint(new Vector3(1.0f, 0.0f, 0.0f));
         down = Camera.main.WorldToViewportPoint(new Vector3(0.0f, 1.0f, 0.0f));
@@ -40,13 +41,13 @@ public class cameraMovement : MonoBehaviour
     }
     void Update()
     {
-        inScrollClamp = -5.0f;
-        outScrollClamp = 8.0f;
+        //inScrollClamp = -5.0f;
+        //outScrollClamp = 8.0f;
         ogCamRot = Quaternion.Euler(0.0f, 60.0f, 0.0f);
-        leftWallClamp = 0.0f;
-        downWallClamp = 0.0f;
-        rightWallClamp = 50.0f;
-        upWallClamp = 50.0f;
+        //leftWallClamp = 0.0f;
+        //downWallClamp = 0.0f;
+        //rightWallClamp = 50.0f;
+        //upWallClamp = 50.0f;
 
         if (cameraTar.position.y <= inScrollClamp)
         {
@@ -115,8 +116,8 @@ public class cameraMovement : MonoBehaviour
         //Reset Camera
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            cameraTar.position = new Vector3(cameraTar.position.x, 1.5f, cameraTar.position.z);
-            cameraTar.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
+            cameraTar.position = ogPosition;//new Vector3(cameraTar.position.x, 1.5f, cameraTar.position.z);
+            //cameraTar.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
            // transform.rotation = Quaternion.Slerp(transform.rotation, ogCamRot, 1.0f);
         }
         //Scroll Zoom

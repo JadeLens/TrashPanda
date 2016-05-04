@@ -4,16 +4,14 @@ using System.Collections.Generic;
 public enum faction { neutral, faction1, faction2 }
 public class baseRtsAI : aiBehavior
 {
-    public faction UnitFaction;
     public Seeker m_seeker;
     public Pier_Unit m_unit;
     //  public unitStats_ForAiTest stats;
     public command MainWeapon;
-    public AItype typeToChase;
-    public AItype typeToAvoid;
-
-    public float attackDelay = 1;
+   
+ 
     public new IRtsUnit stats;
+  
     private aiBehaviorNode CreateRabbit()
     {
 
@@ -27,7 +25,7 @@ public class baseRtsAI : aiBehavior
                 { 
 			//	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
                     new Node_Wander_Modular(
-                        new Node_MoveTo_With_Astar(this.gameObject, this.m_seeker, ref this.m_unit.del,m_unit,SeekarriveRadius),
+                        new Node_MoveTo_With_Astar(this.gameObject,m_unit,SeekarriveRadius),
                         anchorRange),
 
                 }
@@ -59,9 +57,9 @@ public class baseRtsAI : aiBehavior
                 {
                     new Node_FollowOrders(this),
 
-                      pierBehaviorsubTrees.attackSequence(this)//this gets reapeated by main repeat node if we have no orders
+                     pierBehaviorsubTrees.attackSequence(this)//this gets reapeated by main repeat node if we have no orders
                    
-
+                     
                 }
             )
         );
@@ -73,7 +71,7 @@ public class baseRtsAI : aiBehavior
 
         Init();
        
-
+        
         switch (type)
         {
             case AItype.lamb:
@@ -95,7 +93,6 @@ public class baseRtsAI : aiBehavior
             routine.Run();
         }
     }
-
 
     void OnEnable()
     {

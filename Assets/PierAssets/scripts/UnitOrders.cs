@@ -95,7 +95,7 @@ public class UnitOrders : MonoBehaviour
 
 	public static aiBehaviorNode moveComand(baseRtsAI rabbit,Vector3 loc)
 	{
-		IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit, rabbit.SeekarriveRadius,loc);
+		IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_unit, rabbit.SeekarriveRadius,loc);
 		commande.SetArriveRadius(2.5f);
 		return (aiBehaviorNode)commande;
 	}
@@ -107,7 +107,7 @@ public class UnitOrders : MonoBehaviour
             {
             new Node_Invert(new Node_Repeat_Until_Fail
                 (pierBehaviorsubTrees.attackSequence(rabbit))),
-                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,loc)
+                new Node_MoveTo_With_Astar(rabbit.gameObject,  rabbit.m_unit,rabbit.SeekarriveRadius,loc)
             }
         );
     }
@@ -126,7 +126,7 @@ public class UnitOrders : MonoBehaviour
                         
                     )
                 ),
-                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_seeker, ref rabbit.m_unit.del, rabbit.m_unit,rabbit.SeekarriveRadius,target.GetGameObject().transform.position)
+                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_unit,rabbit.SeekarriveRadius,target.GetGameObject().transform.position)
 
             }
         );

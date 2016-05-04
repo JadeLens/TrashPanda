@@ -56,7 +56,7 @@ public class PointOfInterest : MonoBehaviour
     }
     public void CapturePT(baseRtsAI unit)
     {
-        ChangeFaction(unit.UnitFaction);
+        ChangeFaction(unit.stats.getFaction());
         toggleMat();
         for (int i = 0; i < players.Length; i++)
         {

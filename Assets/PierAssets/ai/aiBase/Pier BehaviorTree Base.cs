@@ -355,7 +355,7 @@ public class Node_Selector : aiBehaviorNode
         //Debug.Log("Node_Selector  act");
         for (int i = 0; i < m_children.Length;i++ )
         {
-            bool isChildRunning = false;
+            //bool isChildRunning = false;
             switch (m_children[i].GetState())
             {
                 case NodeState.Ready:

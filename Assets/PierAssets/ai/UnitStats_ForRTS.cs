@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 
 public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
 {
     baseRtsAI ai;
     IGameUnit target;
     [SerializeField]
-    protected string targetKey;
+    protected string targetKey = "Target";
     public string unitname;
     [SerializeField]
     protected float currentHealth;
     protected bool IsDead = false;
+
+    public float sightRange = 6;
+    public float attackRange = 5;
+    public float attackDelay = 1;
     [SerializeField]
     protected float dmg = 10f;
 
     [SerializeField]
     protected float maxHealth = 100;
+    Slider healthBar;
     private bool isAttacking = false;
     // Use this for initialization
     public faction myFaction;
@@ -120,15 +127,37 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
 
     void Start ()
     {
+        healthBar = GetComponentInChildren<Slider>();
+        healthBar.maxValue = getMaxHealth();
         ai = gameObject.GetComponent<baseRtsAI>();
         currentHealth = maxHealth;
-        if (ai != null)
-            myFaction = ai.UnitFaction;
+     
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-	
-	}
+        if(healthBar != null)
+            healthBar.value = getCurrentHealth();
+    }
+
+    public float getAttackSpeed()
+    {
+        return attackDelay;
+    }
+
+    public void setFaction(faction newFaction)
+    {
+        myFaction = newFaction;
+    }
+
+    public float getAttackRange()
+    {
+        return attackRange;
+    }
+
+    public float getSightRange()
+    {
+        return sightRange;
+    }
 }

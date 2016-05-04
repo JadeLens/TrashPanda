@@ -6,9 +6,11 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
     public string idle;
     public string run;
     public string attack;
-    public Animator anim;
+    private Animator anim;
+    public int index;
     public void crossFadeIdle()
     {
+        
         anim.Play(idle);
         // throw new NotImplementedException();
     }
@@ -20,7 +22,9 @@ public class UnitAnim : MonoBehaviour, IUnitAnim
 
     public void playIdle()
     {
-        anim.Play(idle);
+       //  index = anim.GetLayerIndex(idle);
+       
+          anim.Play(idle);
         //throw new NotImplementedException();
     }
 
