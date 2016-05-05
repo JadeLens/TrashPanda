@@ -54,6 +54,8 @@ public class CameraSelection : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             startClick = Input.mousePosition;
+
+        
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -68,6 +70,20 @@ public class CameraSelection : MonoBehaviour
                 selection.height = -selection.height;
             }
             ctrl.ClearSelection();
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100.0f))
+            {
+                IRtsUnit unit = hit.collider.gameObject.GetComponent<IRtsUnit>();
+
+                if (unit != null)
+                {
+
+                    ctrl.addUnit(unit.getAIcomponent());
+                }
+            }
+
             foreach (IRtsUnit unit in RTSUnitManager.GetUnitList())
             {
                 // Debug.Log("test");
@@ -75,7 +91,7 @@ public class CameraSelection : MonoBehaviour
                 {
                     if (unit.getFaction() == ctrl.UnitFaction)
                     {
-                        if(unit.getAIcomponent() != null)
+                        if (unit.getAIcomponent() != null)
                             ctrl.addUnit(unit.getAIcomponent());
                     }
                 }

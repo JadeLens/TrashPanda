@@ -3,7 +3,7 @@ using System.Collections;
 using Pathfinding;
 
 public class Pier_Unit : MonoBehaviour {
-
+  public  bool debug = false;
 
     // public Vector3 targetPosition;
     //public Vector3 castPosition;
@@ -24,9 +24,9 @@ public class Pier_Unit : MonoBehaviour {
     public float nextWaypointDistance = 1f;
 
     public int speed = 5;
-    private int currentWaypoint = 0;
+    public int currentWaypoint = 0;
 
-    public LayerMask layerItem;
+  //  public LayerMask layerItem;
 
     public bool stationary;
     public bool lookat;
@@ -37,29 +37,30 @@ public class Pier_Unit : MonoBehaviour {
         if (DestinationGoal != dest)
         {
             DestinationGoal = dest;
-          
+          if(debug)
+            {
+                Debug.Log("started new path");
+
+            }
             path = seeker.StartPath(transform.position, DestinationGoal, del);
 
         }
 
     }
-    IEnumerator lookTowards(float waitTime)
+    void Awake()
     {
-        yield return new WaitForSeconds(waitTime);
-        lookat = false;
-    }
 
-    public void Start()
-    {
         seeker = GetComponent<Seeker>();
         unitAnim = GetComponent<IUnitAnim>();
 
-        stationary = true;
-        unitAnim.playIdle();
-
-        layerItem = LayerMask.NameToLayer("ground");
+        //layerItem = LayerMask.NameToLayer("ground");
         del = new OnPathDelegate(OnPathComplete);
-            
+        Debug.Log("setUp");
+    }
+    public void Start()
+    {
+      //  Debug.Log("setUp");
+
     }
 
     public void OnPathComplete(Path p)
@@ -67,19 +68,13 @@ public class Pier_Unit : MonoBehaviour {
   //      Debug.Log("pathComplete ... " + p.error);
         if (!p.error)
         {
-    //        Debug.Log("path set ");
+            if(debug)
+                Debug.Log("path set ");
             path = p;
-            stationary = true;
             currentWaypoint = 0;
         }
     }
-    public void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            lookat = true;
-        }
-    }
+
     Vector3 Seperation()
     {
         // seperation behaviour steers boids into opposite directions of their neighbours
@@ -119,28 +114,15 @@ public class Pier_Unit : MonoBehaviour {
     }
     void part2Math()
     {
-   //     Debug.Log(currentWaypoint);
-      
-
-
         Vector3 r = separationCoeficient * Seperation() + destinationCoeficient * Destination();
-                   ;
+                   
 
-        //   dir *= speed * Time.deltaTime;
-        //     controller.SimpleMove(dir);
         r = r.normalized * speed * Time.deltaTime;
         r = new  Vector3(r.x, 0, r.z);
         transform.position += r;
-     //   transform.Translate(dir * speed * Time.deltaTime,Space.World);
-    //  transform.position = path.vectorPath[currentWaypoint];
-        //  tP = new Vector3(0.0f, path.vectorPath[currentWaypoint].y, path.vectorPath[currentWaypoint].z);
-
-        //Vector3 targetDir = path.vectorPath[currentWaypoint] - transform.position;
-        //float step = speed * Time.deltaTime;
-        //Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-
-        if (lookat)
-        {
+  
+        //if (lookat)
+        //{
             //  transform.LookAt(path.vectorPath[currentWaypoint]);
 
             Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
@@ -150,56 +132,35 @@ public class Pier_Unit : MonoBehaviour {
                 transform.rotation = rotation;
             }
             //  StartCoroutine(lookTowards(0.1f));
-            lookat = false;
-        }
+            //lookat = false;
+        //}
 
     }
     public void FixedUpdate()
     {
-        if (path == null)
+       
+        if (path != null && currentWaypoint < path.vectorPath.Count)
         {
-            stationary = true;
-            // return;
-        }
-        else
-        {
-            if (currentWaypoint >= path.vectorPath.Count)
+            stationary = false;
+            part2Math(); //movement and rotation
+
+            //are we at wayPoint
+            if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
+            {
+                currentWaypoint++;
+
+            }
+            if (currentWaypoint >= path.vectorPath.Count )
             {
                 stationary = true;
+                currentWaypoint = path.vectorPath.Count;
+                path = null;
                 unitAnim.crossFadeIdle();
-
-                //   Debug.Log("End Of Path Reached");
-                //     return;
+              //  Debug.Log("test");
             }
-            else
-            {
-                part2Math();
 
-                if (stationary)
-                {
-
-                    Vector3 relativePos = path.vectorPath[currentWaypoint] - new Vector3(transform.position.x, path.vectorPath[currentWaypoint].y, transform.position.z);
-                    if (relativePos != Vector3.zero)
-                    {
-                        Quaternion rotation = Quaternion.LookRotation(relativePos);
-                        transform.rotation = rotation;
-                    }
-                    lookat = true;
-                    stationary = false;
-                }
-
-                if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
-                {
-                    currentWaypoint++;
-                    //        Debug.Log("next Pt");
-                    lookat = true;
-                    //  return;
-
-                }
-            }
-          
         }
-
+    
 
         if (!stationary )
         {
@@ -214,11 +175,11 @@ public class Pier_Unit : MonoBehaviour {
 
     }
 
-    //void LateUpdate()
-    //{
+    void LateUpdate()
+    {
 
 
-    //    Debug.DrawRay(camRay.origin, camRay.direction * 50, Color.green);
+       Debug.DrawRay(transform.position, DestinationGoal - transform.position, Color.white);
 
-    //}
+    }
 }

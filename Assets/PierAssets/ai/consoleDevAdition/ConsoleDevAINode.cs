@@ -442,11 +442,7 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
 
     }
 
-    protected override void Fail()
-    {
-        base.Fail();
-        Debug.Log("seekFail");
-    }
+ 
 }
 
 public class Node_Get_Closest_Enemy : aiBehaviorNode

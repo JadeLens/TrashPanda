@@ -12,46 +12,48 @@ public class baseRtsAI : aiBehavior
  
     public new IRtsUnit stats;
   
-    private aiBehaviorNode CreateRabbit()
-    {
+   // private aiBehaviorNode CreateRabbit()
+   // {
 
 
-        //  movementNode.SetArriveRadius(SeekarriveRadius);
-        return new Node_Repeat
-        (
-            new Node_PrioritySelector
-            (
-                new aiBehaviorNode[]
-                { 
-			//	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
-                    new Node_Wander_Modular(
-                        new Node_MoveTo_With_Astar(this.gameObject,m_unit,SeekarriveRadius),
-                        anchorRange),
+   //     //  movementNode.SetArriveRadius(SeekarriveRadius);
+   //     return new Node_Repeat
+   //     (
+   //         new Node_PrioritySelector
+   //         (
+   //             new aiBehaviorNode[]
+   //             { 
+			////	new Node_Flee(agent,detectionRange,SeekarriveRadius,typeToAvoid),
+   //                 new Node_Wander_Modular(
+   //                     new Node_MoveTo_With_Astar(this.gameObject,m_unit,SeekarriveRadius),
+   //                     anchorRange),
 
-                }
-            )
-        );
-    }
-    private aiBehaviorNode CreateDrone()
-    {
-        return new Node_Repeat
-        (
-            new Node_PrioritySelector(
-                new aiBehaviorNode[]
-                {
-                    new Node_FollowOrders(this),
-                    new Node_Delay(0.5f)
+   //             }
+   //         )
+   //     );
+   // }
+   // private aiBehaviorNode CreateDrone()
+   // {
+   //     return new Node_Repeat
+   //     (
+   //         new Node_PrioritySelector(
+   //             new aiBehaviorNode[]
+   //             {
+   //                 new Node_FollowOrders(this),
+   //                 new Node_Delay(0.5f)
 
-                }
-            )
-        );
+   //             }
+   //         )
+   //     );
 
-    }
+   // }
+
+
     private aiBehaviorNode CreateAttackDrone()
     {
         return new Node_Repeat//main repeat node
         (
-            new Node_PrioritySelector(
+            new Node_Selector(
 
                 new aiBehaviorNode[]
                 {
@@ -70,24 +72,9 @@ public class baseRtsAI : aiBehavior
     {
 
         Init();
-       
-        
-        switch (type)
-        {
-            case AItype.lamb:
-                routine = CreateRabbit();
-                break;
-            case AItype.wolf:
-                routine = CreateAttackDrone();
-                //    Debug.Log("attack Drone");
+   
+        routine = CreateAttackDrone();
 
-                break;
-            default:
-                routine = CreateDrone();
-                //      Debug.Log(" Drone");
-                break;
-
-        }
         if (autoStart)
         {
             routine.Run();

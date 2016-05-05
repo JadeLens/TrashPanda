@@ -27,8 +27,8 @@ public class cameraMovement : MonoBehaviour
 
     void Start()
     {
-        
-        cameraTar = GameObject.Find("CameraTarget").GetComponent<Transform>();
+
+        cameraTar = transform;
         cam = Camera.main;
         ogCamSize = 5.5f;
         ogPosition = transform.position;
