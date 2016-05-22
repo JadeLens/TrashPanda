@@ -55,7 +55,7 @@ public class Pier_Unit : MonoBehaviour {
 
         //layerItem = LayerMask.NameToLayer("ground");
         del = new OnPathDelegate(OnPathComplete);
-        Debug.Log("setUp");
+     //   Debug.Log("setUp");
     }
     public void Start()
     {

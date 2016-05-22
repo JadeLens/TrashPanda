@@ -15,7 +15,7 @@ public class ComputerSideAI : basePlayer
 
     //behaviortree Related end
 
-    public UnitBuilder myBuilding;
+
     Dictionary<CtrlGroupsName, List<baseRtsAI>> controlGroups;
     //public faction UnitFaction;
    // public List<PointOfInterest> points;
@@ -125,7 +125,7 @@ public class ComputerSideAI : basePlayer
     {
 
 
-        return myBuilding.SpawnRabbit();
+        return myBuilding.builder.SpawnRabbit();
     }
     bool haveEnoughUnitsToAttack()
     {

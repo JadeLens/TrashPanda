@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public interface IRtsUnit: IGameUnit
+
+
+public struct OnAttackedInfo
+{
+ public   Vector3 location;
+
+}
+public interface IRtsUnit: IGameUnit, IObsevable<OnAttackedInfo>
 {
     faction getFaction();
     void setFaction(faction newFaction);

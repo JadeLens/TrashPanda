@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-public class MainBuilding : MonoBehaviour {
-    IRtsUnit stats;
+using System;
+
+public class MainBuilding : MonoBehaviour 
+{
+  
+   public IRtsUnit stats;
+    public UnitBuilder builder;
     // Use this for initialization
-    void Start () {
-	
-	}
+    void Awake() {
+        stats = this.gameObject.GetComponent<IRtsUnit>();
+        builder = this.gameObject.GetComponent<UnitBuilder>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -14,7 +21,7 @@ public class MainBuilding : MonoBehaviour {
 	}
     void OnEnable()
     {
-        stats = this.gameObject.GetComponent<IRtsUnit>();
+       
         RTSUnitManager.Register(stats);
     }
 
@@ -28,4 +35,6 @@ public class MainBuilding : MonoBehaviour {
 
         
     }
+   
 }
+

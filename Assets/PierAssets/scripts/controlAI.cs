@@ -6,15 +6,28 @@ using System.Collections.Generic;
 /// </summary>
 public class controlAI : basePlayer
 {
- 
+    Camera currentCAM;
+    public Camera minimapCam;
+  Vector3 FirstHit;
     public bool attackModifier = false;
 	// Use this for initialization
 	void Start () {
         FirstHit = Input.mousePosition;
         mySelection = new List<baseRtsAI>();
+      
+            myBuilding.stats.Register(this);
+        currentCAM = Camera.main;
     }
-    Vector3 FirstHit;
-
+   public void switchToMiniMapCam()
+    {
+       // Debug.Log("im inside");
+        currentCAM = minimapCam;
+    }
+    public void switchToMainCam()
+    {
+        currentCAM = Camera.main;
+      //  Debug.Log("im out");
+    }
     public void addUnit(baseRtsAI unit)
     {
         unit.gameObject.GetComponentInChildren<Projector>().enabled = true;
@@ -56,7 +69,7 @@ public class controlAI : basePlayer
 		{
             RaycastHit hit;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = currentCAM.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 PointOfInterest poi = hit.collider.gameObject.GetComponent<PointOfInterest>();

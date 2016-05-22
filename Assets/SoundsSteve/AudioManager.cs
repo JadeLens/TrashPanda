@@ -128,10 +128,12 @@ public class AudioManager : MonoBehaviour
         AudioSource source = GetAvailableSource();
 
         // Set the clip to play.
+        if (clip != null) { 
         source.clip = clip;
         source.volume = volume;
         // Play the clip.
         source.Play();
+    }
     }
     private static AudioSource GetAudioSource()
     {

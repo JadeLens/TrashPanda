@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
-public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
+public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
 {
+    List<IObserver<OnAttackedInfo>> observers;
     baseRtsAI ai;
     IGameUnit target;
     [SerializeField]
@@ -81,7 +83,7 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
     public bool changeHealth(float damage)
     {
         currentHealth += damage;
-        if(hurtSound)
+        if (hurtSound)
             AudioManager.PlaySoundClip(hurtSound);
         //Debug.Log(unitname + " current health remaining : " + currentHealth);
         if (currentHealth <= 0)
@@ -90,6 +92,17 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
             Death();
             return true;
         }
+        if (damage < 0)
+        {
+            OnAttackedInfo info;
+            info.location = transform.position;
+            foreach (IObserver<OnAttackedInfo> o in observers)
+            {
+                o.onUpdate(info);
+            }
+
+
+        }
         return false;
     }
     protected void Death()
@@ -97,12 +110,26 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
         IsDead = true;
 
         //this.gameObject.SetActive(false);
-        if(this.gameObject != null)
-        { 
+        if (this.gameObject != null)
+        {
             Destroy(this.gameObject);
         }
     }
 
+
+    public void Register(IObserver<OnAttackedInfo> observer)
+    {
+        Debug.Log("observer");
+        observers.Add(observer);
+    }
+
+    public void Unregister(IObserver<OnAttackedInfo> observer)
+    {
+        if (observers.Contains(observer))
+        {
+            observers.Remove(observer);
+        }
+    }
     public IEnumerator Attack(float range, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -124,7 +151,11 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
         yield return new WaitForSeconds(delay); 
 
     }
+    public void Awake()
+    {
 
+        observers = new List<IObserver<OnAttackedInfo>>();
+    }
     void Start ()
     {
         healthBar = GetComponentInChildren<Slider>();
@@ -160,4 +191,6 @@ public class UnitStats_ForRTS : MonoBehaviour,IRtsUnit
     {
         return sightRange;
     }
+
+
 }

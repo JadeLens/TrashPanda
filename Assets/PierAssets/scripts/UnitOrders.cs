@@ -102,13 +102,18 @@ public class UnitOrders : MonoBehaviour
 
     public static aiBehaviorNode attackMove(baseRtsAI rabbit, Vector3 loc)
     {
-        return new Node_PrioritySelector
-        (new aiBehaviorNode[]
-            {
-            new Node_Invert(new Node_Repeat_Until_Fail
-                (pierBehaviorsubTrees.attackSequence(rabbit))),
-                new Node_MoveTo_With_Astar(rabbit.gameObject,  rabbit.m_unit,rabbit.SeekarriveRadius,loc)
-            }
+        return new Node_Repeat_Until_Fail               //repeat  the selector until it suceeds
+        (                                              // 
+            new Node_Invert(new Node_PrioritySelector //
+            (
+                new aiBehaviorNode[]
+                {
+                new Node_Invert(new Node_Repeat_Until_Fail   //repeat the attackSequence until it fails then succeeds
+                    (pierBehaviorsubTrees.attackSequence(rabbit))),
+
+                    new Node_Timer(new Node_MoveTo_With_Astar(rabbit.gameObject,  rabbit.m_unit,rabbit.SeekarriveRadius,loc),1) //lets node run for T time then fails it 
+                }
+            ))
         );
     }
 

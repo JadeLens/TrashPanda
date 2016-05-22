@@ -257,9 +257,11 @@ public class Node_IsNull : aiBehaviorNode
         if (value == null)
         {
             Succeed();
+         //   Debug.Log("value is null");
         }
         else
         {
+           // Debug.Log("value not null");
             Fail();
 
         }
@@ -276,6 +278,15 @@ public class Node_IsNull : aiBehaviorNode
             return null;
         }
 
+    }
+    static public void RemoveBBVar(Dictionary<string, System.Object> dict, string key)
+    {
+
+        if (dict.ContainsKey(key))
+        {
+            dict.Remove(key);
+
+        }
     }
 }
 
@@ -408,9 +419,17 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
         GameObject target = Node_IsNull.GetBBVar(m_dict, m_key) as GameObject;
         if (target != null)
         {
-            Vector3 Direction = target.transform.position - ob.transform.position;
-            //add a check to see if we are close enought for detection
-            m_child1.SetDestination(target.transform.position);
+            float dist = Vector3.Distance(ob.transform.position, target.transform.position);
+            if (dist < 6)
+            {
+                Vector3 Direction = target.transform.position - ob.transform.position;
+                //add a check to see if we are close enought for detection
+                m_child1.SetDestination(target.transform.position);
+            }
+            else
+            {
+                Fail();
+            }
             //                       Debug.Log("dest set");
             //				Debug.Log(m_child2.GetTarget().transform.position);
             // m_child1.Run();
@@ -464,6 +483,8 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
     }
     public override void Act(GameObject ob)
     {
+        m_target = null;
+        
         foreach (IRtsUnit u in RTSUnitManager.GetUnitList())
         {
 
@@ -490,14 +511,18 @@ public class Node_Get_Closest_Enemy : aiBehaviorNode
 
         if (m_target == null)
         {
-
+            Node_IsNull.RemoveBBVar(m_dict, m_key);
             Fail();
+          
         }
         else
         {
+            Node_SetVariable.SetBBVar(m_dict, m_key, m_target);
             Succeed();
+           
         }
-        Node_SetVariable.SetBBVar(m_dict, m_key, m_target);
+        
+       
     }
 
     public override void Reset()
@@ -578,13 +603,13 @@ public class Node_Find_Closest_Target_BB : aiBehaviorNode
 }
 
 /// <summary>
-/// repeats a child node until it fails
+/// repeats a child node until it fails then this succeeds
 /// </summary>
 public class Node_Repeat_Until_Fail : aiBehaviorNode
 {
     private aiBehaviorNode m_child;
     /// <summary>
-    /// repeats a child node until it fails
+    /// repeats a child node until it fails then this succeeds
     /// </summary>
     public Node_Repeat_Until_Fail(aiBehaviorNode Node)
     {
