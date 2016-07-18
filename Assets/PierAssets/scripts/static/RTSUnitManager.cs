@@ -17,6 +17,11 @@ public interface IRtsUnit: IGameUnit, IObsevable<OnAttackedInfo>
     float getAttackRange();
     float getAttackSpeed();
     baseRtsAI getAIcomponent();
+
+     Sprite getIcon();
+
+     Sprite getPortrait();
+    
 }
 
 public class RTSUnitManager {

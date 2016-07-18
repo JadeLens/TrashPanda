@@ -18,7 +18,8 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
 
     public float sightRange = 6;
     public float attackRange = 5;
-    public float attackDelay = 1;
+    [SerializeField]
+    private float attackDelay = 1;
     [SerializeField]
     protected float dmg = 10f;
 
@@ -28,7 +29,20 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
     private bool isAttacking = false;
     // Use this for initialization
     public faction myFaction;
+    [SerializeField]
+    private Sprite icon;
+    [SerializeField]
+    private Sprite portrait;
 
+
+    public Sprite getIcon()
+    {
+        return icon;
+    }
+    public Sprite getPortrait()
+    {
+        return portrait;
+    }
     public faction getFaction()
     {
         return myFaction;
@@ -119,7 +133,7 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
 
     public void Register(IObserver<OnAttackedInfo> observer)
     {
-        Debug.Log("observer");
+       //ebug.Log("observer");
         observers.Add(observer);
     }
 

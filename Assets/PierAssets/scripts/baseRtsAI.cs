@@ -83,6 +83,7 @@ public class baseRtsAI : aiBehavior
 
     void OnEnable()
     {
+   
         stats = this.gameObject.GetComponent<IRtsUnit>();
         RTSUnitManager.Register(this);
     }
