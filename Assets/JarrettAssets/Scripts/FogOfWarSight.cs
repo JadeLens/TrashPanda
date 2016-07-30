@@ -17,10 +17,11 @@ public class FogOfWarSight : MonoBehaviour
 	void Update ()
     {
 	    foreach(Collider col in Physics.OverlapSphere(transform.position, radius, layerMask))
-        {  
-            if (col.gameObject.GetComponentInChildren<Renderer>() != null)
+        {
+            FogOfWarVisibility fogscript = col.gameObject.GetComponent<FogOfWarVisibility>();
+            if (fogscript != null)
             {
-                col.SendMessage("Observed", SendMessageOptions.DontRequireReceiver);
+                fogscript.Observed();
                 //col.gameObject.GetComponent<Renderer>().enabled = true;
             }
         }

@@ -37,7 +37,7 @@ public class FogOfWarVisibility : MonoBehaviour
         observed = false;
 	}
 
-    void Observed()
+    public void Observed()
     {
         observed = true;
    //    Debug.Log("yo");

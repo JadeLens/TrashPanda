@@ -148,7 +148,7 @@ public class aiBehavior : MonoBehaviour {
         }
     }
 	// Update is called once per frame
-    public void FixedUpdate()
+    public void Update()
     {
         if (routine.isRunning())
         {

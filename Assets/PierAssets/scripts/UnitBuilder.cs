@@ -19,9 +19,20 @@ public class UnitBuilder : MonoBehaviour {
     public AudioClip wrong;
     // Use this for initialization
 
-        /// <summary>
-        /// because Ui button cant use a return type of bool 
-        /// </summary>
+        //later change to use unit interface
+    public static void cloneUnit(baseRtsAI unit)
+    {
+        Transform rabbit = Instantiate(unit.transform, unit.transform.position, unit.transform.rotation) as Transform;
+        baseRtsAI aiComponent = rabbit.gameObject.GetComponent<baseRtsAI>();
+
+        aiComponent.stats.setFaction(unit.stats.getFaction());
+        UnitOrders.giveOrder(aiComponent, UnitOrders.OrderType.move, unit.transform.position);
+
+
+    }
+    /// <summary>
+    /// because Ui button cant use a return type of bool 
+    /// </summary>
     public void spawnForUiButton()
     {
         SpawnRabbit();

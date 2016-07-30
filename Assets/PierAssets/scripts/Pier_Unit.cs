@@ -4,7 +4,7 @@ using Pathfinding;
 
 public class Pier_Unit : MonoBehaviour {
   public  bool debug = false;
-
+    public int frameCountUpdater = 2;
     // public Vector3 targetPosition;
     //public Vector3 castPosition;
     //public Vector3 tP;
@@ -31,7 +31,7 @@ public class Pier_Unit : MonoBehaviour {
     public bool stationary;
     public bool lookat;
    public OnPathDelegate del;
-
+    Vector3 dir;
     public void SetDestination(Vector3 dest)
     {
         if (DestinationGoal != dest)
@@ -89,19 +89,34 @@ public class Pier_Unit : MonoBehaviour {
         // adding contibuting vectors of neghbours towarsds this boid
         foreach (var agent in neighbours)
         {
-            // checking for field of vision boids
-            if (Vector3.Distance(agent.GetGameObject().transform.position, this.transform.position) < separationRadius)
-            {
-                Vector3 towardsMe = this.transform.position - agent.GetGameObject().transform.position;
+            Vector3 towardsMe = this.transform.position - agent.GetGameObject().transform.position;
 
-                if (towardsMe.magnitude > 0)
+            float Dist = towardsMe.magnitude;
+            if (Dist < separationRadius)
+            {
+
+                if (Dist > 0)
                 {
                     // force that each agent has on me is inversely proportional to the distance
-                    r += towardsMe.normalized / towardsMe.magnitude;
+                    r += towardsMe.normalized / Dist;
 
                 }
 
             }
+
+            // checking for field of vision boids
+            /*   if (Vector3.Distance(agent.GetGameObject().transform.position, this.transform.position) < separationRadius)
+               {
+                   Vector3 towardsMe = this.transform.position - agent.GetGameObject().transform.position;
+
+                   if (towardsMe.magnitude > 0)
+                   {
+                       // force that each agent has on me is inversely proportional to the distance
+                       r += towardsMe.normalized / towardsMe.magnitude;
+
+                   }
+
+               }*/
         }
 
         return r.normalized;
@@ -112,14 +127,14 @@ public class Pier_Unit : MonoBehaviour {
 
 
     }
-    void part2Math()
+    Vector3 part2Math()
     {
         Vector3 r = separationCoeficient * Seperation() + destinationCoeficient * Destination();
                    
 
         r = r.normalized * speed * Time.deltaTime;
         r = new  Vector3(r.x, 0, r.z);
-        transform.position += r;
+       
   
         //if (lookat)
         //{
@@ -131,19 +146,22 @@ public class Pier_Unit : MonoBehaviour {
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
                 transform.rotation = rotation;
             }
-            //  StartCoroutine(lookTowards(0.1f));
-            //lookat = false;
+        //  StartCoroutine(lookTowards(0.1f));
+        //lookat = false;
         //}
+        return r;
 
     }
-    public void FixedUpdate()
+    public void Update()
     {
-       
+        
         if (path != null && currentWaypoint < path.vectorPath.Count)
         {
             stationary = false;
-            part2Math(); //movement and rotation
+            
+            dir= part2Math(); //movement and rotation
 
+            transform.position += dir;
             //are we at wayPoint
             if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
             {
@@ -179,7 +197,7 @@ public class Pier_Unit : MonoBehaviour {
     {
 
 
-       Debug.DrawRay(transform.position, DestinationGoal - transform.position, Color.white);
+     //  Debug.DrawRay(transform.position, DestinationGoal - transform.position, Color.white);
 
     }
 }

@@ -37,17 +37,24 @@ public class BottomPanelUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+       
+            
+            IconParent.gameObject.SetActive(!(player.mySelection.Count == 1));
 
-       for(int i = 0; i <  IconParent.childCount; i++)
-        {
-            Destroy(IconParent.GetChild(i).gameObject);
+            if(IconParent.childCount != player.mySelection.Count)
+            {
+                for (int i = 0; i < IconParent.childCount; i++)
+                {
+                    Destroy(IconParent.GetChild(i).gameObject);
 
+                }
+                portraitOb.sprite = null;
+                foreach (baseRtsAI unit in player.mySelection)
+                {
+                    addUnit(unit.stats.getPortrait(), unit.stats.getIcon());
+
+                }
+            }
         }
-        portraitOb.sprite = null;
-    foreach (baseRtsAI unit in player.mySelection)
-        {
-            addUnit( unit.stats.getPortrait(),unit.stats.getIcon());
-
-        }
-	}
+	
 }
