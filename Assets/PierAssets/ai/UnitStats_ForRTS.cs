@@ -34,7 +34,10 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
     [SerializeField]
     private Sprite portrait;
 
-
+    public string getRace()
+    {
+        return unitname;
+    }
     public Sprite getIcon()
     {
         return icon;
@@ -57,7 +60,10 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
     {
         return this.gameObject;
     }
-
+    public Transform GetTransform()
+    {
+        return transform;
+    }
     public bool GetIsAttacking()
     {
         return isAttacking;

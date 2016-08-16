@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BottomPanelUI : MonoBehaviour {
+public class BottomMiddlePanelUI : MonoBehaviour {
     public basePlayer player;
     public Transform iconPrefab;
     public Image portraitOb;
@@ -52,7 +52,7 @@ public class BottomPanelUI : MonoBehaviour {
                 foreach (baseRtsAI unit in player.mySelection)
                 {
                     addUnit(unit.stats.getPortrait(), unit.stats.getIcon());
-
+               
                 }
             }
         }

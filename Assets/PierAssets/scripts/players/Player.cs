@@ -6,7 +6,6 @@ using System.Collections.Generic;
 /// </summary>
 public class Player : basePlayer
 {
-
     Camera currentCAM;
     Camera minimapCam;
     Vector3 startClick;
@@ -15,10 +14,13 @@ public class Player : basePlayer
     public Texture2D selectionBox = null;
     public static Rect selection = new Rect(0, 0, 0, 0);
     List<baseRtsAI>[] controlGroups;
-
     public bool MouseOverUi = false;
     private bool IsDragSelecting = false;
-
+    public bool spellTargetModeOn = false;
+    public Texture2D spellCursorTexture;
+    public Texture2D attackCursorTexture;
+    enum InputMode { normal, attack, spellTarget };
+    InputMode m_InputMode = InputMode.normal;
     // Use this for initialization
     void Start() {
         startClick = -Vector3.one; // selection box not drawn when set to this value
@@ -37,20 +39,15 @@ public class Player : basePlayer
                 {
                     if (unit.getAIcomponent() != null)
                         addUnit(unit.getAIcomponent());
-                }
-            
+                }   
         }
-
     }
     public void setMouseOberUI(bool val)
     {
-
-
         MouseOverUi = val;
     }
     void setControlGroup(int group)
     {
-
         if (mySelection != null)
         {
             if (controlGroups[group] == null)
@@ -64,23 +61,17 @@ public class Player : basePlayer
             }
         }
     }
-
     public void SelectControlGroup(int group)
     {
-     
         if (controlGroups[group] != null)
         {
             ClearSelection();
             foreach (baseRtsAI u in controlGroups[group])
-            {
-                
+            {   
                 addUnit(u);
-            }
-
-        
+            }   
         }
     }
-
     void handleGroup(bool isCtrlDown , int group)
     {
         if (isCtrlDown)
@@ -91,7 +82,6 @@ public class Player : basePlayer
         {
             SelectControlGroup(group);
         }
-
     }
     void ControlGroupsInput()
     {
@@ -99,7 +89,6 @@ public class Player : basePlayer
         if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)|| Input.GetKey(KeyCode.X)){
             ctrl = true;
         }
-
         if (Input.GetKeyUp(KeyCode.Alpha1)){
             handleGroup(ctrl, 1);
         }
@@ -131,32 +120,67 @@ public class Player : basePlayer
             handleGroup(ctrl, 0);
         }
     }
- 
-    void Update()
+    void ActivateAttackModifier()
+    {
+        m_InputMode = InputMode.attack;
+        attackModifier = true;
+        Cursor.SetCursor(attackCursorTexture, Vector2.zero, CursorMode.Auto);
+
+
+    }
+    void resetInputMode()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        m_InputMode = InputMode.normal;
+        attackModifier = false;
+    }
+    void AttackInputModeUpdate()
+    {
+        if (Input.GetButtonUp("Fire1"))
+        {
+
+            if (MouseOverUi == false || cursorOverMinimap() == true) {
+                Debug.Log("frm attc md");
+                orderUnits();
+                resetInputMode();
+                return;
+            }
+            else
+            {
+                resetInputMode();
+                return;
+            }
+        }
+        else if (Input.anyKeyDown && !Input.GetButton("Fire1"))
+        {
+            resetInputMode();
+            Update();
+        }
+    }
+    void SpellTargetInputModeUpdate()
     {
 
 
+    }
+    void NormalInputModeUpdate()
+    {
         ControlGroupsInput();
         if (Input.GetKeyUp(KeyCode.A))
         {
-            attackModifier = true;
-
+            ActivateAttackModifier();
         }
         if (Input.GetButtonUp("Fire2"))
         {
             if (MouseOverUi == false || cursorOverMinimap() == true)
                 orderUnits();
-
         }
         if (Input.GetButtonDown("Fire1"))
         {
             if (MouseOverUi == false)
                 startDragSelect();
-
         }
         if (Input.GetButtonUp("Fire1"))
         {
-
             if (cursorOverMinimap())
             {
                 moveMinimap();
@@ -164,18 +188,35 @@ public class Player : basePlayer
             else if (MouseOverUi == false)
             {
                 endDragSelect();
+               
             }
             startClick = -Vector3.one;
         }
         if (Input.GetButton("Fire1"))
         {
-
             scaleSelectionBox();
         }
 
-
     }
+    void Update()
+    {
+        switch (m_InputMode)
+        {
+            case InputMode.spellTarget:
+                SpellTargetInputModeUpdate();
+            break;
+            case InputMode.attack:
 
+                AttackInputModeUpdate();
+
+                break;
+
+            default:
+
+                NormalInputModeUpdate();
+                break;
+        }
+    }
     public void switchToMiniMapCam()
     {
         // 
@@ -187,10 +228,8 @@ public class Player : basePlayer
         currentCAM = Camera.main;
         //  Debug.Log("im out");
     }
-
     public void addUnit(baseRtsAI unit)
     {
-        
         //Debug.Log(mySelection.Count);
         unit.gameObject.GetComponentInChildren<Projector>().enabled = true;
         mySelection.Add(unit);
@@ -216,9 +255,7 @@ public class Player : basePlayer
 
     void orderUnits()
     {
-
         RaycastHit hit;
-
         Ray ray = currentCAM.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 100.0f))
         {
@@ -236,7 +273,6 @@ public class Player : basePlayer
             if (target != null)
             {
                 ///   Debug.Log("target test");
-
                 UnitOrders.giveOrders(mySelection, UnitOrders.OrderType.attackTarget, target);
                 return;
             }
@@ -255,14 +291,11 @@ public class Player : basePlayer
     }
     bool cursorOverMinimap()
     {
-
         return currentCAM == minimapCam;
     }
-
     private void moveMinimap()
     {
         RaycastHit hit;
-
         Ray ray = currentCAM.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 100.0f))
         {
@@ -271,15 +304,10 @@ public class Player : basePlayer
 
     }
    
-
- 
-
 //selection stuff
     public bool IsWithingBounds(GameObject ob)
     {
-
         //   Bounds selectionBox = getViewPortBounds(Camera.main, startClick, Input.mousePosition);
-
         Vector3 camPos = Camera.main.WorldToScreenPoint(ob.transform.position);
         camPos.y = invertMouseY(camPos.y);
         return selection.Contains(camPos);
@@ -289,12 +317,10 @@ public class Player : basePlayer
     void startDragSelect()
     {
         startClick = Input.mousePosition;
-
     }
     void endDragSelect()
     {
         attackModifier = false;
-
         if (selection.width < 0)
         {
             selection.x += selection.width;
@@ -313,10 +339,8 @@ public class Player : basePlayer
         if (Physics.Raycast(ray, out hit, 100.0f))
         {
             IRtsUnit unit = hit.collider.gameObject.GetComponent<IRtsUnit>();
-
             if (unit != null)
             {
-
                 addUnit(unit.getAIcomponent());
             }
         }
@@ -333,17 +357,11 @@ public class Player : basePlayer
                 }
             }
         }
-
-      
-
     }
 
     void scaleSelectionBox()
     {
-
         selection = new Rect(startClick.x, invertMouseY(startClick.y), Input.mousePosition.x - startClick.x, invertMouseY(Input.mousePosition.y) - invertMouseY(startClick.y));
-
-
     }
 
     //show selection box
@@ -360,15 +378,12 @@ public class Player : basePlayer
     {
         return Screen.height - y;
     }
-
     //static void drawBox(Vector3 topLeft, Vector3 botomRight, Vector3 topRight, Vector3 bottomLeft)
     //{
     //    Debug.DrawLine(topLeft, topRight, Color.magenta);
     //    Debug.DrawLine(topLeft, bottomLeft, Color.magenta);
     //    Debug.DrawLine(botomRight, topRight, Color.magenta);
     //    Debug.DrawLine(botomRight, bottomLeft, Color.magenta);
-
-
     //    Debug.DrawLine(topLeft, botomRight, Color.red);
     //}
 }

@@ -21,7 +21,7 @@ public interface IRtsUnit: IGameUnit, IObsevable<OnAttackedInfo>
      Sprite getIcon();
 
      Sprite getPortrait();
-    
+    string getRace();
 }
 
 public class RTSUnitManager {

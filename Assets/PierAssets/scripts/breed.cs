@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class breed : MonoBehaviour {
+
+
     public baseRtsAI unit;
     public bool isMale = true;
     public bool isMature = true;
@@ -12,6 +14,7 @@ public class breed : MonoBehaviour {
 	
 	// Update is called once per fra
 	void Update () {
+        
         if (Input.GetKeyDown(KeyCode.H))
         {
 

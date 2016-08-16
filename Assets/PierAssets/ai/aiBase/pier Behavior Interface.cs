@@ -26,5 +26,5 @@ public interface IGameUnit
      bool CheckIfAlive();
      float GetDamage();
     GameObject GetGameObject();
-
+    Transform GetTransform();
 }

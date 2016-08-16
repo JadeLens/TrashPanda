@@ -20,9 +20,12 @@ public class unitStats_ForAiTest : MonoBehaviour, IGameUnit
     {
         return this.gameObject;
     }
-   
-	// Use this for initialization
-	void Start () {
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+    // Use this for initialization
+    void Start () {
         currentHealth = maxHealth;
      
 	}

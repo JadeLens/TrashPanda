@@ -89,7 +89,7 @@ public class Pier_Unit : MonoBehaviour {
         // adding contibuting vectors of neghbours towarsds this boid
         foreach (var agent in neighbours)
         {
-            Vector3 towardsMe = this.transform.position - agent.GetGameObject().transform.position;
+            Vector3 towardsMe = this.transform.position - agent.GetTransform().position;
 
             float Dist = towardsMe.magnitude;
             if (Dist < separationRadius)
