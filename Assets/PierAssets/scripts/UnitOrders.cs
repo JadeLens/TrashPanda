@@ -11,6 +11,7 @@ public class UnitOrders : MonoBehaviour
         move,attackMove,attackTarget,capture
     };
 
+ 
     public static void giveOrder(baseRtsAI unit, OrderType type, Vector3 location)
     {
         aiBehaviorNode commande;
@@ -62,6 +63,19 @@ public class UnitOrders : MonoBehaviour
                 giveOrder(rabbit, type, location);
         }
     }
+    public static void removeOrders(List<baseRtsAI> Selection) {
+
+        foreach (baseRtsAI rabbit in Selection)
+        {
+            //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
+            if (rabbit != null)
+            {
+                rabbit.Orders.Clear();
+                rabbit.m_unit.removeDestination();
+            }
+        }
+    }
+
 
     public static void giveOrders(List<baseRtsAI> Selection, OrderType type, IRtsUnit target)
     {

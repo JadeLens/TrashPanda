@@ -32,6 +32,11 @@ public class Pier_Unit : MonoBehaviour {
     public bool lookat;
    public OnPathDelegate del;
     Vector3 dir;
+    public void removeDestination()
+    {
+        Debug.Log("path reset");
+        path = null;
+    }
     public void SetDestination(Vector3 dest)
     {
         if (DestinationGoal != dest)

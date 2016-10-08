@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class BottomMiddlePanelUI : MonoBehaviour {
-    public basePlayer player;
+    private basePlayer player;
     public Transform iconPrefab;
     public Image portraitOb;
 
@@ -20,8 +20,8 @@ public class BottomMiddlePanelUI : MonoBehaviour {
           IconOb.GetComponent<Image>().sprite = Icon;
         portraitOb.sprite = portrait;
 
-        IconOb.transform.SetParent(IconParent);
-        FixRectTransform(IconOb.transform  as RectTransform);
+        IconOb.transform.SetParent(IconParent, false);
+        //FixRectTransform(IconOb.transform  as RectTransform);
     }
 
     public static void FixRectTransform(RectTransform rect)
@@ -32,8 +32,8 @@ public class BottomMiddlePanelUI : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-	
-	}
+        player = GameObject.FindObjectOfType<Player>();
+    }
 	
 	// Update is called once per frame
 	void Update () {

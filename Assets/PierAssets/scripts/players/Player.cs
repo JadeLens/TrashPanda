@@ -120,19 +120,21 @@ public class Player : basePlayer
             handleGroup(ctrl, 0);
         }
     }
-    void ActivateAttackModifier()
+    public void ActivateAttackModifier()
     {
+        Debug.Log("attc md activated");
         m_InputMode = InputMode.attack;
         attackModifier = true;
         Cursor.SetCursor(attackCursorTexture, Vector2.zero, CursorMode.Auto);
 
-
+        Input.ResetInputAxes();
     }
     void resetInputMode()
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         m_InputMode = InputMode.normal;
         attackModifier = false;
+        Debug.Log("md reset");
     }
     void AttackInputModeUpdate()
     {
@@ -154,6 +156,7 @@ public class Player : basePlayer
         else if (Input.anyKeyDown && !Input.GetButton("Fire1"))
         {
             resetInputMode();
+            Debug.Log("tst attc md");
             Update();
         }
     }
@@ -228,6 +231,8 @@ public class Player : basePlayer
         currentCAM = Camera.main;
         //  Debug.Log("im out");
     }
+
+    //unit selection
     public void addUnit(baseRtsAI unit)
     {
         //Debug.Log(mySelection.Count);
@@ -235,7 +240,6 @@ public class Player : basePlayer
         mySelection.Add(unit);
       //  Debug.Log(mySelection.Count);
     }
-
     public void removeUnit(baseRtsAI unit)
     {
         if (unit != null)
@@ -252,7 +256,11 @@ public class Player : basePlayer
 
      //   Debug.Log("cleared");
     }
+   public void stopUnits()
+    {
 
+        UnitOrders.removeOrders(mySelection);
+    }
     void orderUnits()
     {
         RaycastHit hit;
