@@ -35,7 +35,7 @@ public class aiBehavior : MonoBehaviour {
     /// how close does it stop to a target
     /// </summary>
     public float SeekarriveRadius = 2.5f;
-    public NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent agent;
 
     public Queue<aiBehaviorNode> Orders;
 
@@ -60,7 +60,7 @@ public class aiBehavior : MonoBehaviour {
     {
 
         Init();
-        agent = this.gameObject.GetComponent<NavMeshAgent>();
+        agent = this.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
       
         switch(type){
         case AItype.lamb:

@@ -99,7 +99,7 @@ public class Node_Wander : aiBehaviorNode
     /// <summary>
     /// wander in range around a point
     /// </summary>
-    public Node_Wander(float range, NavMeshAgent agent)
+    public Node_Wander(float range, UnityEngine.AI.NavMeshAgent agent)
     {
         m_range = range;
     
@@ -183,7 +183,7 @@ public class Node_Seek : aiBehaviorNode
     /// <param name="_range"></param>
     /// <param name="ArriveRadius"></param>
     /// <param name="_type"></param>
-    public Node_Seek(NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none)
+    public Node_Seek(UnityEngine.AI.NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none)
     {
         m_range = _range;
         m_child1 = new Node_MoveTo_With_Avoid(agent);
@@ -274,7 +274,7 @@ public class Node_AlignToTarget :aiBehaviorNode
     /// <param name="_range"></param>
     /// <param name="ArriveRadius"></param>
     /// <param name="_type"></param>
-    public Node_AlignToTarget(NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none, float TurnSpeed = 3)
+    public Node_AlignToTarget(UnityEngine.AI.NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none, float TurnSpeed = 3)
     {
         m_child1 = new Node_FindClosestTarget(_range, _type);
         m_child2 = new Node_Align(TurnSpeed);
@@ -354,7 +354,7 @@ public class Node_Flee : aiBehaviorNode
    /// <param name="_range"></param>
    /// <param name="ArriveRadius"></param>
    /// <param name="_type"></param>
-    public Node_Flee(NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none)
+    public Node_Flee(UnityEngine.AI.NavMeshAgent agent, float _range, float ArriveRadius, AItype _type = AItype.none)
     {
         m_range = _range;
         m_child1 = new Node_MoveTo_With_Avoid(agent);
@@ -503,7 +503,7 @@ public class Node_MoveInFormation : aiBehaviorNode
 {
     private IMoveToNode m_child;
     private Transform m_target;
-    public Node_MoveInFormation(Transform t,NavMeshAgent agent)
+    public Node_MoveInFormation(Transform t,UnityEngine.AI.NavMeshAgent agent)
     {
         m_target = t;
         m_child = new Node_MoveTo_With_Avoid(agent);

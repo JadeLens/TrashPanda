@@ -30,7 +30,7 @@ public class Node_Follow_Path :  aiBehaviorNode
     private Transform[] m_wayPoints;
     private IMoveToNode m_child1;
 
-    public Node_Follow_Path(NavMeshAgent agent, Transform[] wayPoints)
+    public Node_Follow_Path(UnityEngine.AI.NavMeshAgent agent, Transform[] wayPoints)
     {
         m_wayPoints = wayPoints;
         m_child1  = new Node_MoveTo_With_Avoid(agent); ;

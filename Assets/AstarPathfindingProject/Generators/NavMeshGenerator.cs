@@ -505,7 +505,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 		/** Generates a navmesh. Based on the supplied vertices and triangles */
 		void GenerateNodes (Vector3[] vectorVertices, int[] triangles, out Vector3[] originalVertices, out Int3[] vertices) {
 
-			Profiler.BeginSample ("Init");
+			UnityEngine.Profiling.Profiler.BeginSample ("Init");
 
 			if (vectorVertices.Length == 0 || triangles.Length == 0) {
 				originalVertices = vectorVertices;
@@ -526,8 +526,8 @@ and have a low memory footprint because of their smaller size to describe the sa
 
 			var newVertices = new int[vertices.Length];
 
-			Profiler.EndSample ();
-			Profiler.BeginSample ("Hashing");
+			UnityEngine.Profiling.Profiler.EndSample ();
+			UnityEngine.Profiling.Profiler.BeginSample ("Hashing");
 
 			for (int i=0;i<vertices.Length;i++) {
 				if (!hashedVerts.ContainsKey (vertices[i])) {
@@ -552,8 +552,8 @@ and have a low memory footprint because of their smaller size to describe the sa
 				originalVertices[i] = vectorVertices[newVertices[i]];
 			}
 
-			Profiler.EndSample ();
-			Profiler.BeginSample ("Constructing Nodes");
+			UnityEngine.Profiling.Profiler.EndSample ();
+			UnityEngine.Profiling.Profiler.BeginSample ("Constructing Nodes");
 
 			nodes = new TriangleMeshNode[triangles.Length/3];
 
@@ -596,7 +596,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 				node.UpdatePositionFromVertices();
 			}
 
-			Profiler.EndSample ();
+			UnityEngine.Profiling.Profiler.EndSample ();
 
 			var sides = new Dictionary<Int2, TriangleMeshNode>();
 
@@ -606,7 +606,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 				sides[new Int2(triangles[i+2],triangles[i+0])] = nodes[j];
 			}
 
-			Profiler.BeginSample ("Connecting Nodes");
+			UnityEngine.Profiling.Profiler.BeginSample ("Connecting Nodes");
 
 			var connections = new List<MeshNode> ();
 			var connectionCosts = new List<uint> ();
@@ -629,12 +629,12 @@ and have a low memory footprint because of their smaller size to describe the sa
 				node.connectionCosts = connectionCosts.ToArray ();
 			}
 
-			Profiler.EndSample ();
-			Profiler.BeginSample ("Rebuilding BBTree");
+			UnityEngine.Profiling.Profiler.EndSample ();
+			UnityEngine.Profiling.Profiler.BeginSample ("Rebuilding BBTree");
 
 			RebuildBBTree (this);
 
-			Profiler.EndSample ();
+			UnityEngine.Profiling.Profiler.EndSample ();
 
 		}
 

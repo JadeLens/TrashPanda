@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BottomMiddlePanelUI : MonoBehaviour {
     private basePlayer player;
-    public Transform iconPrefab;
+	public GameObject iconPrefab;
     public Image portraitOb;
 
     public Transform IconParent;
@@ -15,8 +15,8 @@ public class BottomMiddlePanelUI : MonoBehaviour {
 
     public void addUnit(Sprite portrait, Sprite Icon)
     {
-        GameObject IconOb = Instantiate(iconPrefab,Vector3.zero, Quaternion.identity) as GameObject;
-      
+		GameObject IconOb = Instantiate(iconPrefab,Vector3.zero, Quaternion.identity);
+		 
           IconOb.GetComponent<Image>().sprite = Icon;
         portraitOb.sprite = portrait;
 

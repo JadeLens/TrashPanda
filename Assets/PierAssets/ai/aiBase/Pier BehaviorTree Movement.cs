@@ -115,14 +115,14 @@ public class Node_MoveTo_With_Avoid : aiBehaviorNode, IMoveToNode
 {
     private Vector3 m_target;
     private float m_radius;
-    private NavMeshAgent m_agent;
+    private UnityEngine.AI.NavMeshAgent m_agent;
 
-    public Node_MoveTo_With_Avoid(NavMeshAgent agent)
+    public Node_MoveTo_With_Avoid(UnityEngine.AI.NavMeshAgent agent)
     {
         m_agent = agent;
     }
     //temp-----------------------------
-    public Node_MoveTo_With_Avoid(NavMeshAgent agent, Vector3 loc)
+    public Node_MoveTo_With_Avoid(UnityEngine.AI.NavMeshAgent agent, Vector3 loc)
     {
         m_agent = agent;
         SetDestination(loc);
@@ -186,13 +186,13 @@ public class Node_MoveTo_With_Avoid : aiBehaviorNode, IMoveToNode
 
         switch (m_agent.pathStatus)
         {
-            case NavMeshPathStatus.PathComplete:
+            case UnityEngine.AI.NavMeshPathStatus.PathComplete:
 
                 //  Succeed();
                 break;
 
-            case NavMeshPathStatus.PathInvalid:
-            case NavMeshPathStatus.PathPartial:
+            case UnityEngine.AI.NavMeshPathStatus.PathInvalid:
+            case UnityEngine.AI.NavMeshPathStatus.PathPartial:
                 Fail();
                 break;
 
@@ -381,13 +381,13 @@ public class Node_SteerTo : aiBehaviorNode
 public class Node_Align : aiBehaviorNode
 {
     private Vector3 m_target;
-    private NavMeshAgent m_agent;
+    private UnityEngine.AI.NavMeshAgent m_agent;
     private float m_rotationSpeed = 3f;
     public Node_Align(float rSpeed=3f)
     {
         m_rotationSpeed = rSpeed;
     }
-    public Node_Align(NavMeshAgent agent)
+    public Node_Align(UnityEngine.AI.NavMeshAgent agent)
     {
         m_agent = agent;
         SetDirection(m_agent.destination);
