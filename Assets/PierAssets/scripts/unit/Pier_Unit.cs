@@ -2,7 +2,7 @@
 using System.Collections;
 using Pathfinding;
 
-public class Pier_Unit : MonoBehaviour {
+public class Pier_Unit : MonoBehaviour,IunitMovement {
   public  bool debug = false;
     public int frameCountUpdater = 2;
     // public Vector3 targetPosition;

@@ -5,7 +5,7 @@ public enum faction { neutral, faction1, faction2 }
 public class baseRtsAI : aiBehavior
 {
     public Seeker m_seeker;
-    public Pier_Unit m_unit;
+
     //  public unitStats_ForAiTest stats;
     public command MainWeapon;
    
@@ -71,10 +71,12 @@ public class baseRtsAI : aiBehavior
     void Start()
     {
 
-        Init();
-   
-        routine = CreateAttackDrone();
+        
+		base.Init ();
 
+		Debug.Log (m_unitMovement+ " 1");
+        routine = CreateAttackDrone();
+	
         if (autoStart)
         {
             routine.Run();
@@ -82,9 +84,8 @@ public class baseRtsAI : aiBehavior
     }
 
     void OnEnable()
-    {
-   
-        stats = this.gameObject.GetComponent<IRtsUnit>();
+	{
+		stats = this.gameObject.GetComponent<IRtsUnit>();
         RTSUnitManager.Register(this);
     }
 

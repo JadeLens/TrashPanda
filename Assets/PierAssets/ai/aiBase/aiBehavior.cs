@@ -35,16 +35,18 @@ public class aiBehavior : MonoBehaviour {
     /// how close does it stop to a target
     /// </summary>
     public float SeekarriveRadius = 2.5f;
-    public UnityEngine.AI.NavMeshAgent agent;
+    //public UnityEngine.AI.NavMeshAgent agent;
 
     public Queue<aiBehaviorNode> Orders;
 
-
+	public IunitMovement m_unitMovement;
     public IGameUnit stats;
     protected void Init()
     {
-
+		m_unitMovement = this.gameObject.GetComponent<IunitMovement>();
+		//Debug.Log (m_unitMovement);
         stats = this.gameObject.GetComponent<IGameUnit>();
+		//Debug.Log ( stats);
         blackBoard = new Dictionary<string, System.Object>();
         //stats = this.gameObject.get
     }
@@ -60,15 +62,15 @@ public class aiBehavior : MonoBehaviour {
     {
 
         Init();
-        agent = this.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+       // agent = this.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
       
         switch(type){
         case AItype.lamb:
-            routine = CreateLamb();
-        break;
+       //     routine = CreateLamb();
+       // break;
         case AItype.wolf:
-            routine = CreateWolf();
-        break;
+        //    routine = CreateWolf();
+       // break;
         default:
             routine = CreateDrone();
         break;
@@ -96,44 +98,44 @@ public class aiBehavior : MonoBehaviour {
     
     }
 
-    private aiBehaviorNode CreateLamb()
-    {
-        return new Node_Repeat
-        (
-            new Node_PrioritySelector
-            (
-                new aiBehaviorNode[] 
-                { 
-                    new Node_Flee(agent,detectionRange,0.3f,AItype.wolf),
-                    new Node_Wander(anchorRange,agent),
-                 
-                }
-            )
-        );
-    }    
+//    private aiBehaviorNode CreateLamb()
+//    {
+//        return new Node_Repeat
+//        (
+//            new Node_PrioritySelector
+//            (
+//                new aiBehaviorNode[] 
+//                { 
+//                    new Node_Flee(agent,detectionRange,0.3f,AItype.wolf),
+//                    new Node_Wander(anchorRange,agent),
+//                 
+//                }
+//            )
+//        );
+//    }    
 
-    private aiBehaviorNode CreateWolf()
-    {
-        return new Node_Repeat
-        (
-            new Node_PrioritySelector
-            (
-                new aiBehaviorNode[] 
-                {                
-                    
-                   new Node_Seek(agent,detectionRange,SeekarriveRadius,AItype.lamb) ,
-                   new Node_Sequence
-                    (
-                        new aiBehaviorNode[] 
-                        { 
-                            new Node_PuffUp(3), 
-                            new Node_PuffDown(3) 
-                        }
-                    )
-                }
-            )
-        );
-    }
+//    private aiBehaviorNode CreateWolf()
+//    {
+//        return new Node_Repeat
+//        (
+//            new Node_PrioritySelector
+//            (
+//                new aiBehaviorNode[] 
+//                {                
+//                    
+//                   new Node_Seek(agent,detectionRange,SeekarriveRadius,AItype.lamb) ,
+//                   new Node_Sequence
+//                    (
+//                        new aiBehaviorNode[] 
+//                        { 
+//                            new Node_PuffUp(3), 
+//                            new Node_PuffDown(3) 
+//                        }
+//                    )
+//                }
+//            )
+//        );
+//    }
     //resets the routine on mouse down
     //used for debug only
 //also starts its if not yet started

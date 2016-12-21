@@ -23,7 +23,7 @@ public class BaseAI : aiBehavior {
 		blackBoard.Add ("alarm", false);
 		blackBoard.Add ("meeting", false);
 		//routine = CreateBaseVillager();
-		routine = test();
+		//routine = test();
 		if (autoStart)
 		{
 			routine.Run();
@@ -46,52 +46,52 @@ public class BaseAI : aiBehavior {
 	{
 		//return new Node_Repeat
 		//	(
-		return	new Node_Follow_Path(agent,normalPath.points);
+		return	null;//new Node_Follow_Path(agent,normalPath.points);
 			//);
 	}    
-	private aiBehaviorNode test()
-	{
-		return new Node_Repeat
-		(
-			new Node_Selector
-			(
-				new aiBehaviorNode[] 
-				{
-					new Node_Concurent
-					(
-						new aiBehaviorNode[] 
-						{ 	
-							new Node_Invert//if == false
-							(
-								new Node_CheckBool (blackBoard,"alarm")
-							)
-							,
-							new Node_CheckBool (blackBoard,"meeting")
-							,
-							new Node_MoveTo_With_Avoid(agent, meetingLoc.position)
-						}
-
-					)
-					,
-					new Node_Concurent
-					(
-						new aiBehaviorNode[] 
-						{ 
-							new Node_Invert//if == false
-							(
-								new Node_CheckBool (blackBoard,"alarm")
-							)
-							,
-							new Node_Follow_Path(agent,normalPath.points)
-						}
-
-					)
-				,
-				new Node_MoveTo_With_Avoid(agent,homeLoc.position)
-				}
-			)
-		
-		);
-
-	}
+//	private aiBehaviorNode test()
+//	{
+//		return new Node_Repeat
+//		(
+//			new Node_Selector
+//			(
+//				new aiBehaviorNode[] 
+//				{
+//					new Node_Concurent
+//					(
+//						new aiBehaviorNode[] 
+//						{ 	
+//							new Node_Invert//if == false
+//							(
+//								new Node_CheckBool (blackBoard,"alarm")
+//							)
+//							,
+//							new Node_CheckBool (blackBoard,"meeting")
+//							,
+//							new Node_MoveTo_With_Avoid(agent, meetingLoc.position)
+//						}
+//
+//					)
+//					,
+//					new Node_Concurent
+//					(
+//						new aiBehaviorNode[] 
+//						{ 
+//							new Node_Invert//if == false
+//							(
+//								new Node_CheckBool (blackBoard,"alarm")
+//							)
+//							,
+//							new Node_Follow_Path(agent,normalPath.points)
+//						}
+//
+//					)
+//				,
+//				new Node_MoveTo_With_Avoid(agent,homeLoc.position)
+//				}
+//			)
+//		
+//		);
+//
+//	}
 }

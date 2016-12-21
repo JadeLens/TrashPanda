@@ -4,150 +4,138 @@ using System.Collections.Generic;
 
 public class UnitOrders : MonoBehaviour
 {
-	delegate void OrderDoneCallBack();
+	delegate void OrderDoneCallBack ();
 
 	public enum OrderType
-    {
-        move,attackMove,attackTarget,capture
-    };
+	{
+		move,
+		attackMove,
+		attackTarget,
+		capture}
+
+	;
 
  
-    public static void giveOrder(baseRtsAI unit, OrderType type, Vector3 location)
-    {
-        aiBehaviorNode commande;
-        switch (type)
-        {
-            case OrderType.attackMove:
-
-                commande = attackMove(unit, location);
-                break;
-            default:
-
-                commande = moveComand(unit, location);
-
-                break;
-        }
-        EnqueueComand(unit, commande);
-    }
-
-    public static void giveOrder(baseRtsAI unit, OrderType type, IRtsUnit target)
-    {
-        if (unit.stats != target)
-        {
-            EnqueueComand(unit, attackTarget(unit, target));
-        }
-    }
-
-    public static void giveOrder(baseRtsAI unit, OrderType type, PointOfInterest poi)
-    {
-
-        EnqueueComand(unit, CapturePoint(unit, poi));
-    }
-
-    public static void EnqueueComand(baseRtsAI unit, aiBehaviorNode cmd)
-    {
-        if (unit != null)
-        {
-            unit.Orders.Clear();
-            unit.Orders.Enqueue(cmd);
-        }
-
-    }
-
-    public static void giveOrders(List<baseRtsAI> Selection, OrderType type, Vector3 location)
-    {
-        foreach (baseRtsAI rabbit in Selection)
-        {
-            //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
-            if(rabbit != null)
-                giveOrder(rabbit, type, location);
-        }
-    }
-    public static void removeOrders(List<baseRtsAI> Selection) {
-
-        foreach (baseRtsAI rabbit in Selection)
-        {
-            //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
-            if (rabbit != null)
-            {
-                rabbit.Orders.Clear();
-                rabbit.m_unit.removeDestination();
-            }
-        }
-    }
-
-
-    public static void giveOrders(List<baseRtsAI> Selection, OrderType type, IRtsUnit target)
-    {
-        foreach (baseRtsAI rabbit in Selection)
-        {
-            //aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
-            if (rabbit != null)
-            { 
-                giveOrder(rabbit, type, target);
-            }
-        }
-    }
-
-    public static aiBehaviorNode CapturePoint(baseRtsAI rabbit,PointOfInterest poi)
+	public static void giveOrder (baseRtsAI unit, OrderType type, Vector3 location)
 	{
-		aiBehaviorNode commande = new Node_Sequence
-			(
-				new  aiBehaviorNode[] 
-				{
-					moveComand(rabbit,poi.gameObject.transform.position),
-					new Node_Call_Delegate(poi.CapturePT,rabbit)
-				}
-			);
+		aiBehaviorNode commande;
+		switch (type) {
+		case OrderType.attackMove:
+
+			commande = attackMove (unit, location);
+			break;
+		default:
+
+			commande = moveComand (unit, location);
+
+			break;
+		}
+		EnqueueComand (unit, commande);
+	}
+
+	public static void giveOrder (baseRtsAI unit, OrderType type, IRtsUnit target)
+	{
+		if (unit.stats != target) {
+			EnqueueComand (unit, attackTarget (unit, target));
+		}
+	}
+
+	public static void giveOrder (baseRtsAI unit, OrderType type, PointOfInterest poi)
+	{
+
+		EnqueueComand (unit, CapturePoint (unit, poi));
+	}
+
+	public static void EnqueueComand (baseRtsAI unit, aiBehaviorNode cmd)
+	{
+		if (unit != null) {
+			unit.Orders.Clear ();
+			unit.Orders.Enqueue (cmd);
+		}
+
+	}
+
+	public static void giveOrders (List<baseRtsAI> Selection, OrderType type, Vector3 location)
+	{
+		foreach (baseRtsAI rabbit in Selection) {
+			//aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
+			if (rabbit != null)
+				giveOrder (rabbit, type, location);
+		}
+	}
+
+	public static void removeOrders (List<baseRtsAI> Selection)
+	{
+
+		foreach (baseRtsAI rabbit in Selection) {
+			//aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
+			if (rabbit != null) {
+				rabbit.Orders.Clear ();
+				rabbit.m_unitMovement.removeDestination ();
+			}
+		}
+	}
+
+
+	public static void giveOrders (List<baseRtsAI> Selection, OrderType type, IRtsUnit target)
+	{
+		foreach (baseRtsAI rabbit in Selection) {
+			//aiBehaviorNode commande = UnitOrders.moveComand(rabbit,hit.point);
+			if (rabbit != null) { 
+				giveOrder (rabbit, type, target);
+			}
+		}
+	}
+
+	public static aiBehaviorNode CapturePoint (baseRtsAI rabbit, PointOfInterest poi)
+	{
+		aiBehaviorNode commande = new Node_Sequence (
+			                          new  aiBehaviorNode[] {
+				moveComand (rabbit, poi.gameObject.transform.position),
+				new Node_Call_Delegate (poi.CapturePT, rabbit)
+			}
+		                          );
 		return commande;
 	}
 
-	static void printDebug()
-    {
-		Debug.Log("dellegate called");
+	static void printDebug ()
+	{
+		Debug.Log ("dellegate called");
 	}
 
-	public static aiBehaviorNode moveComand(baseRtsAI rabbit,Vector3 loc)
+	public static aiBehaviorNode moveComand (baseRtsAI rabbit, Vector3 loc)
 	{
-		IMoveToNode commande = new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_unit, rabbit.SeekarriveRadius,loc);
-		commande.SetArriveRadius(2.5f);
+		IMoveToNode commande = new Node_MoveTo_With_Astar (rabbit.gameObject, ref rabbit.m_unitMovement, rabbit.SeekarriveRadius, loc);
+		commande.SetArriveRadius (2.5f);
 		return (aiBehaviorNode)commande;
 	}
 
-    public static aiBehaviorNode attackMove(baseRtsAI rabbit, Vector3 loc)
-    {
-        return new Node_Repeat_Until_Fail               //repeat  the selector until it suceeds
-        (                                              // 
-            new Node_Invert(new Node_PrioritySelector //
-            (
-                new aiBehaviorNode[]
-                {
-                new Node_Invert(new Node_Repeat_Until_Fail   //repeat the attackSequence until it fails then succeeds
-                    (pierBehaviorsubTrees.attackSequence(rabbit))),
+	public static aiBehaviorNode attackMove (baseRtsAI rabbit, Vector3 loc)
+	{
+		return new Node_Repeat_Until_Fail (
+			new Node_Invert (new Node_PrioritySelector (
+				new aiBehaviorNode[] {
+					new Node_Invert (new Node_Repeat_Until_Fail (pierBehaviorsubTrees.attackSequence (rabbit)))
+					,
+					new Node_Timer (new Node_MoveTo_With_Astar (rabbit.gameObject, ref rabbit.m_unitMovement, rabbit.SeekarriveRadius, loc), 1)
+				}
+			))
+		);
+	}
 
-                    new Node_Timer(new Node_MoveTo_With_Astar(rabbit.gameObject,  rabbit.m_unit,rabbit.SeekarriveRadius,loc),1) //lets node run for T time then fails it 
-                }
-            ))
-        );
-    }
-
-    public static aiBehaviorNode attackTarget(baseRtsAI rabbit, IRtsUnit target)
-    {
-        return new Node_PrioritySelector
-            (new aiBehaviorNode[]
-            {//change to seletor nested ina  sequence
-                new Node_Invert(new Node_Succeeder(new Node_SetVariable(rabbit.blackBoard,"Target",target.GetGameObject()))),
-                new Node_Invert
-                (
-                    new Node_Repeat_Until_Fail
-                    (
-                    pierBehaviorsubTrees.killTarget(rabbit,"Target")
+	public static aiBehaviorNode attackTarget (baseRtsAI rabbit, IRtsUnit target)
+	{
+		return new Node_PrioritySelector (new aiBehaviorNode[] {//change to seletor nested ina  sequence
+			new Node_Invert (new Node_Succeeder (new Node_SetVariable (rabbit.blackBoard, "Target", target.GetGameObject ()))),
+			new Node_Invert (
+				new Node_Repeat_Until_Fail (
+					pierBehaviorsubTrees.killTarget (rabbit, "Target")
                         
-                    )
-                ),
-                new Node_MoveTo_With_Astar(rabbit.gameObject, rabbit.m_unit,rabbit.SeekarriveRadius,target.GetGameObject().transform.position)
+				)
+			),
+			new Node_MoveTo_With_Astar (rabbit.gameObject, ref rabbit.m_unitMovement, rabbit.SeekarriveRadius, target.GetGameObject ().transform.position)
 
-            }
-        );
-    }
+		}
+		);
+	}
 }

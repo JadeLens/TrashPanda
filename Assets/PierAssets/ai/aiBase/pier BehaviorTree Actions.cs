@@ -340,6 +340,7 @@ public class Node_AlignToTarget :aiBehaviorNode
 }
 
 /// <summary>
+/// depreciated
 /// oposite of a seek behavior
 /// </summary>
 public class Node_Flee : aiBehaviorNode
