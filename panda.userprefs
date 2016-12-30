@@ -1,17 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PierAssets\ai\aiBase\pier Behavior subTrees.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PierAssets\scripts\unit\NavmeshMovement.cs">
     <Files>
       <File FileName="Assets\PierAssets\scripts\Interfaces\unitMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\PierAssets\ai\aiBase\pier Behavior subTrees.cs" Line="24" Column="11" />
-      <File FileName="Assets\PierAssets\ai\aiBase\Pier BehaviorTree Movement.cs" Line="17" Column="35" />
-      <File FileName="Assets\PierAssets\scripts\unit\NavmeshMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\aiBase\pier Behavior subTrees.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\aiBase\Pier BehaviorTree Movement.cs" Line="1" Column="1" />
       <File FileName="Assets\PierAssets\scripts\unit\Pier_Unit.cs" Line="1" Column="1" />
-      <File FileName="Assets\PierAssets\scripts\unit\baseRtsAI.cs" Line="77" Column="33" />
-      <File FileName="Assets\PierAssets\ai\aiBase\aiBehavior.cs" Line="148" Column="31" />
-      <File FileName="Assets\PierAssets\scripts\players\ComputerSideAI.cs" Line="153" Column="43" />
-      <File FileName="Assets\PierAssets\ai\consoleDevAdition\ConsoleDevAINode.cs" Line="491" Column="1" />
-      <File FileName="Assets\PierAssets\scripts\static\RTSUnitManager.cs" Line="27" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\unit\NavmeshMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\unit\baseRtsAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\aiBase\aiBehavior.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\UnitOrders.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\ComputerSideAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\aiBase\pier BehaviorTree Actions.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\UnitStats_ForRTS.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\UnitBuilder.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
