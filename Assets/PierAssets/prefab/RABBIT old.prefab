@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 114905352402686288}
   - component: {fileID: 114957653429521496}
   m_Layer: 12
-  m_Name: RABBIT (4)
+  m_Name: RABBIT old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1341,7 +1341,6 @@ MonoBehaviour:
   autoStart: 1
   anchorRange: 10
   SeekarriveRadius: 2
-  m_seeker: {fileID: 114319533741974622}
   MainWeapon: {fileID: 114247455583106810}
 --- !u!114 &114424261005732110
 MonoBehaviour:
