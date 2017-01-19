@@ -14,7 +14,7 @@ public class BaseAI : aiBehavior {
 	public bool dayMeeting = false;
 	private bool pauseAI = false;
 
-	Dictionary<string, bool> blackBoard;
+	new Dictionary<string, bool> blackBoard;
 	// Use this for initialization
 	void Start () {
 		

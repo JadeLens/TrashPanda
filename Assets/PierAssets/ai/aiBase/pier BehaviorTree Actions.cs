@@ -222,7 +222,7 @@ public class Node_Seek : aiBehaviorNode
             case NodeState.Success:
                 if (m_child2.GetTarget() != null)
                 {
-                    Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
+//                    Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
                     //add a check to see if we are close enought for detection
                     m_child1.SetDestination(m_child2.GetTarget().transform.position);
                     //   Debug.Log("dest set");
@@ -306,7 +306,7 @@ public class Node_AlignToTarget :aiBehaviorNode
                 return;
             //break;
             case NodeState.Success:
-                Vector3 Direction = m_child1.GetTarget().transform.position - ob.transform.position;
+//                Vector3 Direction = m_child1.GetTarget().transform.position - ob.transform.position;
                 //add a check to see if we are close enought for detection
             //    m_child2.SetDirection( ob.transform.position - m_child1.GetTarget().transform.position);
                 m_child2.SetDirection(m_child1.GetTarget().transform.position);

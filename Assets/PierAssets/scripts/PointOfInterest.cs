@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class PointOfInterest : MonoBehaviour
 {
-    public static basePlayer[] players;
+  
 	public faction owningFaction;
 	public Material mat1;
 	public Material mat2;
@@ -42,7 +42,7 @@ public class PointOfInterest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        players = GameObject.FindObjectsOfType<basePlayer>();
+      
         //LightRenderer = this.gameObject.GetComponentInChildren<MeshRenderer>();
 
         render = this.GetComponentInChildren<Renderer>();
@@ -58,10 +58,10 @@ public class PointOfInterest : MonoBehaviour
     {
         ChangeFaction(unit.stats.getFaction());
         toggleMat();
-        for (int i = 0; i < players.Length; i++)
+		for (int i = 0; i < GameManager.playerList.Count; i++)
         {
 
-            if (players[i].UnitFaction == owningFaction)
+			if (GameManager.playerList[i].UnitFaction == owningFaction)
             {
                 currentPlayerIndex = i;
                 break;
@@ -98,11 +98,12 @@ public class PointOfInterest : MonoBehaviour
             if (TimeOwned >= IncRate )
             {
                 TimeOwned = 0;
-                players[currentPlayerIndex].myResources.IncrementTrash(incTrash);
-                players[currentPlayerIndex].myResources.IncrementWater(incWater);
+				GameManager.playerList[currentPlayerIndex].myResources.IncrementTrash(incTrash);
+				GameManager.playerList[currentPlayerIndex].myResources.IncrementWater(incWater);
 
             }
-            if (currentPlayerIndex == 1 && LightRenderer != null) //real player owns the object
+            
+			if (currentPlayerIndex == 1 && LightRenderer != null) //real player owns the object
             {
                 LightRenderer.enabled = true;
 

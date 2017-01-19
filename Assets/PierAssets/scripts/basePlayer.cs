@@ -9,6 +9,7 @@ using System;
 /// </summary>
 public class basePlayer : MonoBehaviour, IObserver<OnAttackedInfo>
 {
+	public Color PlayerColor = Color.red;
     public faction UnitFaction;
     public List<baseRtsAI> mySelection;
    public MainBuilding myBuilding;
@@ -24,4 +25,15 @@ public class basePlayer : MonoBehaviour, IObserver<OnAttackedInfo>
     {
         Debug.Log("attacked at location " + value.location);
     }
+	void OnEnable ()
+	{
+		
+		GameManager.Register (this);
+	}
+
+	void OnDisable ()
+	{
+		GameManager.Unregister (this);
+
+	}
 }

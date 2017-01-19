@@ -78,12 +78,7 @@ public class baseRtsAI : aiBehavior
 
 	void Start ()
 	{
-		
-
-        
 		base.Init ();
-
-		Debug.Log (m_unitMovement + " 1");
 		routine = CreateAttackDrone ();
 	
 		if (autoStart) {

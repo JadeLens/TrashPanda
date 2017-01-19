@@ -1,0 +1,18 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PierAssets\scripts\unit\NavmeshMovement.cs">
+    <Files>
+      <File FileName="Assets\PierAssets\scripts\unit\FogOfWar.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\Player.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\basePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\UnitStats_ForRTS.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\ai\aiBase\pier Behavior subTrees.cs" Line="1" Column="1" />
+      <File FileName="Assets\PierAssets\scripts\unit\NavmeshMovement.cs" Line="34" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -19,10 +19,11 @@ public class beamWeapon : baseWeapon
     void Start()
     {
         line = GetComponent<LineRenderer>();
-        line.SetVertexCount(2);
+		line.numPositions = 2;
         line.GetComponent<Renderer>().material = lineMaterial;
            // renderer.material = lineMaterial;
-        line.SetWidth(0.15f, 0.1f);
+		line.startWidth = 0.15f;
+		line.endWidth = 0.1f;
         line.enabled = false;
     }
   public override  IEnumerator attack()

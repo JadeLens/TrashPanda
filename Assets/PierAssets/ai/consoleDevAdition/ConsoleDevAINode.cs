@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using Pathfinding;
+//using Pathfinding;
 using System;
 
 public class Node_Check_Condition : aiBehaviorNode
@@ -350,7 +350,7 @@ public class Node_Seek_Modular : aiBehaviorNode
             case NodeState.Success:
                 if (m_child2.GetTarget() != null)
                 {
-                    Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
+//                    Vector3 Direction = m_child2.GetTarget().transform.position - ob.transform.position;
                     //add a check to see if we are close enought for detection
                     m_child1.SetDestination(m_child2.GetTarget().transform.position);
                     //                       Debug.Log("dest set");
@@ -422,7 +422,7 @@ public class Node_Seek_Modular_BB : aiBehaviorNode
             float dist = Vector3.Distance(ob.transform.position, target.transform.position);
             if (dist < 6)
             {
-                Vector3 Direction = target.transform.position - ob.transform.position;
+//                Vector3 Direction = target.transform.position - ob.transform.position;
                 //add a check to see if we are close enought for detection
                 m_child1.SetDestination(target.transform.position);
             }

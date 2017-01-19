@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22425818}
-  - 222: {fileID: 22259064}
-  - 114: {fileID: 11439344}
+  - component: {fileID: 22425818}
+  - component: {fileID: 22259064}
+  - component: {fileID: 11439344}
   m_Layer: 12
   m_Name: Handle
   m_TagString: Untagged
@@ -22,16 +22,16 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 498662}
-  - 114: {fileID: 11489164}
-  - 114: {fileID: 11410622}
-  - 114: {fileID: 11412544}
-  - 114: {fileID: 11406968}
-  - 114: {fileID: 11451596}
-  - 54: {fileID: 5469666}
-  m_Layer: 12
+  - component: {fileID: 498662}
+  - component: {fileID: 11489164}
+  - component: {fileID: 11410622}
+  - component: {fileID: 11412544}
+  - component: {fileID: 11406968}
+  - component: {fileID: 11451596}
+  - component: {fileID: 5469666}
+  m_Layer: 16
   m_Name: rabbit den
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,11 +43,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22427282}
-  - 222: {fileID: 22238872}
-  - 114: {fileID: 11459840}
+  - component: {fileID: 22427282}
+  - component: {fileID: 22238872}
+  - component: {fileID: 11459840}
   m_Layer: 12
   m_Name: Fill
   m_TagString: Untagged
@@ -60,10 +60,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 487912}
-  - 119: {fileID: 11911160}
+  - component: {fileID: 487912}
+  - component: {fileID: 11911160}
   m_Layer: 12
   m_Name: selection
   m_TagString: Untagged
@@ -76,11 +76,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22458762}
-  - 222: {fileID: 22283014}
-  - 114: {fileID: 11418276}
+  - component: {fileID: 22458762}
+  - component: {fileID: 22283014}
+  - component: {fileID: 11418276}
   m_Layer: 12
   m_Name: Background
   m_TagString: Untagged
@@ -93,11 +93,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 402866}
-  - 33: {fileID: 3373140}
-  - 23: {fileID: 2341936}
+  - component: {fileID: 402866}
+  - component: {fileID: 3373140}
+  - component: {fileID: 2341936}
   m_Layer: 14
   m_Name: minimap sprite
   m_TagString: Untagged
@@ -110,10 +110,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22440622}
-  - 114: {fileID: 11473500}
+  - component: {fileID: 22440622}
+  - component: {fileID: 11473500}
   m_Layer: 12
   m_Name: Slider
   m_TagString: Untagged
@@ -126,12 +126,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 446624}
-  - 33: {fileID: 3356156}
-  - 136: {fileID: 13658220}
-  - 23: {fileID: 2309062}
+  - component: {fileID: 446624}
+  - component: {fileID: 3356156}
+  - component: {fileID: 13658220}
+  - component: {fileID: 2309062}
   m_Layer: 12
   m_Name: rally
   m_TagString: Untagged
@@ -144,12 +144,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 459402}
-  - 33: {fileID: 3327828}
-  - 23: {fileID: 2323474}
-  - 65: {fileID: 6588652}
+  - component: {fileID: 459402}
+  - component: {fileID: 3327828}
+  - component: {fileID: 2323474}
+  - component: {fileID: 6588652}
   m_Layer: 12
   m_Name: rabbit den
   m_TagString: Untagged
@@ -162,11 +162,11 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 489094}
-  - 33: {fileID: 3340588}
-  - 23: {fileID: 2396552}
+  - component: {fileID: 489094}
+  - component: {fileID: 3340588}
+  - component: {fileID: 2396552}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -179,9 +179,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22454280}
+  - component: {fileID: 22454280}
   m_Layer: 12
   m_Name: Handle Slide Area
   m_TagString: Untagged
@@ -194,9 +194,9 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22404966}
+  - component: {fileID: 22404966}
   m_Layer: 12
   m_Name: Fill Area
   m_TagString: Untagged
@@ -209,10 +209,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 433170}
-  - 33: {fileID: 3375936}
+  - component: {fileID: 433170}
+  - component: {fileID: 3375936}
   m_Layer: 12
   m_Name: spwn
   m_TagString: Untagged
@@ -225,12 +225,12 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22446696}
-  - 223: {fileID: 22338244}
-  - 114: {fileID: 11405256}
-  - 114: {fileID: 11453954}
+  - component: {fileID: 22446696}
+  - component: {fileID: 22338244}
+  - component: {fileID: 11405256}
+  - component: {fileID: 11453954}
   m_Layer: 12
   m_Name: Canvas (1)
   m_TagString: Untagged
@@ -250,6 +250,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459402}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &433170
 Transform:
   m_ObjectHideFlags: 1
@@ -262,6 +263,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459402}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &446624
 Transform:
   m_ObjectHideFlags: 1
@@ -274,6 +276,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459402}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &459402
 Transform:
   m_ObjectHideFlags: 1
@@ -281,7 +284,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173932}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -12.0130005, y: 0.05, z: -2.9420013}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 402866}
@@ -292,6 +295,7 @@ Transform:
   - {fileID: 487912}
   m_Father: {fileID: 498662}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &487912
 Transform:
   m_ObjectHideFlags: 1
@@ -304,6 +308,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459402}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &489094
 Transform:
   m_ObjectHideFlags: 1
@@ -316,6 +321,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459402}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &498662
 Transform:
   m_ObjectHideFlags: 1
@@ -323,12 +329,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.413002, y: 0, z: -7.358}
+  m_LocalPosition: {x: 55.739998, y: 0.15, z: -13.637482}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459402}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2309062
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -338,17 +345,22 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: a6a1d8ff1b34cbe41b2aba3de91fec3a, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -364,18 +376,23 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 5b85372266d01074db5b7cd30da642b8, type: 2}
   - {fileID: 2100000, guid: bc29800e531f9b54ebaf41310600483e, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -391,17 +408,22 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fc36f068f8a72174fa85af621f508560, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -417,17 +439,22 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: f801e86a73ad1e449a9cdfbc50bf25a5, type: 2}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -528,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60be009cf3baf9f4d87f1f87e434f253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MiniMapSprite: {fileID: 0}
   targetKey: Tarhet
   unitname: rabbit den
   currentHealth: 0
@@ -539,7 +567,7 @@ MonoBehaviour:
   myFaction: 1
   icon: {fileID: 0}
   portrait: {fileID: 0}
-  hurtSound: {fileID: 8300000, guid: 1be5479a042fdcc4f98a34ffe087af91, type: 3}
+  hurtSound: {fileID: 0}
 --- !u!114 &11410622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,7 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129652cef7d81bd438afcb19794d155c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  builder: {fileID: 0}
+  builder: {fileID: 11489164}
 --- !u!114 &11453954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -737,7 +765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   Mute: 1
-  rabbitPrefab: {fileID: 439866, guid: b45999323a1a2e7419b22e8820057bc8, type: 2}
+  rabbitPrefab: {fileID: 4573755420047390, guid: 53fe47d84a752f04d9d140cba9ac9ec2,
+    type: 2}
   RacoonPrefab: {fileID: 498762, guid: b9c76f6cdf2ece44a8c525c338a4762f, type: 2}
   spawnLoc: {fileID: 433170}
   rallyPoint: {fileID: 446624}
@@ -828,6 +857,7 @@ RectTransform:
   - {fileID: 22427282}
   m_Father: {fileID: 22440622}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -845,6 +875,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22454280}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -862,6 +893,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22404966}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -882,6 +914,7 @@ RectTransform:
   - {fileID: 22454280}
   m_Father: {fileID: 22446696}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.84}
@@ -900,6 +933,7 @@ RectTransform:
   - {fileID: 22440622}
   m_Father: {fileID: 459402}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -918,6 +952,7 @@ RectTransform:
   - {fileID: 22425818}
   m_Father: {fileID: 22440622}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -935,6 +970,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22440622}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}

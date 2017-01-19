@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Pathfinding;
+//using Pathfinding;
 using extensions;
 
 public interface IMoveToNode
@@ -37,11 +37,9 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
 
 	public Node_MoveTo_With_Astar (GameObject owner, ref IunitMovement unit, float ArriveRadius, Vector3 loc = default(Vector3))
 	{
-		Debug.Log (unit + " 3");
 		m_owner = owner;
        
 		m_unit = unit;
-		Debug.Log (m_unit + " 4");
 
 		SetDestination (loc);
 		SetArriveRadius (ArriveRadius);
@@ -87,7 +85,16 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
 
 		MakeReady ();
 	}
-
+	protected override void Succeed ()
+	{
+		m_unit.removeDestination ();
+		base.Succeed ();
+	}
+	protected override void Fail ()
+	{
+		m_unit.removeDestination ();
+		base.Fail ();
+	}
 	public override void Act (GameObject ob)
 	{
 		//Debug.Log (m_unit + " 5");
@@ -99,7 +106,9 @@ public class Node_MoveTo_With_Astar : aiBehaviorNode, IMoveToNode
      
 
 		if (isAtDestination (ob)) {
+			
 			Succeed ();
+
 			// Debug.Log("at destination");
 			// m_agent.SetDestination(ob.transform.position);
 
@@ -234,11 +243,12 @@ public class Node_MoveTo_With_Avoid : aiBehaviorNode, IMoveToNode
 }
 
 /// <summary>
+/// DEPRECIATED
 /// uses steering node to move around no nawMesh required
 /// </summary>
 public class Node_MoveTo : aiBehaviorNode, IMoveToNode
 {
-	private bool isStartLocationStored = false;
+//	private bool isStartLocationStored = false;
 
 
 	private Vector3 m_target;
@@ -530,7 +540,7 @@ public class Node_Avoid : aiBehaviorNode
 			Fail ();
 			break;
 		case NodeState.Success:
-			Vector3 temp = m_RayCastNode.GetRayHitPosition ();
+			//Vector3 temp = m_RayCastNode.GetRayHitPosition ();
                 //Debug.Log("need to avoid1");
 			m_avoidVector = new Vector3 (ob.transform.position.z, ob.transform.position.y, -ob.transform.position.x);
 			Succeed ();

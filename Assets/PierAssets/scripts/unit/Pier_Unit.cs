@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Pathfinding;
+/*using Pathfinding;
 
 public class Pier_Unit : MonoBehaviour,IunitMovement {
   public  bool debug = false;
@@ -121,7 +121,7 @@ public class Pier_Unit : MonoBehaviour,IunitMovement {
 
                    }
 
-               }*/
+               }
         }
 
         return r.normalized;
@@ -206,3 +206,4 @@ public class Pier_Unit : MonoBehaviour,IunitMovement {
 
     }
 }
+*/

@@ -124,7 +124,7 @@ public class ComputerSideAI : basePlayer
 	{
 
 
-		return true;// myBuilding.builder.SpawnRabbit();
+		return  myBuilding.builder.SpawnRabbit();
 	}
 
 	bool haveEnoughUnitsToAttack ()

@@ -225,7 +225,7 @@ public class Node_Succeeder : aiBehaviorNode
 public class Node_Concurent : aiBehaviorNode
 {
 	public aiBehaviorNode[] m_children;
-	private int m_currentChildIndex = 0;
+//	private int m_currentChildIndex = 0;
 
 	/// <summary>
 	/// runs child all child node each update tick until one fails
@@ -262,7 +262,7 @@ public class Node_Concurent : aiBehaviorNode
 		//Debug.Log("Node_Selector  act");
 		for (int i = 0; i < m_children.Length;i++ )
 		{
-			bool isChildRunning = false;
+//			bool isChildRunning = false;
 			switch (m_children[i].GetState())
 			{
 				case NodeState.Ready:

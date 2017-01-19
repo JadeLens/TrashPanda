@@ -22,7 +22,6 @@ public class FogOfWarSight : MonoBehaviour
             if (fogscript != null)
             {
                 fogscript.Observed();
-                //col.gameObject.GetComponent<Renderer>().enabled = true;
             }
         }
 	}

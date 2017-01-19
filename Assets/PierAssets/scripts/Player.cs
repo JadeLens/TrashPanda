@@ -11,12 +11,13 @@ public class Player : basePlayer
 	Camera minimapCam;
 	Vector3 startClick;
 	Transform cameraTarget;
+
 	public bool attackModifier = false;
 	public Texture2D selectionBox = null;
 	public static Rect selection = new Rect (0, 0, 0, 0);
 	List<baseRtsAI>[] controlGroups;
 	public bool MouseUi = false;
-	private bool IsDragSelecting = false;
+//	private bool IsDragSelecting = false;
 	public bool spellTargetModeOn = false;
 	public Texture2D spellCursorTexture;
 	public Texture2D attackCursorTexture;

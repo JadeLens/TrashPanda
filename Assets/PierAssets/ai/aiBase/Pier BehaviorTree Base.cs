@@ -313,7 +313,7 @@ public class Node_PrioritySelector : aiBehaviorNode
 public class Node_Selector : aiBehaviorNode
 {
     public aiBehaviorNode[] m_children;
-    private int m_currentChildIndex = 0;
+//    private int m_currentChildIndex = 0;
     /// <summary>
     /// runs child all child node in sequence until one succeeds
     /// /// </summary>

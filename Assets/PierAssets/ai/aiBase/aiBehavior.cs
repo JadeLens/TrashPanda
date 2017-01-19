@@ -160,20 +160,6 @@ public class aiBehavior : MonoBehaviour {
 }
 
 //is going somewhere else
-namespace extensions
-{
-    public static class FloatExtensions
-    {
-        public static void Double(this float i)
-        {
-           i= i + i;
-        }
-        public static void Double(this int i)
-        {
-            i = i + i;
 
-        }
-    }
-}
 /*
 */

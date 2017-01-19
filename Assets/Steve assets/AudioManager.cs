@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    static GameObject instance;
+	static AudioManager instance;
     [SerializeField]
     private AudioClip buttonPress = null;
     
@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
             if (instance == null)
             {
                 GameObject.DontDestroyOnLoad(  gameObject);
+			instance = this;
             }
             else
             {

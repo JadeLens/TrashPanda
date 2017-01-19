@@ -6,12 +6,18 @@ using System.Collections.Generic;
 
 public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
 {
+	[SerializeField]
+	private MeshRenderer MiniMapSprite;
+	[SerializeField]
+	private MeshRenderer teamColorRenderer;
     List<IObserver<OnAttackedInfo>> observers;
+	FogOfWar fogControl;
     baseRtsAI ai;
     IGameUnit target;
     [SerializeField]
     protected string targetKey = "Target";
     public string unitname;
+
     [SerializeField]
     protected float currentHealth;
     protected bool IsDead = false;
@@ -175,14 +181,29 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
     {
 
         observers = new List<IObserver<OnAttackedInfo>>();
+		fogControl = gameObject.GetComponent<FogOfWar> ();
     }
     void Start ()
     {
         healthBar = GetComponentInChildren<Slider>();
         healthBar.maxValue = getMaxHealth();
         ai = gameObject.GetComponent<baseRtsAI>();
+
+		if(fogControl != null)
+			fogControl.setFaction (myFaction);
         currentHealth = maxHealth;
-     
+		if (teamColorRenderer != null) 
+		{
+			teamColorRenderer.material.color = new Color(GameManager.getPlayer (myFaction).PlayerColor.r,
+				GameManager.getPlayer (myFaction).PlayerColor.g,
+				GameManager.getPlayer (myFaction).PlayerColor.b,
+			.35f);
+			
+		}
+		if(MiniMapSprite != null){
+			MiniMapSprite.material.color =GameManager.getPlayer (myFaction).PlayerColor;
+
+		}
     }
 	
 	// Update is called once per frame
@@ -200,6 +221,7 @@ public class UnitStats_ForRTS : MonoBehaviour, IRtsUnit
     public void setFaction(faction newFaction)
     {
         myFaction = newFaction;
+		fogControl.setFaction (myFaction);
     }
 
     public float getAttackRange()
